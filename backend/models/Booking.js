@@ -13,6 +13,10 @@ const bookingSchema = new mongoose.Schema({
     quantity: { type: Number, default: 1 }
   }],
   total: { type: Number, required: true },
+  couponCode: { type: String },
+  discountPercentage: { type: Number },
+  discountAmount: { type: Number },
+  finalAmount: { type: Number },
   dateTime: { type: String },
   paymentProof: { type: String }, // file path
   status: { type: String, enum: ['Pending', 'Approved', 'Rejected', 'Completed'], default: 'Pending' },

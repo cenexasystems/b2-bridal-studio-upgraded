@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { fadeUp, staggerContainer } from '../animations/variants';
 
 const UPI_ID = 'b2bridalstudio@upi';
+const API = import.meta.env.VITE_API_URL;
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -18,6 +20,33 @@ const Payment = () => {
   const gst = cartItems.length > 0 ? cartGst : 0; // no GST for service flow
   const total = cartItems.length > 0 ? cartTotal : (serviceData?.total || 0);
   const isServiceFlow = cartItems.length === 0 && !!serviceData;
+
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState('');
+  const [couponSuccess, setCouponSuccess] = useState('');
+
+  const handleApplyCoupon = async () => {
+    setCouponError('');
+    setCouponSuccess('');
+    if (!couponCode.trim()) return;
+    
+    try {
+      const res = await axios.post(`${API}/api/coupons/validate`, { code: couponCode });
+      const discountPercentage = res.data.discountPercentage;
+      const discountAmount = total * (discountPercentage / 100);
+      setAppliedCoupon({
+        code: couponCode.toUpperCase(),
+        discountPercentage,
+        discountAmount,
+        finalAmount: total - discountAmount
+      });
+      setCouponSuccess('Coupon applied successfully');
+    } catch (err) {
+      setCouponError(err.response?.data?.error || 'Invalid coupon');
+      setAppliedCoupon(null);
+    }
+  };
 
   // Redirect if both are empty
   if (items.length === 0) {
@@ -187,13 +216,49 @@ const Payment = () => {
                   <span>GST (18%)</span><span>₹{gst.toFixed(2)}</span>
                 </div>
               )}
+
+              {/* Coupon Section (Only for Services) */}
+              {isServiceFlow && (
+                <div className="pt-2 pb-2">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="Coupon Code"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                      className="flex-1 px-3 py-2 bg-black/50 border outline-none text-sm font-cinzel text-white uppercase"
+                      style={{ borderColor: 'rgba(255,195,0,0.3)' }}
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      className="px-4 py-2 font-cinzel text-xs tracking-wider"
+                      style={{ background: 'rgba(255,195,0,0.1)', color: '#FFD700', border: '1px solid rgba(255,195,0,0.3)' }}
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  {couponError && <p className="text-red-500 text-xs mt-1 italic font-cormorant">{couponError}</p>}
+                  {couponSuccess && <p className="text-green-500 text-xs mt-1 italic font-cormorant">{couponSuccess}</p>}
+                </div>
+              )}
+
+              {appliedCoupon && (
+                <div className="flex justify-between font-cormorant text-sm text-green-500">
+                  <span>Discount ({appliedCoupon.discountPercentage}%)</span>
+                  <span>-₹{appliedCoupon.discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+
               <div className="flex justify-between font-cinzel text-base pt-2" style={{ borderTop: '1px solid rgba(255,195,0,0.08)', color: '#F8F5F0' }}>
-                <span>Total</span><span style={{ color: '#FFD700' }}>₹{total.toFixed(2)}</span>
+                <span>Total</span>
+                <span style={{ color: '#FFD700' }}>
+                  ₹{(appliedCoupon ? appliedCoupon.finalAmount : total).toFixed(2)}
+                </span>
               </div>
             </div>
 
             <button
-              onClick={() => navigate('/confirm-booking', { state: { serviceData } })}
+              onClick={() => navigate('/confirm-booking', { state: { serviceData: { ...serviceData, coupon: appliedCoupon } } })}
               className="btn-gold w-full justify-center mt-8 py-4"
             >
               Confirm Booking

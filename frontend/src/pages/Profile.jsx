@@ -114,7 +114,16 @@ const Profile = () => {
                           <span className="font-cinzel text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(248,245,240,0.35)' }}>Transaction: </span>
                           <span className="font-inter text-xs" style={{ color: 'rgba(248,245,240,0.5)' }}>{booking.transactionId}</span>
                         </div>
-                        <span className="font-cinzel text-base font-bold" style={{ color: '#FFD700' }}>₹{booking.total.toFixed(2)}</span>
+                        <div className="text-right">
+                          <span className="font-cinzel text-base font-bold" style={{ color: '#FFD700' }}>
+                            ₹{(booking.finalAmount || booking.total).toFixed(2)}
+                          </span>
+                          {booking.couponCode && (
+                            <div className="font-cormorant text-xs italic mt-1" style={{ color: '#22c55e' }}>
+                              Coupon: {booking.couponCode} (-₹{booking.discountAmount})
+                            </div>
+                          )}
+                        </div>
                       </div>
 
                       {/* Rejected message */}

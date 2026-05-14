@@ -11,6 +11,7 @@ import Attendance from '../Attendance';
 import PaymentVerification from './PaymentVerification';
 import Revenue from './Revenue';
 import Billing from './Billing';
+import ManageCoupons from './ManageCoupons';
 
 
 const AdminDashboard = () => {
@@ -40,6 +41,7 @@ const navItems = user?.role === "owner"
       { name: 'Staff', path: '/admin/staff', icon: LayoutDashboard },
       { name: 'Attendance', path: '/admin/attendance', icon: LayoutDashboard },
       { name: 'Revenue', path: '/admin/revenue', icon: TrendingUp },
+      { name: 'Coupons', path: '/admin/coupons', icon: Receipt },
     ]
   : [
       { name: 'Services', path: '/admin/services', icon: Scissors },
@@ -112,6 +114,7 @@ const navItems = user?.role === "owner"
             <Route path="attendance" element={<Attendance />} />
             <Route path="revenue" element={<Revenue />} />
             <Route path="billing" element={<Billing />} />
+            <Route path="coupons" element={<ManageCoupons />} />
           </Routes>
         </main>
       </div>

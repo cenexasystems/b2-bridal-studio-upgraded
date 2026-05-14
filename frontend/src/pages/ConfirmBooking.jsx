@@ -19,6 +19,7 @@ const ConfirmBooking = () => {
   const isServiceFlow = !!serviceData && cartItems.length === 0;
   const items = isServiceFlow ? (serviceData.items || []) : cartItems;
   const total = isServiceFlow ? (serviceData.total || 0) : cartTotal;
+  const appliedCoupon = serviceData?.coupon || null;
 
   const [form, setForm] = useState({
     name: user?.name || '',
@@ -63,6 +64,14 @@ const ConfirmBooking = () => {
       formData.append('userId', user?.email || '');
       formData.append('email', user?.email || '');
       formData.append('total', total);
+      if (appliedCoupon) {
+        formData.append('couponCode', appliedCoupon.code);
+        formData.append('discountPercentage', appliedCoupon.discountPercentage);
+        formData.append('discountAmount', appliedCoupon.discountAmount);
+        formData.append('finalAmount', appliedCoupon.finalAmount);
+      } else {
+        formData.append('finalAmount', total);
+      }
       formData.append('dateTime', dateTime);
       formData.append('items', JSON.stringify(items.map(i => ({
         name: i.name,
@@ -216,10 +225,21 @@ const ConfirmBooking = () => {
               ))}
             </div>
 
-            <div className="pt-4 flex flex-col gap-2" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
-              <div className="flex justify-between font-cinzel text-sm" style={{ color: '#F8F5F0' }}>
-                <span>Total</span>
-                <span style={{ color: '#FFD700' }}>₹{total.toFixed(2)}</span>
+            <div className="mt-6 flex flex-col gap-2" style={{ borderTop: '1px solid rgba(255,195,0,0.1)', paddingTop: '16px' }}>
+              <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                <span>Subtotal</span><span>₹{total.toFixed(2)}</span>
+              </div>
+              {appliedCoupon && (
+                <div className="flex justify-between font-cormorant text-sm text-green-500">
+                  <span>Discount ({appliedCoupon.discountPercentage}%)</span>
+                  <span>-₹{appliedCoupon.discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+              <div className="flex justify-between font-cinzel text-base mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,195,0,0.08)', color: '#F8F5F0' }}>
+                <span>Total Payable</span>
+                <span style={{ color: '#FFD700' }}>
+                  ₹{(appliedCoupon ? appliedCoupon.finalAmount : total).toFixed(2)}
+                </span>
               </div>
             </div>
 

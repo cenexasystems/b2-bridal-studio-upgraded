@@ -152,6 +152,11 @@ const PaymentVerification = () => {
                         📅 {formatScheduled(b.dateTime)}
                       </div>
                     )}
+                    {b.couponCode && (
+                      <div className="text-xs text-green-600 mt-1 font-medium flex items-center gap-1">
+                        <Tag size={12} /> {b.couponCode} (-₹{b.discountAmount})
+                      </div>
+                    )}
                   </td>
                   <td className="p-4">
                     <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs font-medium">{b.branch}</span>

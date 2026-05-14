@@ -58,6 +58,7 @@ app.use('/api/attendance', require('./routes/attendance'));
 app.use('/api/staff', require('./routes/staff'));
 app.use('/api/blogs', require('./routes/blogs'));
 app.use('/api/bookings', require('./routes/bookings'));
+app.use('/api/coupons', require('./routes/coupons'));
 
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

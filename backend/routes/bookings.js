@@ -29,7 +29,7 @@ const upload = multer({
 // POST /api/bookings — Create a new booking
 router.post('/', upload.single('paymentProof'), async (req, res) => {
   try {
-    const { name, phone, upiId, transactionId, branch, items, total, dateTime, userId, email } = req.body;
+    const { name, phone, upiId, transactionId, branch, items, total, dateTime, userId, email, couponCode, discountPercentage, discountAmount, finalAmount } = req.body;
 
     const booking = new Booking({
       userId: email || userId,
@@ -40,6 +40,10 @@ router.post('/', upload.single('paymentProof'), async (req, res) => {
       branch,
       items: typeof items === 'string' ? JSON.parse(items) : items,
       total: Number(total),
+      couponCode: couponCode || null,
+      discountPercentage: discountPercentage ? Number(discountPercentage) : null,
+      discountAmount: discountAmount ? Number(discountAmount) : null,
+      finalAmount: finalAmount ? Number(finalAmount) : Number(total),
       dateTime,
       paymentProof: req.file ? req.file.filename : null,
       status: 'Pending'
