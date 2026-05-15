@@ -14,6 +14,22 @@ router.post('/', async (req, res) => {
   }
 });
 
+// ✏️ UPDATE ATTENDANCE EXIT TIME
+router.put('/:id', async (req, res) => {
+  try {
+    const { exitTime } = req.body;
+    // We only update exitTime to preserve other fields
+    const updatedAttendance = await Attendance.findByIdAndUpdate(
+      req.params.id,
+      { exitTime },
+      { new: true }
+    );
+    res.json(updatedAttendance);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // 📥 GET ALL ATTENDANCE
 router.get('/', async (req, res) => {
