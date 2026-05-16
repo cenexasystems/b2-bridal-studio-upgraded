@@ -45,23 +45,19 @@ const AdminDashboard = () => {
     navigate('/admin-login');
   };
 
-  const navItems = user?.role === "owner"
-    ? [
-      { name: 'Revenue', path: '/admin/revenue', icon: TrendingUp },
-    ]
-    : [
-      { name: 'Services', path: '/admin/services', icon: Scissors },
-      { name: 'Bookings', path: '/admin/bookings', icon: Receipt },
-      { name: 'Payments', path: '/admin/payments', icon: CreditCard },
-      { name: 'Products', path: '/admin/products', icon: LayoutDashboard },
-      { name: 'Courses', path: '/admin/courses', icon: LayoutDashboard },
-      { name: 'Stock', path: '/admin/stock', icon: LayoutDashboard },
-      { name: 'Billing', path: '/admin/billing', icon: FileText },
-      { name: 'Staff', path: '/admin/staff', icon: LayoutDashboard },
-      { name: 'Attendance', path: '/admin/attendance', icon: LayoutDashboard },
-      { name: 'Coupons', path: '/admin/coupons', icon: Receipt },
-      { name: 'Revenue', path: '/admin/revenue', icon: TrendingUp },
-    ];
+  const navItems = [
+    { name: 'Services', path: '/admin/services', icon: Scissors },
+    { name: 'Bookings', path: '/admin/bookings', icon: Receipt },
+    { name: 'Payments', path: '/admin/payments', icon: CreditCard },
+    { name: 'Products', path: '/admin/products', icon: LayoutDashboard },
+    { name: 'Courses', path: '/admin/courses', icon: LayoutDashboard },
+    { name: 'Stock', path: '/admin/stock', icon: LayoutDashboard },
+    { name: 'Billing', path: '/admin/billing', icon: FileText },
+    { name: 'Staff', path: '/admin/staff', icon: LayoutDashboard },
+    { name: 'Attendance', path: '/admin/attendance', icon: LayoutDashboard },
+    { name: 'Coupons', path: '/admin/coupons', icon: Receipt },
+    { name: 'Revenue', path: '/admin/revenue', icon: TrendingUp },
+  ];
 
   const handleNavClick = (e, item) => {
     if (item.name === 'Revenue' && user?.role !== 'owner') {

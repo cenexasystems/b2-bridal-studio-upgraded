@@ -32,9 +32,7 @@ import Register from './pages/Register';
 
 // Admin / Owner Pages
 import AdminLogin from './pages/AdminLogin';
-import OwnerLogin from './pages/OwnerLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import OwnerDashboard from './pages/owner/OwnerDashboard';
 
 /* ─── Scroll-to-top on route change ─────────────────────── */
 const ScrollToTop = () => {
@@ -79,10 +77,6 @@ function App() {
               {/* ADMIN ROUTES */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin/*" element={<AdminDashboard />} />
-
-              {/* OWNER ROUTES */}
-              <Route path="/owner-login" element={<OwnerLogin />} />
-              <Route path="/owner/*" element={<OwnerDashboard />} />
 
             </Routes>
           </div>
