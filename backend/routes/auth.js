@@ -38,6 +38,11 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    if (user.role === 'owner') {
+      console.log(`[Auth] Login blocked: Direct owner login is disabled`);
+      return res.status(403).json({ message: 'Direct owner login is disabled. Please log in as staff.' });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       console.log(`[Auth] Login failed: Password mismatch for username: ${username}`);
