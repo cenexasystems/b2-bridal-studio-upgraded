@@ -15,7 +15,7 @@ const OwnerSpotlight = () => {
       className="relative overflow-hidden"
       style={{
         background: '#000',
-        padding: '5rem 0',
+        padding: '4rem 0',
       }}
     >
       {/* Background ambient */}
@@ -39,7 +39,7 @@ const OwnerSpotlight = () => {
       </div>
 
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12" ref={ref}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
           {/* Left — Image */}
           <motion.div
@@ -58,7 +58,7 @@ const OwnerSpotlight = () => {
               }}
             />
 
-            <div className="relative overflow-hidden w-full max-w-[260px] mx-auto" style={{ aspectRatio: '3/4', zIndex: 1 }}>
+            <div className="relative overflow-hidden w-full max-w-[360px] mx-auto" style={{ aspectRatio: '3/4', zIndex: 1 }}>
               <motion.img
                 src="/images/ownerspotlight.jpeg"
                 alt="Studio Owner — Bridal Makeup Artist"
@@ -145,7 +145,7 @@ const OwnerSpotlight = () => {
             </motion.h2>
 
             {/* Title */}
-            <motion.div variants={fadeUp} className="font-cinzel text-xs tracking-[0.3em] uppercase mb-8" style={{ color: 'rgba(248,245,240,0.5)' }}>
+            <motion.div variants={fadeUp} className="font-cinzel text-xs tracking-[0.3em] uppercase mb-8" style={{ color: 'rgba(248,245,240,0.7)' }}>
               Founder & Master Bridal Artist
             </motion.div>
 
@@ -156,7 +156,7 @@ const OwnerSpotlight = () => {
             <motion.p
               variants={fadeUp}
               className="font-cormorant leading-relaxed mb-6"
-              style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.75)', letterSpacing: '0.01em' }}
+              style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.85)', letterSpacing: '0.01em' }}
             >
               With over 8 years of transformative artistry, Shammugapriya has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
             </motion.p>
@@ -164,7 +164,7 @@ const OwnerSpotlight = () => {
             <motion.p
               variants={fadeUp}
               className="font-cormorant leading-relaxed mb-10"
-              style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.55)', letterSpacing: '0.01em' }}
+              style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.7)', letterSpacing: '0.01em' }}
             >
               Trained under award-winning masters and certified across international beauty academies, she brings world-class expertise to every bride she serves.
             </motion.p>
@@ -188,7 +188,7 @@ const OwnerSpotlight = () => {
                   >
                     {stat.value}
                   </div>
-                  <div className="font-cormorant text-xs tracking-wider italic mt-1" style={{ color: 'rgba(248,245,240,0.4)' }}>
+                  <div className="font-cormorant text-xs tracking-wider italic mt-1" style={{ color: 'rgba(248,245,240,0.65)' }}>
                     {stat.label}
                   </div>
                 </div>

@@ -20,7 +20,7 @@ const GalleryShowcase = () => {
 
   return (
     <>
-      <section id="gallery-showcase" className="relative overflow-hidden" style={{ padding: '5.5rem 0', background: '#000' }}>
+      <section id="gallery-showcase" className="relative overflow-hidden" style={{ padding: '4.5rem 0', background: '#000' }}>
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,195,0,0.2), transparent)' }} />
 
         <div className="max-w-[1400px] mx-auto px-6 lg:px-12" ref={ref}>
@@ -34,13 +34,13 @@ const GalleryShowcase = () => {
             <motion.h2 variants={fadeUp} className="font-cinzel font-bold uppercase mb-4" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', letterSpacing: '0.05em', color: '#F8F5F0' }}>
               Gallery of Excellence
             </motion.h2>
-            <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.5)' }}>
+            <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.7)' }}>
               A glimpse into the transformations we create every day.
             </motion.p>
           </motion.div>
 
           {/* Masonry-style Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
             {GALLERY_ITEMS.map((item, i) => (
               <motion.div
                 key={item.id}

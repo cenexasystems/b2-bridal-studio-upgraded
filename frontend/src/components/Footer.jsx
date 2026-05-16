@@ -65,7 +65,7 @@ const Footer = () => {
               <div className="font-cormorant text-[0.65rem] tracking-wider uppercase" style={{ color: 'rgba(248,245,240,0.35)' }}>Studio</div>
             </div>
           </Link>
-          <p className="font-cormorant leading-relaxed text-base mb-6" style={{ color: 'rgba(248,245,240,0.45)', fontSize: '1rem' }}>
+          <p className="font-cormorant leading-relaxed text-base mb-6" style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}>
             Crafting luxury bridal experiences and professional training in Chennai and Madurai since 2018.
           </p>
           {/* Social links */}
@@ -101,9 +101,9 @@ const Footer = () => {
                 <Link
                   to={link.to}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group"
-                  style={{ color: 'rgba(248,245,240,0.45)', fontSize: '1rem' }}
+                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.45)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
                 >
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
@@ -124,9 +124,9 @@ const Footer = () => {
                 <Link
                   to={link.to}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group"
-                  style={{ color: 'rgba(248,245,240,0.45)', fontSize: '1rem' }}
+                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.45)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
                 >
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
@@ -151,7 +151,7 @@ const Footer = () => {
             ].map((item, i) => (
               <li key={i} className="flex gap-2 items-start">
                 <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
-                <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.45)' }}>
+                <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.6)' }}>
                   {item.text}
                 </span>
               </li>
@@ -165,7 +165,7 @@ const Footer = () => {
         className="max-w-[1300px] mx-auto px-6 lg:px-12 py-6 flex flex-col sm:flex-row items-center justify-between gap-3"
         style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}
       >
-        <p className="font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.25)', fontSize: '0.9rem' }}>
+        <p className="font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.45)', fontSize: '0.9rem' }}>
           © {new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
         </p>
         <div className="flex items-center gap-2">

@@ -62,7 +62,7 @@ const ContactSection = () => {
           <motion.p
             variants={fadeUp}
             className="font-cormorant italic mx-auto"
-            style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)', maxWidth: '480px' }}
+            style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)', maxWidth: '480px' }}
           >
             Let's create something extraordinary together. Reach out and we'll respond within 24 hours.
           </motion.p>
@@ -103,7 +103,7 @@ const ContactSection = () => {
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.6)' }}>
+                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
                     Full Name
                   </label>
                   <input
@@ -118,7 +118,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.6)' }}>
+                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
                     Phone Number
                   </label>
                   <input
@@ -133,7 +133,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.6)' }}>
+                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
                     Message
                   </label>
                   <textarea
@@ -198,10 +198,10 @@ const ContactSection = () => {
                 >
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.5)' }}>
+                    <div className="font-cinzel text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.7)' }}>
                       {item.label}
                     </div>
-                    <div className="font-cormorant text-base leading-snug" style={{ color: 'rgba(248,245,240,0.7)' }}>
+                    <div className="font-cormorant text-base leading-snug" style={{ color: 'rgba(248,245,240,0.85)' }}>
                       {item.value}
                     </div>
                   </div>

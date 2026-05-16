@@ -339,7 +339,7 @@ const Services = () => {
             <div className="gold-divider" style={{ width: '40px' }} />
           </div>
           <h1 className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>Premium Services</h1>
-          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)' }}>Explore our luxury treatments and book your appointment today.</p>
+          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>Explore our luxury treatments and book your appointment today.</p>
         </div>
       </div>
 
@@ -379,7 +379,7 @@ const Services = () => {
                             <div>
                               <div className="flex justify-between items-start mb-3">
                                 <div>
-                                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.5)' }}>{category.category}</span>
+                                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.75)' }}>{category.category}</span>
                                   <h3 className="font-playfair text-sm" style={{ color: '#F8F5F0' }}>{service.name}</h3>
                                 </div>
                                 <span className="font-cinzel text-sm min-w-max ml-3" style={{ color: '#FFD700' }}>₹{priceToDisplay}</span>
@@ -390,7 +390,7 @@ const Services = () => {
                                 </select>
                               )}
                             </div>
-                            <button onClick={() => addToCart(cartItem)} disabled={!!isAdded} className="w-full py-2 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm" style={{ border: `1px solid ${isAdded ? 'rgba(255,195,0,0.4)' : 'rgba(255,195,0,0.2)'}`, background: isAdded ? 'rgba(255,195,0,0.1)' : 'transparent', color: '#FFD700' }}>
+                            <button onClick={() => addToCart(cartItem)} disabled={!!isAdded} className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm" style={{ border: 'none', background: isAdded ? 'rgba(255,195,0,0.15)' : 'linear-gradient(135deg, #FFED8A, #FFD700, #FFCA28, #E5A100)', color: isAdded ? '#FFD700' : '#000', fontWeight: 700, boxShadow: isAdded ? 'none' : '0 2px 10px rgba(255,195,0,0.25)' }}>
                               {isAdded ? (<><Check size={14} /> Added</>) : (<><ShoppingCart size={14} /> Add</>)}
                             </button>
                           </div>
@@ -412,7 +412,7 @@ const Services = () => {
 
               {/* Branch */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Branch *</label>
+                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Branch *</label>
                 <div className="flex gap-2">
                   {['Chennai', 'Madurai'].map(branch => (
                     <button
@@ -436,12 +436,13 @@ const Services = () => {
 
               {/* Date */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Date *</label>
+                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Date *</label>
                 <div className="relative">
                   <input
                     type="date"
                     value={bookingDate}
                     onChange={(e) => { setBookingDate(e.target.value); setBookingErrors(prev => ({ ...prev, date: '', slot: '' })); }}
+                    min={new Date().toISOString().split('T')[0]}
                     className="input-luxury pl-10 rounded-sm text-sm"
                   />
                   <Calendar className="absolute left-3 top-3.5" size={16} style={{ color: '#FFD700' }} />
@@ -451,7 +452,7 @@ const Services = () => {
 
               {/* Time — hourly slots only */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Time Slot *</label>
+                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Time Slot *</label>
                 <div className="relative">
                   <select
                     value={bookingTime}
@@ -477,7 +478,7 @@ const Services = () => {
               )}
 
             </div>
-            <h3 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,195,0,0.5)' }}>Selected Services</h3>
+            <h3 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,195,0,0.75)' }}>Selected Services</h3>
             {cart.length === 0 ? (
               <p className="font-cormorant italic text-sm text-center py-4" style={{ color: 'rgba(248,245,240,0.3)' }}>No services selected.</p>
             ) : (

@@ -29,7 +29,7 @@ const Contact = () => {
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Get in Touch
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>
             We'd love to hear from you. Reach out and we'll respond within 24 hours.
           </motion.p>
         </motion.div>
@@ -52,20 +52,20 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Full Name</label>
+                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Full Name</label>
                     <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="input-luxury rounded-sm" />
                   </div>
                   <div>
-                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Email</label>
+                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Email</label>
                     <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" required className="input-luxury rounded-sm" />
                   </div>
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Phone</label>
+                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Phone</label>
                   <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+91 00000 00000" required className="input-luxury rounded-sm" />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Message</label>
+                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Message</label>
                   <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your occasion..." required rows={5} className="input-luxury rounded-sm resize-none" />
                 </div>
                 <button type="submit" className="btn-gold w-full justify-center mt-2">
@@ -89,8 +89,8 @@ const Contact = () => {
                 <div key={i} className="flex gap-4 py-4" style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.5)' }}>{item.label}</div>
-                    <div className="font-cormorant text-sm leading-snug" style={{ color: 'rgba(248,245,240,0.7)' }}>{item.value}</div>
+                    <div className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.75)' }}>{item.label}</div>
+                    <div className="font-cormorant text-sm leading-snug" style={{ color: 'rgba(248,245,240,0.85)' }}>{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -98,7 +98,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="glass-dark p-6 rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)' }}>
-              <h3 className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,195,0,0.5)' }}>Follow Us</h3>
+              <h3 className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,195,0,0.75)' }}>Follow Us</h3>
               <div className="flex gap-3">
                 {[
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
@@ -113,7 +113,7 @@ const Contact = () => {
             </div>
 
             {/* Map */}
-            <div className="overflow-hidden rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)', aspectRatio: '4/3' }}>
+            <div className="overflow-hidden rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)', aspectRatio: '16/10' }}>
               <iframe title="B2 Bridal Studio Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.088!2d80.2419!3d13.1283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265d5b5e4d5e3%3A0x5a5e!2sKodungaiyur%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="100%" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             </div>
           </motion.div>

@@ -88,7 +88,7 @@ const Hero = () => {
       <div style={{
         maxWidth: 1360,
         margin: '0 auto',
-        padding: '90px 40px 60px',
+        padding: '70px 40px 40px',
         width: '100%',
         position: 'relative',
         zIndex: 5
@@ -119,7 +119,8 @@ const Hero = () => {
               <div style={{ height: 1, width: 40, background: 'linear-gradient(90deg, #FFD700, transparent)' }} />
               <span style={{
                 fontFamily: "'Poppins'",
-                fontSize: '0.6rem',
+                fontSize: '0.7rem',
+                fontWeight: 600,
                 letterSpacing: '0.45em',
                 textTransform: 'uppercase',
                 color: '#FFD700'
@@ -171,7 +172,7 @@ const Hero = () => {
                 fontFamily: "'Cormorant Garamond'",
                 fontStyle: 'italic',
                 fontSize: '1.2rem',
-                color: 'rgba(245,239,230,0.7)',
+                color: 'rgba(245,239,230,0.85)',
                 marginTop: 20,
                 marginBottom: 40,
                 maxWidth: 420

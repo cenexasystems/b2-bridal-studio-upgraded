@@ -151,7 +151,7 @@ const CourseCard = ({ course, delay }) => {
         {/* Description */}
         <p
           className="font-cormorant leading-relaxed flex-1 mb-5"
-          style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.6)' }}
+          style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.75)' }}
         >
           {course.description}
         </p>
@@ -253,7 +253,7 @@ const CoursesGrid = () => {
             <motion.p
               variants={fadeUp}
               className="font-cormorant italic mx-auto"
-              style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.55)', maxWidth: '480px' }}
+              style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)', maxWidth: '480px' }}
             >
               Master the art of beauty with industry-leading professional courses.
             </motion.p>

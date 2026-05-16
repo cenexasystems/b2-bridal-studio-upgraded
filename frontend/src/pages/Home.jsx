@@ -10,7 +10,7 @@ import Achievements from '../components/home/Achievements';
 import GalleryShowcase from '../components/home/GalleryShowcase';
 import Testimonials from '../components/home/Testimonials';
 import VideoTestimonialsSection from '../components/home/VideoTestimonialsSection';
-import Blogs from '../components/home/Blogs';
+
 import ContactSection from '../components/home/ContactSection';
 
 const Home = () => {
@@ -52,7 +52,7 @@ const Home = () => {
         <GalleryShowcase />
         <Testimonials />
         <VideoTestimonialsSection />
-        <Blogs />
+
         <ContactSection />
       </main>
     </>

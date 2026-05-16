@@ -30,7 +30,7 @@ const StatCard = ({ value, suffix, label, isInView }) => {
         {count.toLocaleString()}{suffix}
       </div>
       <div className="gold-divider mx-auto my-3" style={{ width: '30px' }} />
-      <div className="font-cormorant italic text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>{label}</div>
+      <div className="font-cormorant italic text-sm" style={{ color: 'rgba(248,245,240,0.7)' }}>{label}</div>
     </div>
   );
 };
@@ -98,10 +98,10 @@ const About = () => {
             <p className="font-cormorant italic text-lg mb-4" style={{ color: 'rgba(255,195,0,0.7)' }}>
               A legacy of beauty, artistry, and transformation
             </p>
-            <p className="font-inter text-sm leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.6)' }}>
+            <p className="font-inter text-sm leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.75)' }}>
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.5)' }}>
+            <p className="font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.65)' }}>
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
           </motion.div>
@@ -117,7 +117,7 @@ const About = () => {
             "Crafting Beauty One Story at a Time"
           </h2>
           <div className="gold-divider my-6" />
-          <p className="font-cormorant text-lg leading-relaxed" style={{ color: 'rgba(248,245,240,0.55)' }}>
+          <p className="font-cormorant text-lg leading-relaxed" style={{ color: 'rgba(248,245,240,0.72)' }}>
             B2 Bridal Studio was born from a belief that every woman deserves to feel extraordinary — and every aspiring professional deserves world-class training. We blend tradition with modern artistry to create experiences that transform lives.
           </p>
         </motion.div>
@@ -177,7 +177,7 @@ const About = () => {
               <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'} pl-12 md:pl-0`}>
                 <span className="font-cinzel text-xs tracking-[0.2em]" style={{ color: '#FFD700' }}>{item.year}</span>
                 <h3 className="font-playfair text-lg mt-1 mb-2" style={{ color: '#F8F5F0' }}>{item.title}</h3>
-                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.5)' }}>{item.desc}</p>
+                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.68)' }}>{item.desc}</p>
               </div>
               <div className="flex-1 hidden md:block" />
             </motion.div>
@@ -213,6 +213,43 @@ const About = () => {
                 <p className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.6)' }}>{member.role}</p>
               </div>
             </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ SECTION 5.5 — FEATURED INSIGHTS (BLOG) ═══ */}
+      <section className="relative" style={{ padding: '6rem 0' }}>
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,195,0,0.2), transparent)' }} />
+        <div className="text-center mb-12">
+          <span className="font-cinzel text-[0.6rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>From the Studio</span>
+          <h2 className="font-cinzel font-bold uppercase mt-3" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', color: '#F8F5F0', letterSpacing: '0.04em' }}>
+            Featured Insights
+          </h2>
+        </div>
+        <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', date: 'April 2024', image: 'https://images.unsplash.com/photo-1457972729786-0411a3b2b626?auto=format&fit=crop&w=600&q=80', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
+            { title: 'How to Build a Luxury Bridal Makeup Career', date: 'March 2024', image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
+            { title: 'The Pre-Bridal Skin Care Ritual', date: 'February 2024', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
+          ].map((post, i) => (
+            <motion.article
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.12 }}
+              className="card-luxury rounded-sm group"
+            >
+              <div className="img-zoom-container" style={{ height: '180px' }}>
+                <img src={post.image} alt={post.title} className="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div className="p-5">
+                <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.65)' }}>{post.date}</span>
+                <h3 className="font-playfair text-base mt-2 mb-2 leading-tight" style={{ color: '#F8F5F0' }}>{post.title}</h3>
+                <div className="gold-divider-left mb-3" />
+                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.68)' }}>{post.excerpt}</p>
+              </div>
+            </motion.article>
           ))}
         </div>
       </section>

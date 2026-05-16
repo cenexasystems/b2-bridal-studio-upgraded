@@ -101,7 +101,7 @@ const WhyChooseUs = () => {
           <motion.p
             variants={fadeUp}
             className="font-cormorant italic mx-auto"
-            style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)', maxWidth: '500px' }}
+            style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)', maxWidth: '500px' }}
           >
             Beyond beauty — a commitment to craft, care, and transformation.
           </motion.p>
@@ -153,7 +153,7 @@ const WhyChooseUs = () => {
               {/* Description */}
               <p
                 className="font-cormorant leading-relaxed"
-                style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.55)' }}
+                style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.72)' }}
               >
                 {feature.description}
               </p>

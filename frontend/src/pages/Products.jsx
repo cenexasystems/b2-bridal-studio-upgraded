@@ -61,7 +61,7 @@ const Products = () => {
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Exclusive Products
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>
             Premium beauty tools and artistry supplies, handpicked by our experts.
           </motion.p>
         </motion.div>
@@ -121,7 +121,7 @@ const Products = () => {
                   {!inCart ? (
                     <div className="flex flex-col gap-3 mt-auto pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
                       <div className="flex items-center justify-between">
-                        <span className="font-cinzel text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: 'rgba(248,245,240,0.5)' }}>Quantity</span>
+                        <span className="font-cinzel text-[0.6rem] tracking-[0.1em] uppercase" style={{ color: 'rgba(248,245,240,0.7)' }}>Quantity</span>
                         <div className="flex items-center gap-3">
                           <button
                             onClick={() => handleQuantityChange(product._id, -1)}
@@ -149,9 +149,9 @@ const Products = () => {
                       <button
                         onClick={() => handleAddToCart(product)}
                         className="w-full py-2 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-all rounded-sm"
-                        style={{ background: 'rgba(255,195,0,0.1)', border: '1px solid rgba(255,195,0,0.3)', color: '#FFD700' }}
-                        onMouseEnter={e => { e.currentTarget.style.background = '#FFD700'; e.currentTarget.style.color = '#000'; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,195,0,0.1)'; e.currentTarget.style.color = '#FFD700'; }}
+                        style={{ background: 'linear-gradient(135deg, #FFED8A, #FFD700, #FFCA28, #E5A100)', border: 'none', color: '#000', fontWeight: 700, boxShadow: '0 2px 10px rgba(255,195,0,0.25)' }}
+                        onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 0 25px rgba(255,215,0,0.5), 0 4px 16px rgba(255,195,0,0.25)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 2px 10px rgba(255,195,0,0.25)'; e.currentTarget.style.transform = 'translateY(0)'; }}
                       >
                         Add to Cart
                       </button>

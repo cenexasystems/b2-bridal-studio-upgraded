@@ -143,7 +143,7 @@ const Achievements = () => {
               {/* Label */}
               <div
                 className="font-cormorant italic"
-                style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.5)', letterSpacing: '0.03em' }}
+                style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.7)', letterSpacing: '0.03em' }}
               >
                 {stat.label}
               </div>

@@ -18,7 +18,6 @@ const NAV_LINKS = [
   { label: 'Courses', to: '/courses', hasDropdown: true },
   { label: 'Products', to: '/products' },
   { label: 'About', to: '/about' },
-  { label: 'Blog', to: '/blog' },
   { label: 'Contact', to: '/contact' },
 ];
 
