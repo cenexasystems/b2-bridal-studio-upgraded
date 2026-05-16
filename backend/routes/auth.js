@@ -58,4 +58,26 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post('/verify-owner-password', async (req, res) => {
+  try {
+    const { password } = req.body;
+    
+    // Find the owner user
+    const owner = await User.findOne({ role: 'owner' });
+    if (!owner) {
+      return res.status(404).json({ message: 'Owner account not found' });
+    }
+
+    const isMatch = await bcrypt.compare(password, owner.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error(`[Auth] Server error during owner password verification:`, error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
