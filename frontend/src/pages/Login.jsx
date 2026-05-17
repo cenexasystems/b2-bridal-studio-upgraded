@@ -47,8 +47,8 @@ const Login = () => {
           <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style={{ border: '1px solid rgba(255,195,0,0.4)', boxShadow: '0 0 20px rgba(255,195,0,0.15)' }}>
             <span className="font-cinzel text-lg font-bold text-gold-gradient">B2</span>
           </div>
-          <h1 className="font-cinzel text-sm tracking-[0.3em] uppercase" style={{ color: '#F8F5F0' }}>Welcome Back</h1>
-          <p className="font-cormorant italic text-sm mt-1" style={{ color: 'rgba(248,245,240,0.4)' }}>Sign in to your account</p>
+          <h1 className="font-cinzel text-base tracking-[0.3em] uppercase" style={{ color: '#F8F5F0' }}>Welcome Back</h1>
+          <p className="font-cormorant italic text-sm mt-1" style={{ color: 'rgba(248,245,240,0.6)' }}>Sign in to your account</p>
         </motion.div>
 
         {/* Form */}
@@ -60,7 +60,7 @@ const Login = () => {
         >
           <div className="flex flex-col gap-5">
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Email</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Email</label>
               <input
                 type="email"
                 value={form.email}
@@ -71,7 +71,7 @@ const Login = () => {
               />
             </div>
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Password</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Password</label>
               <div className="relative">
                 <input
                   type={showPw ? 'text' : 'password'}
@@ -104,7 +104,7 @@ const Login = () => {
           </div>
         </motion.form>
 
-        <motion.p variants={fadeUp} className="text-center mt-6 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.4)' }}>
+        <motion.p variants={fadeUp} className="text-center mt-6 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.6)' }}>
           Don't have an account?{' '}
           <Link to="/register" className="font-cinzel text-[0.65rem] tracking-[0.1em] uppercase" style={{ color: '#FFD700' }}>Register</Link>
         </motion.p>

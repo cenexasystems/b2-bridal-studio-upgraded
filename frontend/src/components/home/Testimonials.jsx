@@ -90,7 +90,8 @@ const TestimonialCard = ({ testimonial }) => (
       className="font-cormorant italic leading-relaxed mb-6 flex-1"
       style={{
         fontSize: '1.15rem',
-        color: 'rgba(248,245,240,0.88)',
+        fontWeight: 500,
+        color: 'rgba(248,245,240,0.93)',
         maxWidth: '320px',
       }}
     >
@@ -164,7 +165,7 @@ const Testimonials = () => {
           >
             Client Stories
           </motion.h2>
-          <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.7)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.8)' }}>
             The most honest reviews — from those who wore our artistry.
           </motion.p>
         </motion.div>

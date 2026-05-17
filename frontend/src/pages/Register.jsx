@@ -34,27 +34,27 @@ const Register = () => {
           <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style={{ border: '1px solid rgba(255,195,0,0.4)', boxShadow: '0 0 20px rgba(255,195,0,0.15)' }}>
             <span className="font-cinzel text-lg font-bold text-gold-gradient">B2</span>
           </div>
-          <h1 className="font-cinzel text-sm tracking-[0.3em] uppercase" style={{ color: '#F8F5F0' }}>Create Account</h1>
-          <p className="font-cormorant italic text-sm mt-1" style={{ color: 'rgba(248,245,240,0.4)' }}>Join our community of artisans</p>
+          <h1 className="font-cinzel text-base tracking-[0.3em] uppercase" style={{ color: '#F8F5F0' }}>Create Account</h1>
+          <p className="font-cormorant italic text-sm mt-1" style={{ color: 'rgba(248,245,240,0.6)' }}>Join our community of artisans</p>
         </motion.div>
 
         {/* Form */}
         <motion.form variants={fadeUp} onSubmit={handleSubmit} className="glass-dark p-8 rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
           <div className="flex flex-col gap-5">
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Full Name</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Full Name</label>
               <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your full name" required className="input-luxury rounded-sm" />
             </div>
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Email</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Email</label>
               <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" required className="input-luxury rounded-sm" />
             </div>
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Phone</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Phone</label>
               <input type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+91 00000 00000" required className="input-luxury rounded-sm" />
             </div>
             <div>
-              <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>Password</label>
+              <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.75)' }}>Password</label>
               <div className="relative">
                 <input type={showPw ? 'text' : 'password'} value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} placeholder="••••••••" required className="input-luxury rounded-sm pr-12" />
                 <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,195,0,0.4)' }}>
@@ -70,7 +70,7 @@ const Register = () => {
           </div>
         </motion.form>
 
-        <motion.p variants={fadeUp} className="text-center mt-6 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.4)' }}>
+        <motion.p variants={fadeUp} className="text-center mt-6 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.6)' }}>
           Already have an account?{' '}
           <Link to="/login" className="font-cinzel text-[0.65rem] tracking-[0.1em] uppercase" style={{ color: '#FFD700' }}>Login</Link>
         </motion.p>

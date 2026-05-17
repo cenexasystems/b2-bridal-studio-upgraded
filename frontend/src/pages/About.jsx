@@ -44,23 +44,16 @@ const TIMELINE = [
   { year: '2024', title: 'Today', desc: 'A community of 100K+ alumni, 50+ courses, and a leading name in South Indian bridal artistry.' },
 ];
 
-/* ─── Team Data ─────────────────────────────────────────── */
-const TEAM = [
-  { name: 'Shammugapriya', role: 'Founder & Master Beautician', image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Priya Devi', role: 'Lead Fashion Designer', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80' },
-  { name: 'Kavitha R', role: 'Embroidery Expert', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80' },
-];
+/* ─── Team Data — REMOVED per refinement ───────────────── */
 
 const About = () => {
   const heroRef = useRef(null);
   const statsRef = useRef(null);
   const timelineRef = useRef(null);
-  const teamRef = useRef(null);
 
   const heroInView = useInView(heroRef, { once: true, margin: '-10%' });
   const statsInView = useInView(statsRef, { once: true, margin: '-10%' });
   const timelineInView = useInView(timelineRef, { once: true, margin: '-5%' });
-  const teamInView = useInView(teamRef, { once: true, margin: '-10%' });
 
   return (
     <div style={{ background: '#000' }}>
@@ -75,7 +68,7 @@ const About = () => {
               <img
                 src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80"
                 alt="About B2 Bridal Studio"
-                className="w-full aspect-[4/5] object-cover"
+                className="w-full aspect-square object-cover"
                 loading="lazy"
               />
             </div>
@@ -98,10 +91,10 @@ const About = () => {
             <p className="font-cormorant italic text-lg mb-4" style={{ color: 'rgba(255,195,0,0.7)' }}>
               A legacy of beauty, artistry, and transformation
             </p>
-            <p className="font-inter text-sm leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.75)' }}>
+            <p className="font-inter text-sm leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.82)' }}>
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.65)' }}>
+            <p className="font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.75)' }}>
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
           </motion.div>
@@ -185,37 +178,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ═══ SECTION 5 — TEAM ═══ */}
-      <section className="relative" style={{ padding: '6rem 0' }} ref={teamRef}>
-        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,195,0,0.2), transparent)' }} />
-        <motion.div variants={staggerContainer} initial="hidden" animate={teamInView ? 'visible' : 'hidden'} className="text-center mb-12">
-          <motion.span variants={fadeUp} className="font-cinzel text-[0.6rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>Our Experts</motion.span>
-          <motion.h2 variants={fadeUp} className="font-cinzel font-bold uppercase mt-3" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', color: '#F8F5F0', letterSpacing: '0.04em' }}>
-            Meet the Team
-          </motion.h2>
-        </motion.div>
 
-        <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {TEAM.map((member, i) => (
-            <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="card-luxury rounded-sm group text-center"
-            >
-              <div className="img-zoom-container" style={{ height: '300px' }}>
-                <img src={member.image} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
-              </div>
-              <div className="p-5">
-                <h3 className="font-playfair text-lg mb-1 group-hover:text-gold-500 transition-colors" style={{ color: '#F8F5F0' }}>{member.name}</h3>
-                <p className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.6)' }}>{member.role}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
       {/* ═══ SECTION 5.5 — FEATURED INSIGHTS (BLOG) ═══ */}
       <section className="relative" style={{ padding: '6rem 0' }}>

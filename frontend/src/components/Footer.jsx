@@ -57,7 +57,7 @@ const Footer = () => {
               <img
                 src="/b2-logo.png"
                 alt="B2 Bridal Studio"
-                style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 0 8px rgba(255,195,0,0.4))' }}
+                style={{ width: 52, height: 52, objectFit: 'contain', filter: 'drop-shadow(0 0 8px rgba(255,195,0,0.4))', mixBlendMode: 'lighten' }}
               />
             </div>
             <div>

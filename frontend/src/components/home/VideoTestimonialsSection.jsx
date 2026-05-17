@@ -31,7 +31,7 @@ const VideoTestimonialsSection = () => {
     return (
         <section
             className="relative overflow-hidden"
-            style={{ background: '#000', padding: '6rem 0' }}
+            style={{ background: '#000', padding: '4rem 0' }}
         >
             {/* Gold ambient glow */}
             <div
@@ -48,7 +48,7 @@ const VideoTestimonialsSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="font-cinzel text-white uppercase mb-12"
+                    className="font-cinzel text-white uppercase mb-6"
                     style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', letterSpacing: '0.08em' }}
                 >
                     Video Testimonials
@@ -106,7 +106,7 @@ const VideoTestimonialsSection = () => {
                                     key={current.src}
                                     src={current.src}
                                     controls   // ✅ native controls
-                                    className="relative w-full h-[520px] object-cover"
+                                    className="relative w-full h-[360px] object-cover"
                                     style={{ background: '#000' }}
                                 />
 

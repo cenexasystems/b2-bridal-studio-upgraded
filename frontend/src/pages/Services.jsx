@@ -339,7 +339,7 @@ const Services = () => {
             <div className="gold-divider" style={{ width: '40px' }} />
           </div>
           <h1 className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>Premium Services</h1>
-          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>Explore our luxury treatments and book your appointment today.</p>
+          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.8)' }}>Explore our luxury treatments and book your appointment today.</p>
         </div>
       </div>
 
@@ -358,7 +358,7 @@ const Services = () => {
               {filteredCategories.map((category) => (
                 <div key={category.category} className="card-luxury rounded-sm overflow-hidden">
                   <button onClick={() => toggleCategory(category.category)} className="w-full px-6 py-4 flex justify-between items-center transition-colors" style={{ background: 'rgba(255,195,0,0.03)' }}>
-                    <span className="font-cinzel text-xs tracking-[0.2em] uppercase" style={{ color: '#F8F5F0' }}>{category.category}</span>
+                    <span className="font-cinzel text-sm tracking-[0.2em] uppercase font-semibold" style={{ color: '#F8F5F0' }}>{category.category}</span>
                     {expandedCategory === category.category
                       ? <ChevronUp size={16} style={{ color: '#FFD700' }} />
                       : <ChevronDown size={16} style={{ color: 'rgba(248,245,240,0.3)' }} />}
@@ -379,10 +379,10 @@ const Services = () => {
                             <div>
                               <div className="flex justify-between items-start mb-3">
                                 <div>
-                                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.75)' }}>{category.category}</span>
-                                  <h3 className="font-playfair text-sm" style={{ color: '#F8F5F0' }}>{service.name}</h3>
+                                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase block mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{category.category}</span>
+                                  <h3 className="font-playfair text-base font-semibold" style={{ color: '#F8F5F0' }}>{service.name}</h3>
                                 </div>
-                                <span className="font-cinzel text-sm min-w-max ml-3" style={{ color: '#FFD700' }}>₹{priceToDisplay}</span>
+                                <span className="font-cinzel text-sm font-bold min-w-max ml-3" style={{ color: '#FFD700' }}>₹{priceToDisplay}</span>
                               </div>
                               {isDropdown && (
                                 <select value={activeOptionId} onChange={(e) => handleOptionChange(service._id, e.target.value)} className="w-full px-3 py-2 rounded-sm text-sm font-cormorant outline-none mb-3" style={{ background: 'rgba(255,195,0,0.06)', border: '1px solid rgba(255,195,0,0.15)', color: '#F8F5F0' }}>

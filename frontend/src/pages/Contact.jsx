@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { fadeUp, staggerContainer, slideLeft, slideRight } from '../animations/variants';
 
+const WHATSAPP_NUMBER = '919840551365';
+
 const Contact = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
@@ -11,6 +13,9 @@ const Contact = () => {
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleSubmit = (e) => {
     e.preventDefault();
+    const text = `Hello B2 Bridal Studio!%0A%0A*Name:* ${encodeURIComponent(form.name)}%0A*Email:* ${encodeURIComponent(form.email)}%0A*Phone:* ${encodeURIComponent(form.phone)}%0A*Message:* ${encodeURIComponent(form.message)}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+    window.open(whatsappUrl, '_blank');
     setSent(true);
     setTimeout(() => setSent(false), 4000);
     setForm({ name: '', email: '', phone: '', message: '' });
@@ -23,13 +28,13 @@ const Contact = () => {
         <motion.div variants={staggerContainer} initial="hidden" animate="visible" className="max-w-3xl mx-auto">
           <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-4">
             <div className="gold-divider" style={{ width: '40px' }} />
-            <span className="font-cinzel text-[0.65rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>Connect</span>
+            <span className="font-cinzel text-[0.7rem] tracking-[0.4em] uppercase font-semibold" style={{ color: '#FFD700' }}>Connect</span>
             <div className="gold-divider" style={{ width: '40px' }} />
           </motion.div>
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Get in Touch
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.8)' }}>
             We'd love to hear from you. Reach out and we'll respond within 24 hours.
           </motion.p>
         </motion.div>
@@ -45,27 +50,27 @@ const Contact = () => {
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ border: '1px solid rgba(255,195,0,0.4)', background: 'rgba(255,195,0,0.08)' }}>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2" style={{ color: '#F8F5F0' }}>Message Sent</h3>
-                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.5)' }}>We'll be in touch shortly.</p>
+                <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#F8F5F0' }}>Redirected to WhatsApp</h3>
+                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.6)' }}>Complete your message on WhatsApp.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Full Name</label>
+                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Full Name</label>
                     <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="input-luxury rounded-sm" />
                   </div>
                   <div>
-                    <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Email</label>
+                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Email</label>
                     <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" required className="input-luxury rounded-sm" />
                   </div>
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Phone</label>
+                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Phone</label>
                   <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+91 00000 00000" required className="input-luxury rounded-sm" />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Message</label>
+                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Message</label>
                   <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your occasion..." required rows={5} className="input-luxury rounded-sm resize-none" />
                 </div>
                 <button type="submit" className="btn-gold w-full justify-center mt-2">
@@ -89,8 +94,8 @@ const Contact = () => {
                 <div key={i} className="flex gap-4 py-4" style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.75)' }}>{item.label}</div>
-                    <div className="font-cormorant text-sm leading-snug" style={{ color: 'rgba(248,245,240,0.85)' }}>{item.value}</div>
+                    <div className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{item.label}</div>
+                    <div className="font-cormorant text-base leading-snug" style={{ color: 'rgba(248,245,240,0.9)' }}>{item.value}</div>
                   </div>
                 </div>
               ))}
@@ -98,7 +103,7 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="glass-dark p-6 rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)' }}>
-              <h3 className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase mb-4" style={{ color: 'rgba(255,195,0,0.75)' }}>Follow Us</h3>
+              <h3 className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-4 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Follow Us</h3>
               <div className="flex gap-3">
                 {[
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
@@ -111,13 +116,20 @@ const Contact = () => {
                 ))}
               </div>
             </div>
-
-            {/* Map */}
-            <div className="overflow-hidden rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)', aspectRatio: '16/10' }}>
-              <iframe title="B2 Bridal Studio Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.088!2d80.2419!3d13.1283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265d5b5e4d5e3%3A0x5a5e!2sKodungaiyur%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="100%" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-            </div>
           </motion.div>
         </div>
+
+        {/* Full-width Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="mt-10 overflow-hidden rounded-sm"
+          style={{ border: '1px solid rgba(255,195,0,0.12)' }}
+        >
+          <iframe title="B2 Bridal Studio Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.088!2d80.2419!3d13.1283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265d5b5e4d5e3%3A0x5a5e!2sKodungaiyur%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" width="100%" height="300" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+        </motion.div>
       </div>
     </div>
   );

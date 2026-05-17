@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { fadeUp, slideLeft, slideRight, staggerContainer } from '../../animations/variants';
 
+const WHATSAPP_NUMBER = '919840551365';
+
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
@@ -12,6 +14,9 @@ const ContactSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const text = `Hello B2 Bridal Studio!%0A%0A*Name:* ${encodeURIComponent(form.name)}%0A*Phone:* ${encodeURIComponent(form.phone)}%0A*Message:* ${encodeURIComponent(form.message)}`;
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+    window.open(whatsappUrl, '_blank');
     setSent(true);
     setTimeout(() => setSent(false), 4000);
     setForm({ name: '', phone: '', message: '' });
@@ -47,7 +52,7 @@ const ContactSection = () => {
         >
           <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-4">
             <div className="gold-divider" style={{ width: '40px' }} />
-            <span className="font-cinzel text-[0.65rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>
+            <span className="font-cinzel text-[0.7rem] tracking-[0.4em] uppercase font-semibold" style={{ color: '#FFD700' }}>
               08 — Connect
             </span>
             <div className="gold-divider" style={{ width: '40px' }} />
@@ -62,7 +67,7 @@ const ContactSection = () => {
           <motion.p
             variants={fadeUp}
             className="font-cormorant italic mx-auto"
-            style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)', maxWidth: '480px' }}
+            style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.8)', maxWidth: '480px' }}
           >
             Let's create something extraordinary together. Reach out and we'll respond within 24 hours.
           </motion.p>
@@ -93,17 +98,17 @@ const ContactSection = () => {
                     <path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
-                <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2" style={{ color: '#F8F5F0' }}>
-                  Message Sent
+                <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#F8F5F0' }}>
+                  Redirected to WhatsApp
                 </h3>
-                <p className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.5)' }}>
-                  We'll be in touch shortly.
+                <p className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.6)' }}>
+                  Complete your message on WhatsApp.
                 </p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
+                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
                     Full Name
                   </label>
                   <input
@@ -118,7 +123,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
+                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
                     Phone Number
                   </label>
                   <input
@@ -133,7 +138,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.6rem] tracking-[0.3em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>
+                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
                     Message
                   </label>
                   <textarea
@@ -157,7 +162,7 @@ const ContactSection = () => {
             )}
           </motion.div>
 
-          {/* Info + Map — 2 cols */}
+          {/* Info — 2 cols */}
           <motion.div
             variants={slideRight}
             initial="hidden"
@@ -198,35 +203,39 @@ const ContactSection = () => {
                 >
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.6rem] tracking-[0.25em] uppercase mb-1" style={{ color: 'rgba(255,195,0,0.7)' }}>
+                    <div className="font-cinzel text-[0.65rem] tracking-[0.25em] uppercase mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
                       {item.label}
                     </div>
-                    <div className="font-cormorant text-base leading-snug" style={{ color: 'rgba(248,245,240,0.85)' }}>
+                    <div className="font-cormorant text-base leading-snug" style={{ color: 'rgba(248,245,240,0.9)' }}>
                       {item.value}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Map embed */}
-            <div
-              className="overflow-hidden"
-              style={{ border: '1px solid rgba(255,195,0,0.12)', aspectRatio: '4/3' }}
-            >
-              <iframe
-                title="B2 Bridal Studio Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.088!2d80.2419!3d13.1283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265d5b5e4d5e3%3A0x5a5e!2sKodungaiyur%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
           </motion.div>
         </div>
+
+        {/* Full-width Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="mt-10 overflow-hidden"
+          style={{ border: '1px solid rgba(255,195,0,0.12)' }}
+        >
+          <iframe
+            title="B2 Bridal Studio Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.088!2d80.2419!3d13.1283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265d5b5e4d5e3%3A0x5a5e!2sKodungaiyur%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+            width="100%"
+            height="300"
+            style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </motion.div>
       </div>
     </section>
   );

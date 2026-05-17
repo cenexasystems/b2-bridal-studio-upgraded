@@ -105,7 +105,7 @@ const Navbar = () => {
                 <img
                   src="/b2-logo.png"
                   alt="B2 Bridal Studio"
-                  style={{ width: 48, height: 48, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(255,195,0,0.45))' }}
+                  style={{ width: 48, height: 48, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(255,195,0,0.45))', mixBlendMode: 'lighten' }}
                 />
               </div>
               <div>
