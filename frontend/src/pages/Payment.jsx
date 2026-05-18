@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { fadeUp, staggerContainer } from '../animations/variants';
 
-const UPI_ID = 'b2bridalstudio@upi';
+const UPI_ID = 'b2bridalstudio@sbi';
 const API = import.meta.env.VITE_API_URL;
 
 const Payment = () => {
@@ -96,68 +96,9 @@ const Payment = () => {
           >
             <span className="font-cinzel text-[0.55rem] tracking-[0.3em] uppercase block mb-6" style={{ color: '#FFD700' }}>Scan to Pay</span>
             
-            {/* QR Code Placeholder */}
-            <div className="mx-auto mb-6 p-4 inline-block rounded-sm" style={{ background: '#fff' }}>
-              <div style={{ width: '200px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
-                {/* Generated QR-like pattern */}
-                <svg width="180" height="180" viewBox="0 0 200 200">
-                  <rect width="200" height="200" fill="white"/>
-                  {/* Corner markers */}
-                  <rect x="10" y="10" width="50" height="50" fill="black"/>
-                  <rect x="15" y="15" width="40" height="40" fill="white"/>
-                  <rect x="20" y="20" width="30" height="30" fill="black"/>
-                  <rect x="140" y="10" width="50" height="50" fill="black"/>
-                  <rect x="145" y="15" width="40" height="40" fill="white"/>
-                  <rect x="150" y="20" width="30" height="30" fill="black"/>
-                  <rect x="10" y="140" width="50" height="50" fill="black"/>
-                  <rect x="15" y="145" width="40" height="40" fill="white"/>
-                  <rect x="20" y="150" width="30" height="30" fill="black"/>
-                  {/* Data pattern */}
-                  <rect x="70" y="10" width="10" height="10" fill="black"/>
-                  <rect x="90" y="10" width="10" height="10" fill="black"/>
-                  <rect x="110" y="10" width="10" height="10" fill="black"/>
-                  <rect x="70" y="30" width="10" height="10" fill="black"/>
-                  <rect x="100" y="30" width="10" height="10" fill="black"/>
-                  <rect x="120" y="30" width="10" height="10" fill="black"/>
-                  <rect x="80" y="50" width="10" height="10" fill="black"/>
-                  <rect x="110" y="50" width="10" height="10" fill="black"/>
-                  <rect x="10" y="70" width="10" height="10" fill="black"/>
-                  <rect x="30" y="70" width="10" height="10" fill="black"/>
-                  <rect x="50" y="70" width="10" height="10" fill="black"/>
-                  <rect x="70" y="70" width="10" height="10" fill="black"/>
-                  <rect x="90" y="70" width="10" height="10" fill="black"/>
-                  <rect x="110" y="70" width="10" height="10" fill="black"/>
-                  <rect x="130" y="70" width="10" height="10" fill="black"/>
-                  <rect x="150" y="70" width="10" height="10" fill="black"/>
-                  <rect x="170" y="70" width="10" height="10" fill="black"/>
-                  <rect x="20" y="90" width="10" height="10" fill="black"/>
-                  <rect x="50" y="90" width="10" height="10" fill="black"/>
-                  <rect x="80" y="90" width="10" height="10" fill="black"/>
-                  <rect x="100" y="90" width="10" height="10" fill="black"/>
-                  <rect x="140" y="90" width="10" height="10" fill="black"/>
-                  <rect x="170" y="90" width="10" height="10" fill="black"/>
-                  <rect x="10" y="110" width="10" height="10" fill="black"/>
-                  <rect x="40" y="110" width="10" height="10" fill="black"/>
-                  <rect x="70" y="110" width="10" height="10" fill="black"/>
-                  <rect x="90" y="110" width="10" height="10" fill="black"/>
-                  <rect x="120" y="110" width="10" height="10" fill="black"/>
-                  <rect x="160" y="110" width="10" height="10" fill="black"/>
-                  <rect x="70" y="130" width="10" height="10" fill="black"/>
-                  <rect x="100" y="130" width="10" height="10" fill="black"/>
-                  <rect x="130" y="130" width="10" height="10" fill="black"/>
-                  <rect x="150" y="130" width="10" height="10" fill="black"/>
-                  <rect x="70" y="150" width="10" height="10" fill="black"/>
-                  <rect x="90" y="150" width="10" height="10" fill="black"/>
-                  <rect x="120" y="150" width="10" height="10" fill="black"/>
-                  <rect x="150" y="150" width="10" height="10" fill="black"/>
-                  <rect x="170" y="150" width="10" height="10" fill="black"/>
-                  <rect x="70" y="170" width="10" height="10" fill="black"/>
-                  <rect x="100" y="170" width="10" height="10" fill="black"/>
-                  <rect x="140" y="170" width="10" height="10" fill="black"/>
-                  <rect x="160" y="170" width="10" height="10" fill="black"/>
-                  <rect x="180" y="170" width="10" height="10" fill="black"/>
-                </svg>
-              </div>
+            {/* QR Code */}
+            <div className="mx-auto mb-6 p-2 inline-block rounded-sm" style={{ background: '#fff' }}>
+              <img src="/images/b2-qr.jpg" alt="B2 Bridal Studio QR Code" style={{ width: '220px', height: 'auto', display: 'block' }} />
             </div>
 
             <div className="gold-divider mb-6" />
