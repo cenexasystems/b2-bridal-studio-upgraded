@@ -232,6 +232,7 @@ const Services = () => {
   const [bookingErrors, setBookingErrors] = useState({});
   const [slotChecking, setSlotChecking] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [fullSlots, setFullSlots] = useState([]);
 
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -259,6 +260,23 @@ const Services = () => {
       return () => clearTimeout(timer);
     }
   }, [toast]);
+
+  useEffect(() => {
+    const fetchFullSlots = async () => {
+      if (!bookingBranch || !bookingDate) {
+        setFullSlots([]);
+        return;
+      }
+      try {
+        const res = await fetch(`${API}/api/bookings/full-slots?branch=${encodeURIComponent(bookingBranch)}&date=${encodeURIComponent(bookingDate)}`);
+        const data = await res.json();
+        setFullSlots(data.fullSlots || []);
+      } catch (err) {
+        console.error("Failed to fetch full slots:", err);
+      }
+    };
+    fetchFullSlots();
+  }, [bookingBranch, bookingDate]);
 
   const toggleCategory = (category) => {
     setExpandedCategory(expandedCategory === category ? null : category);
@@ -358,7 +376,7 @@ const Services = () => {
       );
       const data = await res.json();
       if (!data.available) {
-        setBookingErrors({ slot: 'This slot is fully booked for the selected branch. Please choose another time or branch.' });
+        setBookingErrors({ slot: 'This slot is already booked. Please choose another time slot.' });
         setSlotChecking(false);
         return;
       }
@@ -516,9 +534,23 @@ const Services = () => {
                     style={{ background: 'rgba(255,255,255,0.03)' }}
                   >
                     <option value="" style={{ background: '#111' }}>Select a time slot</option>
-                    {HOUR_SLOTS.map(slot => (
-                      <option key={slot.value} value={slot.value} style={{ background: '#111' }}>{slot.label}</option>
-                    ))}
+                    {HOUR_SLOTS.map(slot => {
+                      const isFull = fullSlots.includes(slot.value);
+                      return (
+                        <option
+                          key={slot.value}
+                          value={slot.value}
+                          disabled={isFull}
+                          style={{
+                            background: '#111',
+                            color: isFull ? 'rgba(248,245,240,0.2)' : '#F8F5F0',
+                            textDecoration: isFull ? 'line-through' : 'none'
+                          }}
+                        >
+                          {slot.label} {isFull ? '(Unavailable/Full)' : ''}
+                        </option>
+                      );
+                    })}
                   </select>
                   <Clock className="absolute left-3 top-3.5" size={16} style={{ color: '#FFD700' }} />
                 </div>

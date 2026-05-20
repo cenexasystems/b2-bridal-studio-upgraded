@@ -44,6 +44,25 @@ router.post('/', upload.single('paymentProof'), async (req, res) => {
       return res.status(400).json({ error: 'Missing required booking fields' });
     }
 
+    // Check slot capacity (Max 3 Approved/Completed bookings)
+    if (dateTime && branch) {
+      const datePart = dateTime.split('T')[0];
+      const timePart = dateTime.split('T')[1] || '';
+      const hourPart = timePart.split(':')[0] || '00';
+      const paddedHour = String(hourPart).padStart(2, '0');
+      const prefix = `${datePart}T${paddedHour}`;
+
+      const count = await Booking.countDocuments({
+        branch,
+        status: { $in: ['Approved', 'Completed'] },
+        dateTime: { $regex: `^${prefix}` }
+      });
+
+      if (count >= 3) {
+        return res.status(400).json({ error: 'This slot is already booked. Please choose another time slot.' });
+      }
+    }
+
     const userEmail = (email || userId || '').trim().toLowerCase();
 
     const booking = new Booking({
@@ -84,7 +103,7 @@ router.get('/', async (req, res) => {
 
 // ─── NAMED ROUTES (must be before /:id wildcards) ────────────────────────────
 
-// GET /api/bookings/slot-check — Check slot availability (Approved bookings only)
+// GET /api/bookings/slot-check — Check slot availability (Approved/Completed bookings only)
 router.get('/slot-check', async (req, res) => {
   try {
     const { branch, date, hour } = req.query;
@@ -95,10 +114,46 @@ router.get('/slot-check', async (req, res) => {
     const prefix = `${date}T${paddedHour}`;
     const count = await Booking.countDocuments({
       branch,
-      status: 'Approved',
+      status: { $in: ['Approved', 'Completed'] },
       dateTime: { $regex: `^${prefix}` }
     });
     res.json({ count, available: count < 3 });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/bookings/full-slots — Get all slots for a branch and date that are full (>= 3 bookings)
+router.get('/full-slots', async (req, res) => {
+  try {
+    const { branch, date } = req.query;
+    if (!branch || !date) {
+      return res.status(400).json({ error: 'branch and date are required' });
+    }
+    
+    // Find all approved or completed bookings for this branch and date
+    const prefix = date;
+    const bookings = await Booking.find({
+      branch,
+      status: { $in: ['Approved', 'Completed'] },
+      dateTime: { $regex: `^${prefix}` }
+    });
+
+    // Group by hour and count
+    const slotCounts = {};
+    bookings.forEach(b => {
+      const parts = b.dateTime.split('T');
+      if (parts[1]) {
+        const hour = parts[1].split(':')[0];
+        const numHour = parseInt(hour, 10).toString(); // e.g. "13" or "10"
+        slotCounts[numHour] = (slotCounts[numHour] || 0) + 1;
+      }
+    });
+
+    // Find slots where count >= 3
+    const fullSlots = Object.keys(slotCounts).filter(hour => slotCounts[hour] >= 3);
+
+    res.json({ fullSlots });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
