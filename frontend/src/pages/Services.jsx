@@ -328,23 +328,41 @@ const Services = () => {
     }));
   };
 
+  const isBridalCategory = (name) => name.toLowerCase().includes('bridal');
+
   const filteredCategories = services.map(cat => {
     const matchedServices = cat.services.filter(service => 
       service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       cat.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
     return { ...cat, services: matchedServices };
-  }).filter(cat => cat.services.length > 0);
+  }).filter(cat => cat.services.length > 0)
+    .sort((a, b) => {
+      const aB = isBridalCategory(a.category);
+      const bB = isBridalCategory(b.category);
+      if (aB && !bB) return -1;
+      if (!aB && bB) return 1;
+      return 0;
+    });
 
   const addToCart = (serviceItem) => {
-    if (!cart.find(item => item._id === serviceItem._id)) {
-      setCart([...cart, serviceItem]);
-      setToast({
-        show: true,
-        message: `“${serviceItem.name}” added successfully. Scroll down to view your cart.`,
-        serviceName: serviceItem.name
-      });
+    if (cart.find(item => item._id === serviceItem._id)) return;
+
+    const isAddingBridal = isBridalCategory(serviceItem.category || '');
+    const cartHasBridal = cart.some(item => isBridalCategory(item.category || ''));
+    const cartHasRegular = cart.some(item => !isBridalCategory(item.category || ''));
+
+    if (isAddingBridal && cartHasRegular) {
+      setToast({ show: true, message: 'Bridal Services are handled separately via WhatsApp inquiry and cannot be combined with regular service bookings.', serviceName: '', isWarning: true });
+      return;
     }
+    if (!isAddingBridal && cartHasBridal) {
+      setToast({ show: true, message: 'Bridal Services require separate WhatsApp consultation bookings and cannot be combined with regular services.', serviceName: '', isWarning: true });
+      return;
+    }
+
+    setCart([...cart, serviceItem]);
+    setToast({ show: true, message: `"${serviceItem.name}" added successfully. Scroll down to view your cart.`, serviceName: serviceItem.name });
   };
 
   const removeFromCart = (serviceId) => {
@@ -476,7 +494,7 @@ const Services = () => {
               {filteredCategories.map((category) => (
                 <div key={category.category} className="card-luxury rounded-sm overflow-hidden">
                   <button onClick={() => toggleCategory(category.category)} className="w-full px-6 py-4 flex justify-between items-center transition-colors" style={{ background: 'rgba(255,195,0,0.03)' }}>
-                    <span className="font-cinzel text-sm tracking-[0.2em] uppercase font-semibold" style={{ color: '#F8F5F0' }}>{category.category}</span>
+                    <span className="font-cinzel text-sm tracking-[0.2em] uppercase font-semibold" style={{ color: '#F8F5F0' }}>{isBridalCategory(category.category) ? `${category.category} (WhatsApp Inquiry Only)` : category.category}</span>
                     {expandedCategory === category.category
                       ? <ChevronUp size={16} style={{ color: '#FFD700' }} />
                       : <ChevronDown size={16} style={{ color: 'rgba(248,245,240,0.3)' }} />}
@@ -514,9 +532,20 @@ const Services = () => {
                                 </select>
                               )}
                             </div>
-                            <button onClick={() => addToCart(cartItem)} disabled={!!isAdded} className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm" style={{ border: 'none', background: isAdded ? 'rgba(255,195,0,0.15)' : 'linear-gradient(135deg, #FFED8A, #FFD700, #FFCA28, #E5A100)', color: isAdded ? '#FFD700' : '#000', fontWeight: 700, boxShadow: isAdded ? 'none' : '0 2px 10px rgba(255,195,0,0.25)' }}>
-                              {isAdded ? (<><Check size={14} /> Added</>) : (<><ShoppingCart size={14} /> Add</>)}
-                            </button>
+                            {isAdded ? (
+                              <div className="flex gap-2 mt-2">
+                                <span className="flex-1 py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-1.5 rounded-sm" style={{ background: 'rgba(255,195,0,0.12)', color: '#FFD700', fontWeight: 700, border: '1px solid rgba(255,195,0,0.25)' }}>
+                                  <Check size={13} /> Added
+                                </span>
+                                <button onClick={() => removeFromCart(cartItem._id)} className="px-3 py-2.5 font-cinzel text-[0.6rem] tracking-[0.1em] uppercase flex items-center justify-center gap-1.5 rounded-sm transition-all" style={{ background: 'transparent', color: '#f87171', fontWeight: 700, border: '1px solid rgba(248,113,113,0.3)' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.5)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; }}>
+                                  <Trash2 size={13} /> Remove
+                                </button>
+                              </div>
+                            ) : (
+                              <button onClick={() => addToCart(cartItem)} className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm" style={{ border: 'none', background: 'linear-gradient(135deg, #FFED8A, #FFD700, #FFCA28, #E5A100)', color: '#000', fontWeight: 700, boxShadow: '0 2px 10px rgba(255,195,0,0.25)' }}>
+                                <ShoppingCart size={14} /> Add
+                              </button>
+                            )}
                           </div>
                         );
                       })}
@@ -635,7 +664,7 @@ const Services = () => {
               <ul className="flex flex-col gap-3 mb-4">{cart.map(item => (
                 <li key={item._id} className="flex justify-between items-center group text-sm">
                   <div className="flex-1 min-w-0"><span className="block font-cormorant truncate" style={{ color: '#F8F5F0' }}>{item.name}</span><span className="font-cinzel text-xs" style={{ color: 'rgba(255,195,0,0.6)' }}>₹{item.price}</span></div>
-                  <button onClick={() => removeFromCart(item._id)} className="p-1 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'rgba(248,245,240,0.3)' }}><Trash2 size={14} /></button>
+                  <button onClick={() => removeFromCart(item._id)} className="p-1.5 rounded-sm transition-all" style={{ color: '#f87171', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.15)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.08)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.15)'; }}><Trash2 size={14} /></button>
                 </li>
               ))}</ul>
             )}
@@ -698,8 +727,8 @@ const Services = () => {
             >
               <div className="glass-dark border-gold-glow px-4 py-3 rounded-md flex items-center justify-between shadow-2xl relative overflow-hidden" style={{ background: 'rgba(10, 10, 10, 0.95)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 215, 0, 0.1)', border: '1px solid rgba(255, 215, 0, 0.3)' }}>
-                    <Check size={16} style={{ color: '#FFD700' }} />
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: toast.isWarning ? 'rgba(248,113,113,0.1)' : 'rgba(255, 215, 0, 0.1)', border: toast.isWarning ? '1px solid rgba(248,113,113,0.3)' : '1px solid rgba(255, 215, 0, 0.3)' }}>
+                    {toast.isWarning ? <span style={{ color: '#f87171', fontSize: '16px' }}>⚠</span> : <Check size={16} style={{ color: '#FFD700' }} />}
                   </div>
                   <div className="flex-1">
                     <p className="font-playfair text-[0.85rem] font-semibold leading-snug" style={{ color: '#F8F5F0' }}>
@@ -728,12 +757,12 @@ const Services = () => {
             >
               <div className="glass-dark border-gold-glow px-4 py-3 rounded-md flex items-center justify-between shadow-2xl relative overflow-hidden" style={{ background: 'rgba(10, 10, 10, 0.95)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255, 215, 0, 0.1)', border: '1px solid rgba(255, 215, 0, 0.3)' }}>
-                    <Check size={16} style={{ color: '#FFD700' }} />
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: toast.isWarning ? 'rgba(248,113,113,0.1)' : 'rgba(255, 215, 0, 0.1)', border: toast.isWarning ? '1px solid rgba(248,113,113,0.3)' : '1px solid rgba(255, 215, 0, 0.3)' }}>
+                    {toast.isWarning ? <span style={{ color: '#f87171', fontSize: '16px' }}>⚠</span> : <Check size={16} style={{ color: '#FFD700' }} />}
                   </div>
                   <div className="flex-1">
                     <p className="font-playfair text-[0.85rem] font-semibold leading-snug" style={{ color: '#F8F5F0' }}>
-                      “{toast.serviceName}” added successfully.
+                      {toast.message}
                     </p>
                   </div>
                 </div>

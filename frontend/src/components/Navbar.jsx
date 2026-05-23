@@ -60,15 +60,19 @@ const Navbar = () => {
   const scrollToContact = (e) => {
     e.preventDefault();
     setMenuOpen(false);
-    if (location.pathname === '/') {
+    const scrollToEl = () => {
       const el = document.getElementById('contact');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (el) {
+        const offset = 80; // fixed navbar height
+        const y = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    };
+    if (location.pathname === '/') {
+      scrollToEl();
     } else {
       navigate('/');
-      setTimeout(() => {
-        const el = document.getElementById('contact');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
+      setTimeout(scrollToEl, 500);
     }
   };
 

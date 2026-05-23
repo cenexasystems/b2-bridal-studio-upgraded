@@ -19,7 +19,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [toast, setToast] = useState(null);
-  const { addToCart, items, openCart } = useCart();
+  const { addToCart, removeFromCart, items, openCart } = useCart();
 
   useEffect(() => {
     axios.get(`${API}/api/products`)
@@ -157,14 +157,23 @@ const Products = () => {
                       </button>
                     </div>
                   ) : (
-                    <div className="mt-auto pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
-                      <button
-                        onClick={openCart}
-                        className="w-full py-2 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-all flex items-center justify-center gap-2 rounded-sm"
-                        style={{ background: 'rgba(255,195,0,0.15)', border: '1px solid #FFD700', color: '#FFD700' }}
+                    <div className="mt-auto pt-3 flex gap-2" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
+                      <span
+                        className="flex-1 py-2 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-1.5 rounded-sm"
+                        style={{ background: 'rgba(255,195,0,0.12)', border: '1px solid rgba(255,195,0,0.25)', color: '#FFD700', fontWeight: 700 }}
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                        View Cart
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        Added
+                      </span>
+                      <button
+                        onClick={() => removeFromCart(product._id)}
+                        className="px-3 py-2 font-cinzel text-[0.6rem] tracking-[0.1em] uppercase flex items-center justify-center gap-1.5 rounded-sm transition-all"
+                        style={{ background: 'transparent', color: '#f87171', fontWeight: 700, border: '1px solid rgba(248,113,113,0.3)' }}
+                        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.5)'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; }}
+                      >
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                        Remove
                       </button>
                     </div>
                   )}

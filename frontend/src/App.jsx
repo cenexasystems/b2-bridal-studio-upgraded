@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -16,7 +16,7 @@ import Products from './pages/Products';
 import Gallery from './pages/Gallery';
 import Certificates from './pages/Certificates';
 import About from './pages/About';
-import Contact from './pages/Contact';
+// Contact page removed — navbar scrolls to homepage #contact section
 import BlogList from './pages/BlogList';
 import BlogDetail from './pages/BlogDetail';
 
@@ -39,8 +39,28 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 
 /* ─── Scroll-to-top on route change ─────────────────────── */
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    // Skip scroll-to-top if there's a hash (e.g. /#contact)
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+};
+
+/* Redirect /contact → home page #contact with smooth scroll */
+const ContactRedirect = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/', { replace: true });
+    setTimeout(() => {
+      const el = document.getElementById('contact');
+      if (el) {
+        const offset = 80; // navbar height
+        const y = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 400);
+  }, [navigate]);
   return null;
 };
 
@@ -65,7 +85,7 @@ function App() {
               <Route path="/gallery" element={<PublicLayout><Gallery /></PublicLayout>} />
               <Route path="/certificates" element={<PublicLayout><Certificates /></PublicLayout>} />
               <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
-              <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
+              <Route path="/contact" element={<PublicLayout><ContactRedirect /></PublicLayout>} />
               {/* Blog routes removed — content integrated into About page */}
               {/* <Route path="/blog" element={<PublicLayout><BlogList /></PublicLayout>} /> */}
               {/* <Route path="/blog/:slug" element={<PublicLayout><BlogDetail /></PublicLayout>} /> */}
