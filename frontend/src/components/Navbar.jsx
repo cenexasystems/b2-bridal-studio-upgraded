@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const COURSE_CATEGORIES = [
@@ -18,7 +18,7 @@ const NAV_LINKS = [
   { label: 'Courses', to: '/courses', hasDropdown: true },
   { label: 'Products', to: '/products' },
   { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Contact', to: '/contact', isContact: true },
 ];
 
 const Navbar = () => {
@@ -55,6 +55,22 @@ const Navbar = () => {
   const dropdownTimeout = useRef(null);
   const { itemCount, openCart } = useCart();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToContact = (e) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    if (location.pathname === '/') {
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById('contact');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  };
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 60);
@@ -195,7 +211,7 @@ const Navbar = () => {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <NavLink key={link.to} to={link.to} active={location.pathname === link.to}>
+                  <NavLink key={link.to} to={link.to} active={location.pathname === link.to} onClick={link.isContact ? scrollToContact : undefined}>
                     {link.label}
                   </NavLink>
                 )
@@ -378,7 +394,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to={link.to}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => { if (link.isContact) { scrollToContact(e); } else { setMenuOpen(false); } }}
                   className="block py-4 font-cinzel text-sm tracking-[0.2em] uppercase border-b"
                   style={{ color: 'rgba(248,245,240,0.7)', borderBottomColor: 'rgba(255,195,0,0.08)' }}
                 >
@@ -413,9 +429,10 @@ const Navbar = () => {
   );
 };
 
-const NavLink = ({ to, children, active }) => (
+const NavLink = ({ to, children, active, onClick }) => (
   <Link
     to={to}
+    onClick={onClick}
     className="relative font-cinzel text-[0.7rem] tracking-[0.2em] uppercase group"
     style={{ color: active ? '#FFD700' : 'rgba(248,245,240,0.7)', textDecoration: 'none' }}
     onMouseEnter={e => e.currentTarget.style.color = '#FFD700'}

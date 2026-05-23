@@ -97,7 +97,14 @@ const ViewBookings = () => {
                   </td>
                   <td className="p-4 pr-6 text-right">
                     <div className="font-bold text-gray-900 text-lg font-cinzel">₹{bill.total.toFixed(2)}</div>
-                    <div className="text-xs text-gray-400 mt-1 font-cormorant italic">inc. GST</div>
+                    {bill.couponCode && bill.discountAmount > 0 && (
+                      <div className="text-xs text-green-600 mt-1 font-medium">
+                        🏷️ {bill.couponCode} (-₹{bill.discountAmount.toFixed(2)})
+                      </div>
+                    )}
+                    {bill.gst > 0 && (
+                      <div className="text-xs text-gray-400 mt-0.5 font-cormorant italic">inc. GST ₹{bill.gst.toFixed(2)}</div>
+                    )}
                   </td>
                 </tr>
               ))}

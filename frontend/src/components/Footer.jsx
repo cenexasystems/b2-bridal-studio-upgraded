@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const QUICK_LINKS = [
   { label: 'Our Services', to: '/services' },
@@ -45,6 +45,23 @@ const SocialLink = ({ href, label, children }) => (
 );
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const scrollToContact = (e) => {
+    e.preventDefault();
+    if (location.pathname === '/') {
+      const el = document.getElementById('contact');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById('contact');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    }
+  };
+
   return (
     <footer style={{ background: '#000', borderTop: '1px solid rgba(255,195,0,0.15)' }}>
       {/* Main footer grid */}
@@ -98,6 +115,19 @@ const Footer = () => {
           <ul className="flex flex-col gap-3">
             {QUICK_LINKS.map(link => (
               <li key={link.to}>
+                {link.to === '/contact' ? (
+                <a
+                  href="/#contact"
+                  onClick={scrollToContact}
+                  className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group cursor-pointer"
+                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
+                >
+                  <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
+                  {link.label}
+                </a>
+              ) : (
                 <Link
                   to={link.to}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group"
@@ -108,6 +138,7 @@ const Footer = () => {
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
                 </Link>
+              )}
               </li>
             ))}
           </ul>

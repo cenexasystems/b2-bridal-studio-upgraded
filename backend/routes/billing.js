@@ -37,10 +37,11 @@ router.post('/generate-from-booking/:id', verifyToken, verifyRole(['staff', 'own
     if (booking.status !== 'Approved') return res.status(400).json({ error: 'Booking must be Approved to generate bill' });
     if (booking.billId) return res.status(400).json({ error: 'Bill already generated for this booking' });
 
-    // Calculate actual GST from per-item rates stored in booking
+    // Calculate actual amounts
     const bookingGst = booking.gstAmount || 0;
-    const billTotal = booking.finalAmount || booking.total;
+    const billTotal = booking.finalAmount || booking.total; // actual amount paid
     const billSubtotal = billTotal - bookingGst;
+    const hasDiscount = booking.couponCode && booking.discountAmount > 0;
 
     // Create a bill entry
     const bill = new Bill({
@@ -49,6 +50,11 @@ router.post('/generate-from-booking/:id', verifyToken, verifyRole(['staff', 'own
       subtotal: billSubtotal,
       gst: bookingGst,
       total: billTotal,
+      // Coupon / discount info
+      couponCode: booking.couponCode || undefined,
+      discountPercentage: booking.discountPercentage || undefined,
+      discountAmount: booking.discountAmount || undefined,
+      originalTotal: hasDiscount ? booking.total : undefined,
       bookingId: booking._id,
       userId: booking.userId,
       branch: booking.branch,

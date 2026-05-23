@@ -11,6 +11,11 @@ const billSchema = new mongoose.Schema({
   subtotal: { type: Number, default: 0 },
   gst: { type: Number, default: 0 },
   total: { type: Number, required: true },
+  // Coupon / discount info (for online booking bills)
+  couponCode: { type: String },
+  discountPercentage: { type: Number },
+  discountAmount: { type: Number },
+  originalTotal: { type: Number }, // pre-discount service total
   date: { type: Date, default: Date.now },
   customerDetails: {
     name: String,
