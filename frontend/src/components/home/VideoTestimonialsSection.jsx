@@ -26,6 +26,15 @@ const VideoTestimonialsSection = () => {
         });
     };
 
+    const handleDragEnd = (event, info) => {
+        const swipeThreshold = 50; // pixels to trigger paging
+        if (info.offset.x < -swipeThreshold) {
+            paginate(1);
+        } else if (info.offset.x > swipeThreshold) {
+            paginate(-1);
+        }
+    };
+
     const current = videos[index];
 
     return (
@@ -57,10 +66,10 @@ const VideoTestimonialsSection = () => {
                 {/* Frame */}
                 <div className="relative flex items-center justify-center">
 
-                    {/* LEFT */}
+                    {/* LEFT ARROW (DESKTOP ONLY) */}
                     <button
                         onClick={() => paginate(-1)}
-                        className="absolute left-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md"
+                        className="absolute left-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md hidden md:flex cursor-pointer transition-all hover:bg-rgba(212,175,55,0.15) active:scale-95"
                         style={{
                             border: '1px solid rgba(212,175,55,0.45)',
                             color: '#D4AF37',
@@ -70,9 +79,9 @@ const VideoTestimonialsSection = () => {
                         ←
                     </button>
 
-                    {/* GLASS VIDEO CARD */}
+                    {/* GLASS VIDEO CARD WITH DRAG SUPPORT */}
                     <div
-                        className="relative w-full max-w-3xl overflow-hidden group"
+                        className="relative w-full max-w-3xl overflow-hidden group rounded-sm"
                         style={{
                             border: '1px solid rgba(212,175,55,0.5)',
                             background: 'rgba(212,175,55,0.06)',
@@ -88,25 +97,24 @@ const VideoTestimonialsSection = () => {
                                 animate="center"
                                 exit="exit"
                                 transition={{ duration: 0.6 }}
-                                className="relative"
+                                drag="x"
+                                dragConstraints={{ left: 0, right: 0 }}
+                                dragElastic={0.2}
+                                onDragEnd={handleDragEnd}
+                                className="relative cursor-grab active:cursor-grabbing touch-pan-y"
                             >
-                                {/* Background blur */}
+                                {/* Golden ambient background glow (fixed invalid URL reference for performance) */}
                                 <div
-                                    className="absolute inset-0 scale-110 blur-2xl opacity-40"
-                                    style={{
-                                        backgroundImage: `url(${current.src})`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                    }}
+                                    className="absolute inset-0 scale-110 blur-2xl opacity-40 bg-gradient-to-tr from-[#FFD700]/10 via-transparent to-[#FFD700]/5 pointer-events-none"
                                 />
 
-                                {/* VIDEO (NORMAL CONTROLS ENABLED) */}
+                                {/* VIDEO (NORMAL CONTROLS ENABLED, RESPONSIVE HEIGHT) */}
                                 <video
                                     ref={videoRef}
                                     key={current.src}
                                     src={current.src}
                                     controls   // ✅ native controls
-                                    className="relative w-full h-[360px] object-cover"
+                                    className="relative w-full h-[240px] sm:h-[320px] md:h-[450px] object-cover"
                                     style={{ background: '#000' }}
                                 />
 
@@ -122,10 +130,10 @@ const VideoTestimonialsSection = () => {
                         </AnimatePresence>
                     </div>
 
-                    {/* RIGHT */}
+                    {/* RIGHT ARROW (DESKTOP ONLY) */}
                     <button
                         onClick={() => paginate(1)}
-                        className="absolute right-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md"
+                        className="absolute right-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md hidden md:flex cursor-pointer transition-all hover:bg-rgba(212,175,55,0.15) active:scale-95"
                         style={{
                             border: '1px solid rgba(212,175,55,0.45)',
                             color: '#D4AF37',

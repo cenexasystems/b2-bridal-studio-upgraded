@@ -1,71 +1,72 @@
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import axios from 'axios';
+import { Star, X, Check } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../../animations/variants';
 
-const testimonials = [
+const API = import.meta.env.VITE_API_URL || '';
+
+const staticTestimonials = [
   {
-    id: 1,
+    _id: 'static-1',
     name: 'Priya Lakshmi',
     role: 'Bride, 2023',
     quote: 'Shammugapriya transformed me into exactly the bride I dreamed of being. The artistry, the attention to detail, and the love poured into every brushstroke — it was a spiritual experience.',
-    image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80',
     stars: 5,
   },
   {
-    id: 2,
+    _id: 'static-2',
     name: 'Kavitha Raj',
     role: 'Bride, 2024',
-    quote: 'I\'ve been to many studios, but B2 is in a different league entirely. The luxury experience begins the moment you walk in. My bridal look was absolute perfection.',
-    image: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?auto=format&fit=crop&w=200&q=80',
+    quote: "I've been to many studios, but B2 is in a different league entirely. The luxury experience begins the moment you walk in. My bridal look was absolute perfection.",
     stars: 5,
   },
   {
-    id: 3,
+    _id: 'static-3',
     name: 'Meena Selvam',
     role: 'Student, Batch 2023',
-    quote: 'The training programme at B2 Academy launched my entire career. The techniques, the professionalism, and the personal mentoring — I couldn\'t ask for more from a teacher.',
-    image: 'https://images.unsplash.com/photo-1557555187-23d685287bc3?auto=format&fit=crop&w=200&q=80',
+    quote: "The training programme at B2 Academy launched my entire career. The techniques, the professionalism, and the personal mentoring — I couldn't ask for more from a teacher.",
     stars: 5,
   },
   {
-    id: 4,
+    _id: 'static-4',
     name: 'Deepa Sundar',
     role: 'Bride, 2024',
-    quote: 'Every photograph from my wedding is a masterpiece. That is what B2 does — they don\'t just do makeup, they create art that lasts forever.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
+    quote: "Every photograph from my wedding is a masterpiece. That is what B2 does — they don't just do makeup, they create art that lasts forever.",
     stars: 5,
   },
   {
-    id: 5,
+    _id: 'static-5',
     name: 'Anitha Kumar',
     role: 'Bride, 2023',
     quote: 'From the moment I walked in, I felt like royalty. The team understood exactly what I wanted — my bridal look was beyond anything I imagined possible.',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
     stars: 5,
   },
   {
-    id: 6,
+    _id: 'static-6',
     name: 'Lakshmi Narayan',
     role: 'Student, Batch 2024',
     quote: 'B2 Academy gave me the skills and confidence to launch my own studio. The hands-on training and mentorship are genuinely world-class.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80',
     stars: 5,
   },
 ];
 
 const StarRating = ({ count }) => (
   <div className="flex gap-1">
-    {Array.from({ length: count }).map((_, i) => (
-      <svg key={i} width="14" height="14" viewBox="0 0 14 14" fill="#FFD700">
-        <path d="M7 1l1.6 4.4H13L9.2 8.2l1.4 4.4L7 10l-3.6 2.6L4.8 8.2 1 5.4h4.4z" />
-      </svg>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <Star
+        key={i}
+        size={14}
+        fill={i < count ? '#FFD700' : 'transparent'}
+        color={i < count ? '#FFD700' : 'rgba(255, 215, 0, 0.2)'}
+      />
     ))}
   </div>
 );
 
 const TestimonialCard = ({ testimonial }) => (
   <div
-    className="glass-dark flex-shrink-0 px-8 py-10 flex flex-col items-center text-center"
+    className="glass-dark flex-shrink-0 px-8 py-10 flex flex-col items-center text-center rounded-sm"
     style={{
       width: '380px',
       minHeight: '320px',
@@ -87,28 +88,33 @@ const TestimonialCard = ({ testimonial }) => (
 
     {/* Quote */}
     <blockquote
-      className="font-cormorant italic leading-relaxed mb-6 flex-1"
+      className="font-cormorant italic leading-relaxed mb-6 flex-1 text-ellipsis overflow-hidden"
       style={{
         fontSize: '1.15rem',
         fontWeight: 500,
         color: 'rgba(248,245,240,0.93)',
         maxWidth: '320px',
+        display: '-webkit-box',
+        WebkitLineClamp: 5,
+        WebkitBoxOrient: 'vertical',
       }}
     >
       {testimonial.quote}
     </blockquote>
 
     {/* Author */}
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2 mt-auto">
       <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ border: '1px solid rgba(255,215,0,0.4)', background: 'rgba(255,215,0,0.08)' }}>
-        <span className="font-cinzel text-sm font-bold" style={{ color: '#FFD700' }}>{testimonial.name.charAt(0)}</span>
+        <span className="font-cinzel text-sm font-bold" style={{ color: '#FFD700' }}>
+          {testimonial.name ? testimonial.name.charAt(0).toUpperCase() : 'C'}
+        </span>
       </div>
       <div>
-        <div className="font-cinzel text-sm tracking-[0.1em] uppercase" style={{ color: '#F8F5F0' }}>
+        <div className="font-cinzel text-sm tracking-[0.1em] uppercase text-white">
           {testimonial.name}
         </div>
         <div className="font-cormorant text-xs italic mt-0.5" style={{ color: 'rgba(255,215,0,0.65)' }}>
-          {testimonial.role}
+          {testimonial.role || 'Client'}
         </div>
       </div>
     </div>
@@ -119,8 +125,98 @@ const Testimonials = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
 
-  // Duplicate testimonials for seamless infinite scroll
-  const doubledTestimonials = [...testimonials, ...testimonials];
+  const [list, setList] = useState(staticTestimonials);
+  const [showModal, setShowModal] = useState(false);
+  
+  // Form State
+  const [name, setName] = useState('');
+  const [quote, setQuote] = useState('');
+  const [role, setRole] = useState('');
+  const [stars, setStars] = useState(5);
+  const [hoverStars, setHoverStars] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  // Fetch reviews from Database
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await axios.get(`${API}/api/reviews`);
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          // Put DB reviews first, then append static ones
+          setList([...res.data, ...staticTestimonials]);
+        }
+      } catch (err) {
+        console.error('Failed to fetch reviews:', err);
+      }
+    };
+    fetchReviews();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    const trimmedName = name.trim();
+    const trimmedQuote = quote.trim();
+    const trimmedRole = role.trim() || 'Client';
+
+    if (!trimmedName) {
+      setError('Please enter your name.');
+      return;
+    }
+    if (!trimmedQuote) {
+      setError('Please enter your review / experience.');
+      return;
+    }
+
+    if (trimmedName.length > 50) {
+      setError('Name must be 50 characters or less.');
+      return;
+    }
+    if (trimmedQuote.length > 500) {
+      setError('Review must be 500 characters or less.');
+      return;
+    }
+    if (trimmedRole.length > 30) {
+      setError('Role / Occasion must be 30 characters or less.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const res = await axios.post(`${API}/api/reviews`, {
+        name: trimmedName,
+        quote: trimmedQuote,
+        role: trimmedRole,
+        stars,
+      });
+
+      // Update marquee list instantly with the new review at the front
+      setList((prev) => [res.data, ...prev]);
+      setSuccess(true);
+      
+      // Reset form fields
+      setName('');
+      setQuote('');
+      setRole('');
+      setStars(5);
+
+      // Close modal after showing success screen
+      setTimeout(() => {
+        setShowModal(false);
+        setSuccess(false);
+      }, 3000);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to submit review. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // Duplicate list to achieve continuous seamless scroller animation
+  const doubledTestimonials = [...list, ...list];
 
   return (
     <section
@@ -128,7 +224,7 @@ const Testimonials = () => {
       className="relative overflow-hidden"
       style={{ padding: '4.5rem 0', background: '#000' }}
     >
-      {/* Subtle left glow */}
+      {/* Subtle left ambient glow */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -165,17 +261,210 @@ const Testimonials = () => {
           <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.8)' }}>
             The most honest reviews — from those who wore our artistry.
           </motion.p>
+
+          {/* Luxury Google Reviews Rating Badge */}
+          <motion.div variants={fadeUp} className="flex justify-center items-center gap-4 mt-6">
+            <a
+              href="https://www.google.com/search?q=B2+Bridal+Studio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-dark px-5 py-2.5 rounded-sm border border-[#FFD700]/15 flex items-center gap-3 hover:border-[#FFD700]/30 transition-all cursor-pointer"
+              style={{ background: 'rgba(255, 215, 0, 0.02)' }}
+            >
+              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.94 5.94 0 0 1 8 12.571a5.94 5.94 0 0 1 5.99-5.943c1.606 0 3.066.6 4.2 1.571l3.207-3.2A10.137 10.137 0 0 0 13.99 1C8.473 1 4 5.485 4 11s4.473 10 9.99 10c5.752 0 10.01-4.048 10.01-10 0-.685-.06-1.342-.18-1.714H12.24Z"/>
+              </svg>
+              <span className="font-cinzel text-[0.65rem] tracking-[0.18em] text-[#FFD700] font-bold">
+                4.9 ★ ON GOOGLE REVIEWS
+              </span>
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Auto-scrolling carousel */}
-        <div className="testimonial-mask overflow-hidden">
+        <div className="testimonial-mask overflow-hidden mb-12">
           <div className="testimonial-track">
             {doubledTestimonials.map((testimonial, i) => (
-              <TestimonialCard key={`${testimonial.id}-${i}`} testimonial={testimonial} />
+              <TestimonialCard key={`${testimonial._id}-${i}`} testimonial={testimonial} />
             ))}
           </div>
         </div>
+
+        {/* Action Button to Open Submission Modal */}
+        <div className="text-center">
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn-outline-gold px-8 py-3 rounded-sm transition-all"
+          >
+            Leave a Review
+          </button>
+        </div>
       </div>
+
+      {/* Review Submission Dialog Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => !submitting && setShowModal(false)}
+              className="absolute inset-0 bg-black/85 backdrop-blur-md"
+            />
+
+            {/* Modal Body */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 30 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="glass-dark max-w-lg w-full p-8 rounded-sm relative border border-[#FFD700]/30 shadow-2xl z-10"
+              style={{ background: 'rgba(10, 10, 12, 0.98)' }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => !submitting && setShowModal(false)}
+                className="absolute right-4 top-4 text-gray-500 hover:text-white transition-colors cursor-pointer"
+                disabled={submitting}
+              >
+                <X size={20} />
+              </button>
+
+              {success ? (
+                <div className="text-center py-10 flex flex-col items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-6">
+                    <Check size={32} className="text-emerald-400" />
+                  </div>
+                  <h3 className="font-cinzel text-xl text-[#FFD700] uppercase font-bold tracking-[0.1em] mb-3">
+                    Thank you!
+                  </h3>
+                  <p className="font-cormorant text-lg italic text-[#F8F5F0] max-w-xs leading-relaxed">
+                    Thank you for sharing your experience! Your review has been added to our story wall.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <div className="mb-2">
+                    <h3 className="font-cinzel text-lg text-[#F8F5F0] uppercase font-bold tracking-[0.15em] mb-1">
+                      Share Your Story
+                    </h3>
+                    <p className="font-cormorant text-sm italic text-gray-400">
+                      We value your feedback. Let us know how your experience was.
+                    </p>
+                  </div>
+
+                  {error && (
+                    <p className="text-xs text-red-400 bg-red-950/20 border border-red-900/30 px-3.5 py-2.5 rounded-sm">
+                      {error}
+                    </p>
+                  )}
+
+                  {/* Star Rating Input */}
+                  <div>
+                    <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2 font-semibold">
+                      Your Rating *
+                    </label>
+                    <div className="flex gap-2">
+                      {Array.from({ length: 5 }).map((_, i) => {
+                        const starVal = i + 1;
+                        return (
+                          <button
+                            type="button"
+                            key={i}
+                            onClick={() => setStars(starVal)}
+                            onMouseEnter={() => setHoverStars(starVal)}
+                            onMouseLeave={() => setHoverStars(null)}
+                            className="p-1 cursor-pointer transition-transform hover:scale-110 active:scale-95"
+                          >
+                            <Star
+                              size={24}
+                              fill={(hoverStars !== null ? hoverStars >= starVal : stars >= starVal) ? '#FFD700' : 'transparent'}
+                              color={(hoverStars !== null ? hoverStars >= starVal : stars >= starVal) ? '#FFD700' : 'rgba(255, 215, 0, 0.25)'}
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Customer Name */}
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                        Your Name *
+                      </label>
+                      <span className="text-[0.65rem] text-gray-500 font-sans">
+                        {name.length}/50
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      maxLength={50}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Priya Lakshmi"
+                      className="input-luxury rounded-sm text-sm"
+                      required
+                    />
+                  </div>
+
+                  {/* Role / Occasion */}
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                        Role / Occasion (Optional)
+                      </label>
+                      <span className="text-[0.65rem] text-gray-500 font-sans">
+                        {role.length}/30
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      maxLength={30}
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      placeholder="e.g. Bride, Madurai (2024)"
+                      className="input-luxury rounded-sm text-sm"
+                    />
+                  </div>
+
+                  {/* Review / Experience */}
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                        Your Review / Experience *
+                      </label>
+                      <span className="text-[0.65rem] text-gray-500 font-sans">
+                        {quote.length}/500
+                      </span>
+                    </div>
+                    <textarea
+                      maxLength={500}
+                      rows={4}
+                      value={quote}
+                      onChange={(e) => setQuote(e.target.value)}
+                      placeholder="Share details of your experience with our artists..."
+                      className="input-luxury rounded-sm text-sm resize-none"
+                      required
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn-gold w-full mt-2 py-3.5 text-center flex items-center justify-center"
+                  >
+                    {submitting ? 'Submitting Review...' : 'Submit Review'}
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
