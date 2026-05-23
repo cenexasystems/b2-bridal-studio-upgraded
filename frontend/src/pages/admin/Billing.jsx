@@ -16,9 +16,14 @@ export default function Billing() {
   const [loadingCat, setLoadingCat] = useState(false);
 
   /* current selection */
-  const [category, setCategory] = useState('services'); // 'services' | 'products'
+  const [category, setCategory] = useState('services'); // 'services' | 'other'
   const [selectedItem, setSelectedItem] = useState('');
   const [qty, setQty] = useState(1);
+
+  /* custom item form */
+  const [showCustomForm, setShowCustomForm] = useState(false);
+  const [customName, setCustomName] = useState('');
+  const [customPrice, setCustomPrice] = useState('');
 
   /* bill */
   const [billItems, setBillItems] = useState([]);
@@ -58,6 +63,18 @@ export default function Billing() {
           : svc.price ? [{ id: svc._id, name: svc.name, price: svc.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0 }] : []
       )
     : products.map(p => ({ id: p._id, name: p.name, price: p.price, itemType: 'product', gstPercentage: 0 }));
+
+  /* ─── add custom item to bill ───────────────────────────────── */
+  const handleAddCustomItem = () => {
+    const name = customName.trim();
+    const price = Number(customPrice);
+    if (!name || !price || price <= 0) return;
+    const customId = `custom-${Date.now()}`;
+    setBillItems(prev => [...prev, { id: customId, name, price, quantity: 1, itemType: 'other', gstPercentage: 0 }]);
+    setCustomName('');
+    setCustomPrice('');
+    setShowCustomForm(false);
+  };
 
   /* ─── add item to bill ─────────────────────────────────────── */
   const handleAddItem = () => {
@@ -329,13 +346,13 @@ export default function Billing() {
 
             {/* Category tabs */}
             <div className="flex gap-2">
-              {['services', 'products'].map(cat => (
+              {['services', 'other'].map(cat => (
                 <button
                   key={cat}
                   id={`billing-cat-${cat}`}
-                  onClick={() => { setCategory(cat); setSelectedItem(''); }}
+                  onClick={() => { setCategory(cat === 'other' ? 'products' : cat); setSelectedItem(''); setShowCustomForm(false); }}
                   className={`flex-1 py-2.5 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wide transition-all capitalize ${
-                    category === cat
+                    (cat === 'other' ? category === 'products' : category === cat)
                       ? 'bg-[#111] text-amber-400 shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
@@ -386,6 +403,60 @@ export default function Billing() {
                 <Plus size={16} className="text-[#FFD700]" /> Add
               </button>
             </div>
+
+            {/* Custom Item — only in Other tab */}
+            {category === 'products' && (
+              <div className="pt-3 border-t border-gray-100">
+                {!showCustomForm ? (
+                  <button
+                    onClick={() => setShowCustomForm(true)}
+                    className="flex items-center gap-2 text-xs font-cinzel font-bold tracking-wide text-[#B8860B] hover:text-gray-900 uppercase transition-colors"
+                  >
+                    <Plus size={14} /> Add Custom Item
+                  </button>
+                ) : (
+                  <div className="p-4 rounded-lg bg-amber-50/60 border border-amber-200/60 space-y-3" style={{ animation: 'fadeIn 0.2s ease-out' }}>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-cinzel font-bold uppercase tracking-wide text-gray-800">Custom Item</span>
+                      <button onClick={() => { setShowCustomForm(false); setCustomName(''); setCustomPrice(''); }} className="text-gray-400 hover:text-gray-700 transition-colors">
+                        <X size={16} />
+                      </button>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-cinzel font-semibold uppercase tracking-wide text-gray-700 mb-1">Item Name</label>
+                      <input
+                        type="text"
+                        value={customName}
+                        onChange={e => setCustomName(e.target.value)}
+                        placeholder="e.g. Hair Extension Clips"
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 text-sm transition-colors"
+                      />
+                    </div>
+                    <div className="flex items-end gap-3">
+                      <div className="flex-1">
+                        <label className="block text-xs font-cinzel font-semibold uppercase tracking-wide text-gray-700 mb-1">Price (₹)</label>
+                        <input
+                          type="number"
+                          min={1}
+                          value={customPrice}
+                          onChange={e => setCustomPrice(e.target.value)}
+                          placeholder="e.g. 350"
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 text-sm transition-colors"
+                        />
+                      </div>
+                      <button
+                        onClick={handleAddCustomItem}
+                        disabled={!customName.trim() || !customPrice || Number(customPrice) <= 0}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wide transition-all hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                        style={{ background: 'linear-gradient(135deg, #D4AF37, #C9A227)', color: '#fff' }}
+                      >
+                        <Plus size={14} /> Add
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
