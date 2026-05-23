@@ -374,6 +374,45 @@ const Services = () => {
   const total = subtotal + gstTotal;
   const hasBridalService = cart.some(item => item.category === 'Bridal Services');
 
+  const handleSingleServiceWhatsAppInquiry = (service, activeOption, categoryName) => {
+    const serviceName = activeOption 
+      ? `${service.name} - ${activeOption.name}` 
+      : service.name;
+    const price = activeOption ? activeOption.price : service.price;
+
+    let dateTimeInfo = '';
+    if (bookingBranch || bookingDate || bookingTime) {
+      const parts = [];
+      if (bookingDate) {
+        try {
+          const formattedDate = new Date(bookingDate).toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          parts.push(`on ${formattedDate}`);
+        } catch (e) {
+          // ignore
+        }
+      }
+      if (bookingTime) {
+        const timeLabel = HOUR_SLOTS.find(slot => slot.value === bookingTime)?.label || bookingTime;
+        parts.push(`at ${timeLabel}`);
+      }
+      if (bookingBranch) {
+        parts.push(`for the ${bookingBranch} branch`);
+      }
+      if (parts.length > 0) {
+        dateTimeInfo = ` ${parts.join(' ')}`;
+      }
+    }
+
+    const message = `Hello B2 Bridal Studio! I would like to inquire about booking the service "${serviceName}" (Price: ₹${price})${dateTimeInfo}.`;
+    const whatsappUrl = `https://wa.me/919361527951?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const handleWhatsAppInquiry = () => {
     if (cart.length === 0) return;
 
@@ -532,7 +571,21 @@ const Services = () => {
                                 </select>
                               )}
                             </div>
-                            {isAdded ? (
+                            {isBridalCategory(category.category) ? (
+                              <button
+                                onClick={() => handleSingleServiceWhatsAppInquiry(service, activeOption, category.category)}
+                                className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm"
+                                style={{
+                                  border: 'none',
+                                  background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                                  color: '#FFF',
+                                  fontWeight: 700,
+                                  boxShadow: '0 2px 10px rgba(37,211,102,0.25)'
+                                }}
+                              >
+                                <MessageCircle size={14} /> Book via WhatsApp
+                              </button>
+                            ) : isAdded ? (
                               <div className="flex gap-2 mt-2">
                                 <span className="flex-1 py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-1.5 rounded-sm" style={{ background: 'rgba(255,195,0,0.12)', color: '#FFD700', fontWeight: 700, border: '1px solid rgba(255,195,0,0.25)' }}>
                                   <Check size={13} /> Added
