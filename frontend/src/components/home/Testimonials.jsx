@@ -11,7 +11,7 @@ const staticTestimonials = [
     _id: 'static-1',
     name: 'Priya Lakshmi',
     role: 'Bride, 2023',
-    quote: 'Shammugapriya transformed me into exactly the bride I dreamed of being. The artistry, the attention to detail, and the love poured into every brushstroke — it was a spiritual experience.',
+    quote: 'Shanmugavadivu Sabarinathan transformed me into exactly the bride I dreamed of being. The artistry, the attention to detail, and the love poured into every brushstroke — it was a spiritual experience.',
     stars: 5,
   },
   {

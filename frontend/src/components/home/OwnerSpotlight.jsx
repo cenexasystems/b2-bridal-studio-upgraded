@@ -141,7 +141,7 @@ const OwnerSpotlight = () => {
                 backgroundClip: 'text',
               }}
             >
-              Shammugapriya
+              Shanmugavadivu Sabarinathan
             </motion.h2>
 
             {/* Title */}
@@ -158,7 +158,7 @@ const OwnerSpotlight = () => {
               className="font-cormorant leading-relaxed mb-6"
               style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.85)', letterSpacing: '0.01em' }}
             >
-              With over 8 years of transformative artistry, Shammugapriya has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
+              With over 8 years of transformative artistry, Shanmugavadivu Sabarinathan has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
             </motion.p>
 
             <motion.p
