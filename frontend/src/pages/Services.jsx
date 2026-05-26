@@ -514,7 +514,7 @@ const Services = () => {
             <div className="gold-divider" style={{ width: '40px' }} />
           </div>
           <h1 className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>Premium Services</h1>
-          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.8)' }}>Explore our luxury treatments and book your appointment today.</p>
+          <p className="font-cormorant italic mt-4" style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.92)' }}>Explore our luxury treatments and book your appointment today.</p>
         </div>
       </div>
 
@@ -636,7 +636,7 @@ const Services = () => {
                       style={{
                         border: bookingBranch === branch ? '1px solid #FFD700' : '1px solid rgba(255,195,0,0.2)',
                         background: bookingBranch === branch ? 'rgba(255,215,0,0.12)' : 'transparent',
-                        color: bookingBranch === branch ? '#FFD700' : 'rgba(248,245,240,0.45)',
+                        color: bookingBranch === branch ? '#FFD700' : 'rgba(248,245,240,0.68)',
                         fontWeight: bookingBranch === branch ? 700 : 400,
                       }}
                     >
@@ -721,7 +721,7 @@ const Services = () => {
             </div>
             <h3 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,195,0,0.75)' }}>Selected Services</h3>
             {cart.length === 0 ? (
-              <p className="font-cormorant italic text-sm text-center py-4" style={{ color: 'rgba(248,245,240,0.3)' }}>No services selected.</p>
+              <p className="font-cormorant italic text-sm text-center py-4" style={{ color: 'rgba(248,245,240,0.68)' }}>No services selected.</p>
             ) : (
               <ul className="flex flex-col gap-3 mb-4">{cart.map(item => (
                 <li key={item._id} className="flex justify-between items-center group text-sm">
@@ -732,9 +732,9 @@ const Services = () => {
             )}
             {cart.length > 0 && (
               <div className="pt-4 mb-4 flex flex-col gap-2 text-sm" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
-                <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}><span>Subtotal</span><span>₹{subtotal.toFixed(2)}</span></div>
+                <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.8)' }}><span>Subtotal</span><span>₹{subtotal.toFixed(2)}</span></div>
                 {gstTotal > 0 && (
-                  <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}><span>GST</span><span>₹{gstTotal.toFixed(2)}</span></div>
+                  <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.8)' }}><span>GST</span><span>₹{gstTotal.toFixed(2)}</span></div>
                 )}
                 <div className="flex justify-between font-cinzel text-sm pt-2" style={{ color: '#F8F5F0', borderTop: '1px solid rgba(255,195,0,0.08)' }}><span>Total</span><span style={{ color: '#FFD700' }}>₹{total.toFixed(2)}</span></div>
               </div>
@@ -763,7 +763,7 @@ const Services = () => {
                 className="w-full py-3 font-cinzel text-[0.65rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 transition-all rounded-sm"
                 style={{
                   background: cart.length > 0 ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'rgba(255,255,255,0.03)',
-                  color: cart.length > 0 ? '#000' : 'rgba(248,245,240,0.3)',
+                  color: cart.length > 0 ? '#000' : 'rgba(248,245,240,0.5)',
                   cursor: cart.length > 0 && !slotChecking ? 'pointer' : 'not-allowed',
                   fontWeight: 700,
                   opacity: slotChecking ? 0.7 : 1,

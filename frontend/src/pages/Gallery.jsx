@@ -50,7 +50,7 @@ const Gallery = () => {
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Our Gallery
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.5)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.92)' }}>
             A curated showcase of beauty transformations and artistry.
           </motion.p>
         </motion.div>
@@ -67,7 +67,7 @@ const Gallery = () => {
               style={{
                 background: activeTab === tab ? 'rgba(255,195,0,0.15)' : 'transparent',
                 border: `1px solid ${activeTab === tab ? 'rgba(255,195,0,0.5)' : 'rgba(255,195,0,0.12)'}`,
-                color: activeTab === tab ? '#FFD700' : 'rgba(248,245,240,0.5)',
+                color: activeTab === tab ? '#FFD700' : 'rgba(248,245,240,0.85)',
               }}
             >
               {tab}

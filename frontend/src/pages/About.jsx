@@ -30,7 +30,7 @@ const StatCard = ({ value, suffix, label, isInView }) => {
         {count.toLocaleString()}{suffix}
       </div>
       <div className="gold-divider mx-auto my-3" style={{ width: '30px' }} />
-      <div className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.7)' }}>{label}</div>
+      <div className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.92)' }}>{label}</div>
     </div>
   );
 };
@@ -74,10 +74,10 @@ const About = () => {
             <p className="font-cormorant italic text-xl mb-4" style={{ color: 'rgba(255,195,0,0.7)' }}>
               A legacy of beauty, artistry, and transformation
             </p>
-            <p className="font-inter text-base leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.82)' }}>
+            <p className="font-inter text-base leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.95)' }}>
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-inter text-base leading-relaxed" style={{ color: 'rgba(248,245,240,0.75)' }}>
+            <p className="font-inter text-base leading-relaxed" style={{ color: 'rgba(248,245,240,0.92)' }}>
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
           </motion.div>
@@ -95,7 +95,7 @@ const About = () => {
             {/* Floating stat */}
             <div className="absolute -bottom-6 -right-4 lg:-right-8 glass-dark px-6 py-4 text-center" style={{ border: '1px solid rgba(255,195,0,0.2)' }}>
               <div className="font-cinzel font-bold text-lg" style={{ color: '#FFD700' }}>15+</div>
-              <div className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.5)' }}>Years of Excellence</div>
+              <div className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.82)' }}>Years of Excellence</div>
             </div>
           </motion.div>
         </motion.div>
@@ -109,7 +109,7 @@ const About = () => {
           <h2 className="font-playfair italic text-2xl md:text-3xl mt-4 leading-relaxed" style={{ color: '#F8F5F0' }}>
             "Crafting Beauty One Story at a Time"
           </h2>
-          <p className="font-cormorant text-xl leading-relaxed" style={{ color: 'rgba(248,245,240,0.72)' }}>
+          <p className="font-cormorant text-xl leading-relaxed" style={{ color: 'rgba(248,245,240,0.92)' }}>
             B2 Bridal Studio was born from a belief that every woman deserves to feel extraordinary — and every aspiring professional deserves world-class training. We blend tradition with modern artistry to create experiences that transform lives.
           </p>
         </motion.div>
@@ -171,7 +171,7 @@ const About = () => {
               <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'} pl-12 md:pl-0`}>
                 <span className="font-cinzel text-xs tracking-[0.2em]" style={{ color: '#FFD700' }}>{item.year}</span>
                 <h3 className="font-playfair text-lg mt-1 mb-2" style={{ color: '#F8F5F0' }}>{item.title}</h3>
-                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.68)' }}>{item.desc}</p>
+                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.9)' }}>{item.desc}</p>
               </div>
               <div className="flex-1 hidden md:block" />
             </motion.div>
@@ -211,7 +211,7 @@ const About = () => {
                 <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.65)' }}>{post.date}</span>
                 <h3 className="font-playfair text-base mt-2 mb-2 leading-tight" style={{ color: '#F8F5F0' }}>{post.title}</h3>
                 <div className="gold-divider-left mb-3" />
-                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.68)' }}>{post.excerpt}</p>
+                <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.9)' }}>{post.excerpt}</p>
               </div>
             </motion.article>
           ))}

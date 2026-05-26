@@ -34,7 +34,7 @@ const Contact = () => {
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Get in Touch
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.35rem', color: 'rgba(248,245,240,0.8)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.35rem', color: 'rgba(248,245,240,0.92)' }}>
             We'd love to hear from you. Reach out and we'll respond within 24 hours.
           </motion.p>
         </motion.div>
@@ -51,7 +51,7 @@ const Contact = () => {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#F8F5F0' }}>Redirected to WhatsApp</h3>
-                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.6)' }}>Complete your message on WhatsApp.</p>
+                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.88)' }}>Complete your message on WhatsApp.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -130,7 +130,7 @@ const Contact = () => {
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg> },
                 ].map((social, i) => (
-                  <a key={i} href={social.href} className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300" style={{ border: '1px solid rgba(255,195,0,0.2)', color: 'rgba(248,245,240,0.5)' }} onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFD700'; e.currentTarget.style.color = '#FFD700'; e.currentTarget.style.background = 'rgba(255,195,0,0.08)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,195,0,0.2)'; e.currentTarget.style.color = 'rgba(248,245,240,0.5)'; e.currentTarget.style.background = 'transparent'; }}>
+                  <a key={i} href={social.href} className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300" style={{ border: '1px solid rgba(255,195,0,0.2)', color: 'rgba(248,245,240,0.75)' }} onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFD700'; e.currentTarget.style.color = '#FFD700'; e.currentTarget.style.background = 'rgba(255,195,0,0.08)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,195,0,0.2)'; e.currentTarget.style.color = 'rgba(248,245,240,0.75)'; e.currentTarget.style.background = 'transparent'; }}>
                     {social.icon}
                   </a>
                 ))}

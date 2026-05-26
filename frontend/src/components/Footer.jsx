@@ -83,10 +83,10 @@ const Footer = () => {
             </div>
             <div>
               <div className="font-cinzel text-xs tracking-[0.2em] uppercase" style={{ color: '#FFD700' }}>B2 Bridal</div>
-              <div className="font-cormorant text-[0.65rem] tracking-wider uppercase" style={{ color: 'rgba(248,245,240,0.35)' }}>Studio</div>
+              <div className="font-cormorant text-[0.65rem] tracking-wider uppercase" style={{ color: 'rgba(248,245,240,0.65)' }}>Studio</div>
             </div>
           </Link>
-          <p className="font-cormorant leading-relaxed text-base mb-6" style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}>
+          <p className="font-cormorant leading-relaxed text-base mb-6" style={{ color: 'rgba(248,245,240,0.92)', fontSize: '1rem' }}>
             Crafting luxury bridal experiences and professional training in Chennai and Madurai since 2018.
           </p>
           {/* Social links */}
@@ -124,9 +124,9 @@ const Footer = () => {
                   href="/#contact"
                   onClick={scrollToContact}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group cursor-pointer"
-                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
+                  style={{ color: 'rgba(248,245,240,0.85)', fontSize: '1rem' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.85)'; }}
                 >
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
@@ -135,9 +135,9 @@ const Footer = () => {
                 <Link
                   to={link.to}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group"
-                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
+                  style={{ color: 'rgba(248,245,240,0.85)', fontSize: '1rem' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.85)'; }}
                 >
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
@@ -159,9 +159,9 @@ const Footer = () => {
                 <Link
                   to={link.to}
                   className="font-cormorant text-base transition-colors duration-200 flex items-center gap-2 group"
-                  style={{ color: 'rgba(248,245,240,0.6)', fontSize: '1rem' }}
+                  style={{ color: 'rgba(248,245,240,0.85)', fontSize: '1rem' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#FFD700'; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.6)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(248,245,240,0.85)'; }}
                 >
                   <span className="w-3 h-px opacity-0 group-hover:opacity-100 transition-all" style={{ background: '#FFD700' }} />
                   {link.label}
@@ -193,12 +193,12 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-cormorant leading-snug transition-colors duration-200 hover:text-[#FFD700]"
-                    style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.6)', textDecoration: 'none' }}
+                    style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)', textDecoration: 'none' }}
                   >
                     {item.text}
                   </a>
                 ) : (
-                  <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.6)' }}>
+                  <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)' }}>
                     {item.text}
                   </span>
                 )}
@@ -213,12 +213,12 @@ const Footer = () => {
         className="max-w-[1300px] mx-auto px-6 lg:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4"
         style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}
       >
-        <p className="font-cormorant text-sm text-center md:text-left" style={{ color: 'rgba(248,245,240,0.45)', fontSize: '0.9rem' }}>
+        <p className="font-cormorant text-sm text-center md:text-left" style={{ color: 'rgba(248,245,240,0.75)', fontSize: '0.9rem' }}>
           © {new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
         </p>
         
         {/* Attribution */}
-        <p className="font-inter text-[0.7rem] tracking-wide text-center" style={{ color: 'rgba(248,245,240,0.35)' }}>
+        <p className="font-inter text-[0.7rem] tracking-wide text-center" style={{ color: 'rgba(248,245,240,0.65)' }}>
           Powered by{' '}
           <a
             href="https://cenexasystems.com"

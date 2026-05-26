@@ -111,7 +111,7 @@ const ContactSection = () => {
           <motion.p
             variants={fadeUp}
             className="font-cormorant italic mx-auto"
-            style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.8)', maxWidth: '480px' }}
+            style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.92)', maxWidth: '480px' }}
           >
             Let's create something extraordinary together. Reach out and we'll respond within 24 hours.
           </motion.p>
@@ -145,7 +145,7 @@ const ContactSection = () => {
                 <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#F8F5F0' }}>
                   Redirected to WhatsApp
                 </h3>
-                <p className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.6)' }}>
+                <p className="font-cormorant italic text-base" style={{ color: 'rgba(248,245,240,0.88)' }}>
                   Complete your message on WhatsApp.
                 </p>
               </motion.div>
