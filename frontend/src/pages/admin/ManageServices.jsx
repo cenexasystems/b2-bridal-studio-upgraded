@@ -18,6 +18,10 @@ const ManageServices = () => {
     gstPercentage: ''
   });
 
+  // Category State — kept separate so typing in new-category input never resets the dropdown
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [newCategory, setNewCategory] = useState('');
+
   // Search & Grouping State
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedCategories, setExpandedCategories] = useState({});
@@ -43,10 +47,20 @@ const ManageServices = () => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    
+
+    // Resolve the final category from the two separate state variables
+    const finalCategory =
+      selectedCategory === 'new' ? newCategory.trim() : selectedCategory;
+
+    if (!finalCategory) {
+      alert('Please select or enter a category name.');
+      return;
+    }
+
     // Cleanup empty options
     const payload = {
       ...currentService,
+      category: finalCategory,
       options: currentService.options.filter(opt => opt.name && opt.price)
     };
     if (payload.options.length === 0) delete payload.options;
@@ -107,6 +121,8 @@ const ManageServices = () => {
         await axios.post(`${API}/api/services`, payload, config);
       }
       setIsEditing(false);
+      setSelectedCategory('');
+      setNewCategory('');
       fetchServices();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to save service');
@@ -250,7 +266,7 @@ const ManageServices = () => {
             <h3 className="text-base font-bold font-cinzel tracking-wide text-gray-900 uppercase">
               {currentService._id ? 'Edit Service' : 'Add New Service'}
             </h3>
-            <button onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-gray-700 transition-colors">
+            <button onClick={() => { setIsEditing(false); setSelectedCategory(''); setNewCategory(''); }} className="text-gray-400 hover:text-gray-700 transition-colors">
               <X size={24} />
             </button>
           </div>
@@ -260,24 +276,27 @@ const ManageServices = () => {
               <div>
                 <label className="block text-xs font-cinzel tracking-wide text-gray-700 uppercase mb-1.5 font-semibold">Category</label>
                 <select
-                  value={currentService.category}
-                  onChange={e => setCurrentService({...currentService, category: e.target.value})}
+                  value={selectedCategory}
+                  onChange={e => setSelectedCategory(e.target.value)}
                   className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
-                  required
+                  required={selectedCategory !== 'new'}
                 >
                   <option value="">Select Category</option>
                   {[...new Set(services.map(s => s.category))].map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
-                  <option value="NEW" className="text-[#B8860B] font-bold">+ Add New Category</option>
+                  <option value="new" className="text-[#B8860B] font-bold">+ Add New Category</option>
                 </select>
 
-                {currentService.category === "NEW" && (
+                {selectedCategory === 'new' && (
                   <input
                     type="text"
-                    placeholder="Enter new category"
-                    className="w-full mt-3 p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
-                    onChange={e => setCurrentService({...currentService, category: e.target.value})}
+                    autoFocus
+                    value={newCategory}
+                    placeholder="Enter new category name"
+                    className="w-full mt-3 p-2.5 rounded-lg border border-[#FFD700] focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
+                    onChange={e => setNewCategory(e.target.value)}
+                    required
                   />
                 )}
               </div>
@@ -368,7 +387,7 @@ const ManageServices = () => {
 
             <div className="flex justify-end gap-3 pt-6 mt-4 border-t border-gray-100">
               <button 
-                type="button" onClick={() => setIsEditing(false)}
+                type="button" onClick={() => { setIsEditing(false); setSelectedCategory(''); setNewCategory(''); }}
                 className="px-5 py-2 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wide text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Cancel
@@ -408,6 +427,8 @@ const ManageServices = () => {
                 <button 
                   onClick={() => {
                     setCurrentService({ category: '', name: '', price: '', options: [], gstPercentage: '' });
+                    setSelectedCategory('');
+                    setNewCategory('');
                     setIsEditing(true);
                   }}
                   className="whitespace-nowrap w-full sm:w-auto flex justify-center items-center gap-2 px-5 py-2 rounded-lg font-cinzel text-xs uppercase tracking-wide transition-all font-bold shadow-md hover:shadow-lg bg-[#111] text-white"
@@ -553,6 +574,8 @@ const ManageServices = () => {
                                         gstPercentage: service.gstPercentage || ''
                                       };
                                       setCurrentService(editableService);
+                                      setSelectedCategory(service.category || '');
+                                      setNewCategory('');
                                       setIsEditing(true);
                                     }}
                                     className="p-2 rounded-md text-gray-400 hover:text-[#B8860B] hover:bg-yellow-50 transition-colors"
