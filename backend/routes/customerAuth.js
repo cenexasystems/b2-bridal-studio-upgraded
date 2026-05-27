@@ -9,6 +9,38 @@ const nodemailer = require('nodemailer');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
+// Configure the Nodemailer SMTP Transporter once at module level for connection pooling
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true, // true for port 465 SSL, false for other ports (e.g. 587 TLS)
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  connectionTimeout: 15000, // 15 seconds connection timeout
+  socketTimeout: 15000,     // 15 seconds socket timeout
+  dnsTimeout: 10000         // 10 seconds DNS resolution timeout
+});
+
+// Verify SMTP connection configuration on startup
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  transporter.verify((error, success) => {
+    if (error) {
+      console.error('[SMTP Transporter] Verification failed on startup:', {
+        message: error.message,
+        code: error.code,
+        command: error.command,
+        response: error.response
+      });
+    } else {
+      console.log('[SMTP Transporter] Verification successful. Ready to send emails.');
+    }
+  });
+} else {
+  console.warn('[SMTP Transporter] Warning: EMAIL_USER or EMAIL_PASS environment variables are not set.');
+}
+
 // 🔹 REGISTER
 router.post('/register', async (req, res) => {
   try {
@@ -175,15 +207,7 @@ router.post('/forgot-password', async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Send email
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
+    // Prepare reset URL
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
     const mailOptions = {
@@ -224,7 +248,19 @@ router.post('/forgot-password', async (req, res) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`[Forgot Password] Reset email sent successfully to: ${email}`);
+    } catch (mailError) {
+      console.error('[Forgot Password] Send mail error details:', {
+        message: mailError.message,
+        code: mailError.code,
+        command: mailError.command,
+        response: mailError.response,
+        responseCode: mailError.responseCode
+      });
+      throw new Error(`Failed to send password reset email: ${mailError.message}`);
+    }
 
     res.json({ message: 'If an account exists with this email, a reset link has been sent.' });
 
@@ -327,15 +363,7 @@ router.post('/send-otp', async (req, res) => {
       await customer.save();
     }
 
-    // Send email using Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
+    // Prepare OTP email options
     const mailOptions = {
       from: `"B2 Bridal Studio" <${process.env.EMAIL_USER}>`,
       to: email,
@@ -374,7 +402,19 @@ router.post('/send-otp', async (req, res) => {
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`[OTP] OTP email sent successfully to: ${email}`);
+    } catch (mailError) {
+      console.error('[OTP] Send OTP error details:', {
+        message: mailError.message,
+        code: mailError.code,
+        command: mailError.command,
+        response: mailError.response,
+        responseCode: mailError.responseCode
+      });
+      throw new Error(`Failed to send OTP email: ${mailError.message}`);
+    }
 
     res.json({ message: "OTP sent successfully" });
 
