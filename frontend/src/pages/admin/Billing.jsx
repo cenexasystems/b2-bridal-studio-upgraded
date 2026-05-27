@@ -59,8 +59,8 @@ export default function Billing() {
   const catalogueItems = category === 'services'
     ? services.flatMap(svc =>
         svc.options && svc.options.length > 0
-          ? svc.options.map(opt => ({ id: `${svc._id}-${opt._id}`, name: `${svc.name} — ${opt.name}`, price: opt.price, itemType: 'service', gstPercentage: 0 }))
-          : svc.price ? [{ id: svc._id, name: svc.name, price: svc.price, itemType: 'service', gstPercentage: 0 }] : []
+          ? svc.options.map(opt => ({ id: `${svc._id}-${opt._id}`, name: `${svc.name} — ${opt.name}`, price: opt.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0 }))
+          : svc.price ? [{ id: svc._id, name: svc.name, price: svc.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0 }] : []
       )
     : products.map(p => ({ id: p._id, name: p.name, price: p.price, itemType: 'product', gstPercentage: 0 }));
 
@@ -99,9 +99,24 @@ export default function Billing() {
   const removeItem = (id) => setBillItems(prev => prev.filter(i => i.id !== id));
 
   /* ─── totals ───────────────────────────────────────────────── */
-  const subtotalBase = billItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const gstAmount = 0;
-  const total = subtotalBase;
+  const calculatedTotals = billItems.reduce((acc, item) => {
+    const qty = item.quantity || 1;
+    const finalPrice = item.price * qty;
+    const gstPercent = item.gstPercentage || 0;
+    if (item.itemType === 'service' && gstPercent > 0) {
+      const base = finalPrice / (1 + gstPercent / 100);
+      acc.subtotal += base;
+      acc.gst += (finalPrice - base);
+    } else {
+      acc.subtotal += finalPrice;
+    }
+    acc.total += finalPrice;
+    return acc;
+  }, { subtotal: 0, gst: 0, total: 0 });
+
+  const subtotalBase = Math.round(calculatedTotals.subtotal * 100) / 100;
+  const gstAmount = Math.round(calculatedTotals.gst * 100) / 100;
+  const total = Math.round(calculatedTotals.total * 100) / 100;
 
   /* ─── generate bill ────────────────────────────────────────── */
   const handleGenerateBill = async () => {
@@ -197,11 +212,20 @@ export default function Billing() {
     });
 
     const finalY = doc.lastAutoTable.finalY + 8;
-    doc.rect(120, finalY, 75, 18, 'F');
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 100, 100);
+    let cursorY = finalY + 6;
+    if (bill.gst && bill.gst > 0) {
+      doc.text(`Service Total: Rs.${bill.subtotal.toFixed(2)}`, 193, cursorY, { align: 'right' });
+      cursorY += 6;
+      doc.text(`GST Included: Rs.${bill.gst.toFixed(2)}`, 193, cursorY, { align: 'right' });
+      cursorY += 6;
+    }
     doc.setFontSize(13);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(20, 20, 20);
-    doc.text(`Total: Rs.${bill.total.toFixed(2)}`, 193, finalY + 12, { align: 'right' });
+    doc.text(`Total: Rs.${bill.total.toFixed(2)}`, 193, cursorY + 2, { align: 'right' });
 
     // Footer
     doc.setFontSize(8);
@@ -490,7 +514,19 @@ export default function Billing() {
 
           {/* Total + generate */}
           <div className="border-t border-gray-100 p-5">
-            <div className="flex justify-between items-center mb-4">
+            {gstAmount > 0 ? (
+              <>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-cinzel font-bold uppercase tracking-wide text-gray-500">Service Total</span>
+                  <span className="text-sm font-semibold text-gray-900">₹{subtotalBase.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-cinzel font-bold uppercase tracking-wide text-gray-500">GST Included</span>
+                  <span className="text-sm font-semibold text-gray-900">₹{gstAmount.toLocaleString()}</span>
+                </div>
+              </>
+            ) : null}
+            <div className="flex justify-between items-center mb-4 pt-2" style={{ borderTop: gstAmount > 0 ? '1px solid rgba(0,0,0,0.06)' : 'none' }}>
               <span className="text-sm font-cinzel font-bold uppercase tracking-wide text-gray-700">Total</span>
               <span className="text-2xl font-bold text-gray-900 font-cinzel">₹{total.toLocaleString()}</span>
             </div>

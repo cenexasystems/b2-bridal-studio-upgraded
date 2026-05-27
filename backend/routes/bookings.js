@@ -96,7 +96,7 @@ router.post('/', upload.single('paymentProof'), async (req, res) => {
       branch,
       items: typeof items === 'string' ? JSON.parse(items) : (items || []),
       total: Number(total),
-      gstAmount: 0,
+      gstAmount: Number(gstAmount) || 0,
       couponCode: couponCode || null,
       discountPercentage: discountPercentage ? Number(discountPercentage) : null,
       discountAmount: discountAmount ? Number(discountAmount) : null,

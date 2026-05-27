@@ -37,18 +37,45 @@ router.post('/generate-from-booking/:id', verifyToken, verifyRole(['staff', 'own
     if (booking.status !== 'Approved') return res.status(400).json({ error: 'Booking must be Approved to generate bill' });
     if (booking.billId) return res.status(400).json({ error: 'Bill already generated for this booking' });
 
-    // Force GST to 0 and set correct totals
-    const bookingGst = 0;
+    // Calculate dynamic subtotal and GST
+    let calculatedSubtotal = 0;
+    let calculatedGst = 0;
+    
+    (booking.items || []).forEach(item => {
+      const qty = item.quantity || 1;
+      const finalPrice = item.price * qty;
+      const gstPercent = item.gstPercentage || 0;
+      if (gstPercent > 0) {
+        const base = finalPrice / (1 + gstPercent / 100);
+        calculatedSubtotal += base;
+        calculatedGst += (finalPrice - base);
+      } else {
+        calculatedSubtotal += finalPrice;
+      }
+    });
+
     const billTotal = booking.finalAmount || booking.total; // actual amount paid after coupon discounts
-    const billSubtotal = booking.total; // original service price
     const hasDiscount = booking.couponCode && booking.discountAmount > 0;
+
+    // Scale subtotal and GST proportionally under coupon discount
+    let billSubtotal = calculatedSubtotal;
+    let billGst = calculatedGst;
+    
+    if (hasDiscount && booking.total > 0) {
+      const discountRatio = billTotal / booking.total;
+      billSubtotal = calculatedSubtotal * discountRatio;
+      billGst = calculatedGst * discountRatio;
+    }
+
+    billSubtotal = Math.round(billSubtotal * 100) / 100;
+    billGst = Math.round(billGst * 100) / 100;
 
     // Create a bill entry
     const bill = new Bill({
       type: 'service',
       items: booking.items,
       subtotal: billSubtotal,
-      gst: 0,
+      gst: billGst,
       total: billTotal,
       // Coupon / discount info
       couponCode: booking.couponCode || undefined,
@@ -108,16 +135,31 @@ router.post('/offline', verifyToken, verifyRole(['staff', 'owner']), async (req,
       return res.status(400).json({ error: 'Total must be greater than 0' });
     }
 
-    // Force GST to 0 and set subtotal to total
-    const billGst = 0;
-    const billSubtotal = total;
+    let calculatedSubtotal = 0;
+    let calculatedGst = 0;
+    
+    (items || []).forEach(item => {
+      const qty = item.quantity || 1;
+      const finalPrice = item.price * qty;
+      const gstPercent = item.gstPercentage || 0;
+      if (item.itemType === 'service' && gstPercent > 0) {
+        const base = finalPrice / (1 + gstPercent / 100);
+        calculatedSubtotal += base;
+        calculatedGst += (finalPrice - base);
+      } else {
+        calculatedSubtotal += finalPrice;
+      }
+    });
+
+    const billSubtotal = Math.round(calculatedSubtotal * 100) / 100;
+    const billGst = Math.round(calculatedGst * 100) / 100;
 
     // Create the bill
     const bill = new Bill({
       type: 'mixed',
       items,
       subtotal: billSubtotal,
-      gst: 0,
+      gst: billGst,
       total,
       source: source || 'offline',
       paymentMethod: paymentMethod || 'cash',

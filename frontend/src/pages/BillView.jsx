@@ -71,18 +71,35 @@ const BillView = () => {
     let cursorY = finalY;
     doc.setFontSize(10);
 
-    // Show original total + coupon discount if applicable
-    if (bill.couponCode && bill.discountAmount > 0) {
+    // If the bill has GST
+    if (bill.gst && bill.gst > 0) {
       doc.setTextColor(100, 100, 100);
-      doc.text(`Service Total: ₹${(bill.originalTotal || (bill.total + bill.discountAmount)).toFixed(2)}`, 150, cursorY, { align: 'right' });
+      doc.text(`Service Total: ₹${bill.subtotal.toFixed(2)}`, 150, cursorY, { align: 'right' });
       cursorY += 7;
-      doc.setTextColor(34, 139, 34);
-      doc.text(`Coupon Discount (${bill.couponCode}): -₹${bill.discountAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
+
+      if (bill.couponCode && bill.discountAmount > 0) {
+        doc.setTextColor(34, 139, 34);
+        doc.text(`Coupon Discount (${bill.couponCode}): -₹${bill.discountAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
+        cursorY += 7;
+      }
+
+      doc.setTextColor(100, 100, 100);
+      doc.text(`GST Included: ₹${bill.gst.toFixed(2)}`, 150, cursorY, { align: 'right' });
       cursorY += 7;
     } else {
-      doc.setTextColor(100, 100, 100);
-      doc.text(`Service Total: ₹${bill.total.toFixed(2)}`, 150, cursorY, { align: 'right' });
-      cursorY += 7;
+      // Show original total + coupon discount if applicable
+      if (bill.couponCode && bill.discountAmount > 0) {
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Service Total: ₹${(bill.originalTotal || (bill.total + bill.discountAmount)).toFixed(2)}`, 150, cursorY, { align: 'right' });
+        cursorY += 7;
+        doc.setTextColor(34, 139, 34);
+        doc.text(`Coupon Discount (${bill.couponCode}): -₹${bill.discountAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
+        cursorY += 7;
+      } else {
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Service Total: ₹${bill.total.toFixed(2)}`, 150, cursorY, { align: 'right' });
+        cursorY += 7;
+      }
     }
 
     cursorY += 3;
@@ -191,24 +208,46 @@ const BillView = () => {
 
             {/* Totals */}
             <div className="px-6 py-5" style={{ background: 'rgba(255,195,0,0.03)', borderTop: '1px solid rgba(255,195,0,0.1)' }}>
-              {/* Coupon discount breakdown */}
-              {bill.couponCode && bill.discountAmount > 0 ? (
+              {bill.gst && bill.gst > 0 ? (
                 <>
                   <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
-                    <span>Service Total</span><span>₹{(bill.originalTotal || (bill.total + bill.discountAmount)).toFixed(2)}</span>
+                    <span>Service Total</span><span>₹{bill.subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: '#4ade80' }}>
-                    <span className="flex items-center gap-1.5">
-                      <span style={{ fontSize: '0.6rem', padding: '1px 6px', borderRadius: '9999px', background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)' }}>{bill.couponCode}</span>
-                      Coupon Discount{bill.discountPercentage ? ` (${bill.discountPercentage}%)` : ''}
-                    </span>
-                    <span>-₹{bill.discountAmount.toFixed(2)}</span>
+                  {bill.couponCode && bill.discountAmount > 0 && (
+                    <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: '#4ade80' }}>
+                      <span className="flex items-center gap-1.5">
+                        <span style={{ fontSize: '0.6rem', padding: '1px 6px', borderRadius: '9999px', background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)' }}>{bill.couponCode}</span>
+                        Coupon Discount{bill.discountPercentage ? ` (${bill.discountPercentage}%)` : ''}
+                      </span>
+                      <span>-₹{bill.discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                    <span>GST Included</span><span>₹{bill.gst.toFixed(2)}</span>
                   </div>
                 </>
               ) : (
-                <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
-                  <span>Service Total</span><span>₹{bill.total.toFixed(2)}</span>
-                </div>
+                <>
+                  {/* Coupon discount breakdown */}
+                  {bill.couponCode && bill.discountAmount > 0 ? (
+                    <>
+                      <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                        <span>Service Total</span><span>₹{(bill.originalTotal || (bill.total + bill.discountAmount)).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: '#4ade80' }}>
+                        <span className="flex items-center gap-1.5">
+                          <span style={{ fontSize: '0.6rem', padding: '1px 6px', borderRadius: '9999px', background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)' }}>{bill.couponCode}</span>
+                          Coupon Discount{bill.discountPercentage ? ` (${bill.discountPercentage}%)` : ''}
+                        </span>
+                        <span>-₹{bill.discountAmount.toFixed(2)}</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                      <span>Service Total</span><span>₹{bill.total.toFixed(2)}</span>
+                    </div>
+                  )}
+                </>
               )}
               <div className="flex justify-between font-cinzel text-lg pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.12)', color: '#F8F5F0' }}>
                 <span>Final Amount Paid</span><span style={{ color: '#FFD700' }}>₹{bill.total.toFixed(2)}</span>

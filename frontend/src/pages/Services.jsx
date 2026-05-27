@@ -570,7 +570,14 @@ const Services = () => {
                                     </span>
                                   )}
                                 </div>
-                                <span className="font-cinzel text-sm font-bold min-w-max ml-3" style={{ color: '#FFD700' }}>₹{priceToDisplay}</span>
+                                <span className="font-cinzel text-sm font-bold min-w-max ml-3 text-right" style={{ color: '#FFD700' }}>
+                                  ₹{priceToDisplay}
+                                  {serviceGst > 0 && (
+                                    <span style={{ fontSize: '0.65rem', color: 'rgba(248,245,240,0.5)', display: 'block', textAlign: 'right', fontWeight: 'normal', textTransform: 'none' }}>
+                                      (incl. GST)
+                                    </span>
+                                  )}
+                                </span>
                               </div>
                               {isDropdown && (
                                 <select value={activeOptionId} onChange={(e) => handleOptionChange(service._id, e.target.value)} className="w-full px-3 py-2 rounded-sm text-sm font-cormorant outline-none mb-3" style={{ background: 'rgba(255,195,0,0.06)', border: '1px solid rgba(255,195,0,0.15)', color: '#F8F5F0' }}>

@@ -50,8 +50,55 @@ const ManageServices = () => {
       options: currentService.options.filter(opt => opt.name && opt.price)
     };
     if (payload.options.length === 0) delete payload.options;
-    // Force GST to 0
-    payload.gstPercentage = 0;
+
+    // Calculate dynamic basePrice and finalPrice if GST percentage is entered
+    const gstPercent = parseFloat(currentService.gstPercentage) || 0;
+    payload.gstPercentage = gstPercent;
+
+    if (gstPercent > 0) {
+      if (payload.options && payload.options.length > 0) {
+        payload.options = payload.options.map(opt => {
+          const base = parseFloat(opt.price) || 0;
+          const final = base + (base * gstPercent / 100);
+          return {
+            name: opt.name,
+            price: final, // keep backward compatibility
+            basePrice: base,
+            finalPrice: final
+          };
+        });
+        delete payload.price;
+        delete payload.basePrice;
+        delete payload.finalPrice;
+      } else {
+        const base = parseFloat(currentService.price) || 0;
+        const final = base + (base * gstPercent / 100);
+        payload.basePrice = base;
+        payload.finalPrice = final;
+        payload.price = final; // keep backward compatibility
+      }
+    } else {
+      // Simplified no-GST flow
+      if (payload.options && payload.options.length > 0) {
+        payload.options = payload.options.map(opt => {
+          const base = parseFloat(opt.price) || 0;
+          return {
+            name: opt.name,
+            price: base,
+            basePrice: base,
+            finalPrice: base
+          };
+        });
+        delete payload.price;
+        delete payload.basePrice;
+        delete payload.finalPrice;
+      } else {
+        const base = parseFloat(currentService.price) || 0;
+        payload.basePrice = base;
+        payload.finalPrice = base;
+        payload.price = base;
+      }
+    }
 
     try {
       if (currentService._id) {
@@ -242,6 +289,21 @@ const ManageServices = () => {
                   onChange={e => setCurrentService({...currentService, name: e.target.value})}
                   className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
                   placeholder="e.g. Premium Bridal Makeup"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-xs font-cinzel tracking-wide text-gray-700 uppercase mb-1.5 font-semibold">GST % (Optional)</label>
+                <input 
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={currentService.gstPercentage || ''} 
+                  onChange={e => setCurrentService({...currentService, gstPercentage: e.target.value})}
+                  className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
+                  placeholder="e.g. 18 (Leave empty or 0 if no GST)"
                 />
               </div>
             </div>
@@ -480,7 +542,17 @@ const ManageServices = () => {
                                 <div className="flex justify-end gap-3 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-0 border-gray-100">
                                   <button 
                                     onClick={() => {
-                                      setCurrentService(service);
+                                      const hasGst = service.gstPercentage > 0;
+                                      const editableService = {
+                                        ...service,
+                                        price: hasGst && service.basePrice !== undefined ? service.basePrice : service.price,
+                                        options: (service.options || []).map(opt => ({
+                                          ...opt,
+                                          price: hasGst && opt.basePrice !== undefined ? opt.basePrice : opt.price
+                                        })),
+                                        gstPercentage: service.gstPercentage || ''
+                                      };
+                                      setCurrentService(editableService);
                                       setIsEditing(true);
                                     }}
                                     className="p-2 rounded-md text-gray-400 hover:text-[#B8860B] hover:bg-yellow-50 transition-colors"
