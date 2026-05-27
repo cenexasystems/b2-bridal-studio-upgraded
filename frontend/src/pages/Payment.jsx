@@ -119,6 +119,22 @@ const Payment = () => {
                   Copy
                 </button>
               </div>
+
+              {/* GPay Number */}
+              <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>GPay Number</span>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="font-inter text-base font-medium" style={{ color: '#FFD700' }}>9840551365</span>
+                <button
+                  onClick={() => { navigator.clipboard.writeText('9840551365'); }}
+                  className="px-3 py-1 font-cinzel text-[0.5rem] tracking-[0.15em] uppercase transition-all cursor-pointer"
+                  style={{ border: '1px solid rgba(255,195,0,0.3)', color: '#FFD700' }}
+                >
+                  Copy
+                </button>
+              </div>
+
+              <div className="gold-divider mb-4" />
+
               <a
                 href={upiUri}
                 className="btn-gold w-full justify-center py-3 text-xs tracking-wider flex items-center gap-2 mb-2"

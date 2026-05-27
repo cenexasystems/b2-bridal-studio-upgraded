@@ -9,8 +9,7 @@ const blogs = [
     category: 'Bridal Trends',
     title: '10 Bridal Makeup Looks Dominating 2024 Weddings',
     preview: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.',
-    image: '/images/bridal5.jpeg',
-    date: 'April 2024',
+    image: '/images/bridal7.jpeg',
     readTime: '5 min read',
   },
   {
@@ -18,8 +17,7 @@ const blogs = [
     category: 'Academy Insights',
     title: 'How to Build a Luxury Bridal Makeup Career from Scratch',
     preview: 'Our master trainers share the exact roadmap — from certification to premium clientele — for aspiring bridal artists.',
-    image: '/images/bridal9.jpeg',
-    date: 'March 2024',
+    image: '/images/bridal12.jpeg',
     readTime: '7 min read',
   },
   {
@@ -27,8 +25,7 @@ const blogs = [
     category: 'Skin Care',
     title: 'The Pre-Bridal Skin Care Ritual Every Bride Should Follow',
     preview: 'Six weeks out, four weeks, two weeks — the complete countdown for flawless skin on your wedding day.',
-    image: '/images/bridal8.jpeg',
-    date: 'February 2024',
+    image: '/images/bridal10.jpeg',
     readTime: '6 min read',
   },
 ];
@@ -78,10 +75,6 @@ const BlogCard = ({ blog, delay }) => {
     <div className="flex flex-col flex-1 p-6">
       {/* Meta */}
       <div className="flex items-center gap-3 mb-4">
-        <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.5)' }}>
-          {blog.date}
-        </span>
-        <span style={{ color: 'rgba(255,195,0,0.2)' }}>·</span>
         <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.5)' }}>
           {blog.readTime}
         </span>

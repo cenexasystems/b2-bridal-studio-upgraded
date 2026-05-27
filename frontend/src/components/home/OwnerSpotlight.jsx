@@ -141,7 +141,7 @@ const OwnerSpotlight = () => {
                 backgroundClip: 'text',
               }}
             >
-              Shammugapriya
+              Shanmugavadivu Sabarinathan
             </motion.h2>
 
             {/* Title */}

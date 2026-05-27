@@ -88,7 +88,8 @@ const About = () => {
               <img
                 src="/images/about3.jpg"
                 alt="About B2 Bridal Studio"
-                className="w-full aspect-square object-cover"
+                className="w-full object-cover"
+                style={{ aspectRatio: '3/4', objectPosition: 'top center' }}
                 loading="lazy"
               />
             </div>
@@ -115,7 +116,48 @@ const About = () => {
         </motion.div>
       </section>
 
-
+      {/* ═══ SECTION 2.5 — STUDIO GALLERY ═══ */}
+      <section className="relative" style={{ padding: '6rem 0' }}>
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,195,0,0.2), transparent)' }} />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="max-w-[1100px] mx-auto px-6 text-center mb-10"
+        >
+          <motion.span variants={fadeUp} className="font-cinzel text-[0.6rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>Our Studio</motion.span>
+          <motion.h2 variants={fadeUp} className="font-cinzel font-bold uppercase mt-3" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', color: '#F8F5F0', letterSpacing: '0.04em' }}>
+            A Glimpse Inside
+          </motion.h2>
+        </motion.div>
+        <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { src: '/images/about1.jpeg', alt: 'B2 Bridal Studio — Bridal Artistry' },
+            { src: '/images/about2.jpeg', alt: 'B2 Bridal Studio — Academy Training' },
+            { src: '/images/about3.jpg', alt: 'B2 Bridal Studio — Founder' },
+          ].map((img, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              className="card-luxury rounded-sm group"
+              style={{ overflow: 'hidden' }}
+            >
+              <div className="img-zoom-container" style={{ aspectRatio: '4/5' }}>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* ═══ SECTION 3 — HIGHLIGHTS / STATS ═══ */}
       <section className="relative" style={{ padding: '5rem 0' }} ref={statsRef}>
@@ -192,9 +234,9 @@ const About = () => {
         </div>
         <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', date: 'April 2024', image: '/images/bridal5.jpeg', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
-            { title: 'How to Build a Luxury Bridal Makeup Career', date: 'March 2024', image: '/images/bridal9.jpeg', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
-            { title: 'The Pre-Bridal Skin Care Ritual', date: 'February 2024', image: '/images/bridal8.jpeg', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
+            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: '/images/bridal7.jpeg', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
+            { title: 'How to Build a Luxury Bridal Makeup Career', image: '/images/bridal12.jpeg', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
+            { title: 'The Pre-Bridal Skin Care Ritual', image: '/images/bridal10.jpeg', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
           ].map((post, i) => (
             <motion.article
               key={i}
@@ -208,8 +250,7 @@ const About = () => {
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover" loading="lazy" />
               </div>
               <div className="p-5">
-                <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.65)' }}>{post.date}</span>
-                <h3 className="font-playfair text-base mt-2 mb-2 leading-tight" style={{ color: '#F8F5F0' }}>{post.title}</h3>
+                <h3 className="font-playfair text-base mb-2 leading-tight" style={{ color: '#F8F5F0' }}>{post.title}</h3>
                 <div className="gold-divider-left mb-3" />
                 <p className="font-cormorant text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.68)' }}>{post.excerpt}</p>
               </div>

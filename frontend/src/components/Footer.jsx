@@ -220,13 +220,13 @@ const Footer = () => {
         <p className="font-inter text-[0.7rem] tracking-wide text-center" style={{ color: 'rgba(248,245,240,0.35)' }}>
           Powered by{' '}
           <a
-            href="https://cenerasystems.com"
+            href="https://cenexasystems.com"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all duration-300 font-semibold hover:text-[#FFD700]"
             style={{ color: '#FFD700', textDecoration: 'none' }}
           >
-            Cenera Systems
+            Cenexa Systems
           </a>{' '}
           © 2026
         </p>
