@@ -88,7 +88,7 @@ const OwnerSpotlight = () => {
                 Experience
               </div>
               <div className="font-playfair text-3xl font-bold text-white mt-1">8+</div>
-              <div className="font-cormorant text-sm italic" style={{ color: 'rgba(248,245,240,0.6)' }}>
+              <div className="font-cormorant text-sm italic" style={{ color: 'rgba(248,245,240,0.88)' }}>
                 Years of Artistry
               </div>
             </motion.div>
@@ -145,7 +145,7 @@ const OwnerSpotlight = () => {
             </motion.h2>
 
             {/* Title */}
-            <motion.div variants={fadeUp} className="font-cinzel text-xs tracking-[0.3em] uppercase mb-8" style={{ color: 'rgba(248,245,240,0.7)' }}>
+            <motion.div variants={fadeUp} className="font-cinzel text-xs tracking-[0.3em] uppercase mb-8" style={{ color: 'rgba(248,245,240,0.92)' }}>
               Founder & Master Bridal Artist
             </motion.div>
 
@@ -156,15 +156,15 @@ const OwnerSpotlight = () => {
             <motion.p
               variants={fadeUp}
               className="font-cormorant leading-relaxed mb-6"
-              style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.85)', letterSpacing: '0.01em' }}
+              style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.95)', letterSpacing: '0.01em' }}
             >
-              With over 8 years of transformative artistry, Shammugapriya has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
+              With over 8 years of transformative artistry, Shanmugavadivu Sabarinathan has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
             </motion.p>
 
             <motion.p
               variants={fadeUp}
               className="font-cormorant leading-relaxed mb-10"
-              style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.7)', letterSpacing: '0.01em' }}
+              style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.92)', letterSpacing: '0.01em' }}
             >
               Trained under award-winning masters and certified across international beauty academies, she brings world-class expertise to every bride she serves.
             </motion.p>
@@ -188,7 +188,7 @@ const OwnerSpotlight = () => {
                   >
                     {stat.value}
                   </div>
-                  <div className="font-cormorant text-xs tracking-wider italic mt-1" style={{ color: 'rgba(248,245,240,0.65)' }}>
+                  <div className="font-cormorant text-xs tracking-wider italic mt-1" style={{ color: 'rgba(248,245,240,0.88)' }}>
                     {stat.label}
                   </div>
                 </div>

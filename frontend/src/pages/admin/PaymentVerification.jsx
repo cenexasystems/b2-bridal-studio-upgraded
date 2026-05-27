@@ -180,7 +180,7 @@ const PaymentVerification = () => {
                   <td className="p-4">
                     {b.paymentProof ? (
                       <button
-                        onClick={() => setProofModal(`${API}/uploads/${b.paymentProof}`)}
+                        onClick={() => setProofModal(b.paymentProof.startsWith('data:') ? b.paymentProof : `${API}/uploads/${b.paymentProof}`)}
                         className="text-blue-600 hover:text-blue-800 text-xs font-medium underline"
                       >
                         View Proof
@@ -242,10 +242,14 @@ const PaymentVerification = () => {
                 <X size={20} />
               </button>
             </div>
-            {proofModal.endsWith('.pdf') ? (
+            {(proofModal.startsWith('data:application/pdf') || proofModal.endsWith('.pdf')) ? (
               <iframe src={proofModal} className="w-full h-96 rounded-lg" title="Payment Proof" />
             ) : (
-              <img src={proofModal} alt="Payment Proof" className="w-full rounded-lg" />
+              <img 
+                src={proofModal} 
+                alt="Payment Proof" 
+                className="w-full h-auto object-contain rounded-lg shadow-sm" 
+              />
             )}
           </div>
         </div>

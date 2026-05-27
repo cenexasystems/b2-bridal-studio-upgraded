@@ -11,15 +11,25 @@ const API = import.meta.env.VITE_API_URL;
 const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { items: cartItems, subtotal: cartSubtotal, gst: cartGst, total: cartTotal } = useCart();
+  const { items: cartItems, subtotal: cartSubtotal, total: cartTotal } = useCart();
 
   // Support both Cart flow and Direct Service flow
   const serviceData = location.state?.serviceData;
   const items = cartItems.length > 0 ? cartItems : (serviceData?.items || []);
   const subtotal = cartItems.length > 0 ? cartSubtotal : (serviceData?.subtotal || 0);
-  const gst = cartItems.length > 0 ? cartGst : (serviceData?.gstTotal || 0);
+  const gst = 0;
   const total = cartItems.length > 0 ? cartTotal : (serviceData?.total || 0);
   const isServiceFlow = cartItems.length === 0 && !!serviceData;
+
+  const gstIncluded = items.reduce((sum, i) => {
+    const gstPercent = i.gstPercentage || 0;
+    if (gstPercent > 0) {
+      const finalPrice = i.price * (i.quantity || 1);
+      const base = finalPrice / (1 + gstPercent / 100);
+      return sum + (finalPrice - base);
+    }
+    return sum;
+  }, 0);
 
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -185,12 +195,13 @@ const Payment = () => {
               <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
                 <span>Subtotal</span><span>₹{subtotal.toFixed(2)}</span>
               </div>
-              {/* Show GST when applicable */}
-              {gst > 0 && (
+              {gstIncluded > 0 && (
                 <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
-                  <span>GST</span><span>₹{gst.toFixed(2)}</span>
+                  <span>GST (Included)</span>
+                  <span>₹{(appliedCoupon ? gstIncluded * (appliedCoupon.finalAmount / total) : gstIncluded).toFixed(2)}</span>
                 </div>
               )}
+
 
               {/* Coupon Section (Only for Services) */}
               {isServiceFlow && (

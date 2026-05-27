@@ -18,6 +18,10 @@ const ManageServices = () => {
     gstPercentage: ''
   });
 
+  // Category State — kept separate so typing in new-category input never resets the dropdown
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [newCategory, setNewCategory] = useState('');
+
   // Search & Grouping State
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedCategories, setExpandedCategories] = useState({});
@@ -43,18 +47,71 @@ const ManageServices = () => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    
+
+    // Resolve the final category from the two separate state variables
+    const finalCategory =
+      selectedCategory === 'new' ? newCategory.trim() : selectedCategory;
+
+    if (!finalCategory) {
+      alert('Please select or enter a category name.');
+      return;
+    }
+
     // Cleanup empty options
     const payload = {
       ...currentService,
+      category: finalCategory,
       options: currentService.options.filter(opt => opt.name && opt.price)
     };
     if (payload.options.length === 0) delete payload.options;
-    // Handle GST: convert to number or remove if empty
-    if (payload.gstPercentage === '' || payload.gstPercentage === null || payload.gstPercentage === undefined) {
-      delete payload.gstPercentage;
+
+    // Calculate dynamic basePrice and finalPrice if GST percentage is entered
+    const gstPercent = parseFloat(currentService.gstPercentage) || 0;
+    payload.gstPercentage = gstPercent;
+
+    if (gstPercent > 0) {
+      if (payload.options && payload.options.length > 0) {
+        payload.options = payload.options.map(opt => {
+          const base = parseFloat(opt.price) || 0;
+          const final = base + (base * gstPercent / 100);
+          return {
+            name: opt.name,
+            price: final, // keep backward compatibility
+            basePrice: base,
+            finalPrice: final
+          };
+        });
+        delete payload.price;
+        delete payload.basePrice;
+        delete payload.finalPrice;
+      } else {
+        const base = parseFloat(currentService.price) || 0;
+        const final = base + (base * gstPercent / 100);
+        payload.basePrice = base;
+        payload.finalPrice = final;
+        payload.price = final; // keep backward compatibility
+      }
     } else {
-      payload.gstPercentage = Number(payload.gstPercentage);
+      // Simplified no-GST flow
+      if (payload.options && payload.options.length > 0) {
+        payload.options = payload.options.map(opt => {
+          const base = parseFloat(opt.price) || 0;
+          return {
+            name: opt.name,
+            price: base,
+            basePrice: base,
+            finalPrice: base
+          };
+        });
+        delete payload.price;
+        delete payload.basePrice;
+        delete payload.finalPrice;
+      } else {
+        const base = parseFloat(currentService.price) || 0;
+        payload.basePrice = base;
+        payload.finalPrice = base;
+        payload.price = base;
+      }
     }
 
     try {
@@ -64,6 +121,8 @@ const ManageServices = () => {
         await axios.post(`${API}/api/services`, payload, config);
       }
       setIsEditing(false);
+      setSelectedCategory('');
+      setNewCategory('');
       fetchServices();
     } catch (err) {
       alert(err.response?.data?.error || 'Failed to save service');
@@ -207,7 +266,7 @@ const ManageServices = () => {
             <h3 className="text-base font-bold font-cinzel tracking-wide text-gray-900 uppercase">
               {currentService._id ? 'Edit Service' : 'Add New Service'}
             </h3>
-            <button onClick={() => setIsEditing(false)} className="text-gray-400 hover:text-gray-700 transition-colors">
+            <button onClick={() => { setIsEditing(false); setSelectedCategory(''); setNewCategory(''); }} className="text-gray-400 hover:text-gray-700 transition-colors">
               <X size={24} />
             </button>
           </div>
@@ -217,24 +276,27 @@ const ManageServices = () => {
               <div>
                 <label className="block text-xs font-cinzel tracking-wide text-gray-700 uppercase mb-1.5 font-semibold">Category</label>
                 <select
-                  value={currentService.category}
-                  onChange={e => setCurrentService({...currentService, category: e.target.value})}
+                  value={selectedCategory}
+                  onChange={e => setSelectedCategory(e.target.value)}
                   className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
-                  required
+                  required={selectedCategory !== 'new'}
                 >
                   <option value="">Select Category</option>
                   {[...new Set(services.map(s => s.category))].map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
-                  <option value="NEW" className="text-[#B8860B] font-bold">+ Add New Category</option>
+                  <option value="new" className="text-[#B8860B] font-bold">+ Add New Category</option>
                 </select>
 
-                {currentService.category === "NEW" && (
+                {selectedCategory === 'new' && (
                   <input
                     type="text"
-                    placeholder="Enter new category"
-                    className="w-full mt-3 p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
-                    onChange={e => setCurrentService({...currentService, category: e.target.value})}
+                    autoFocus
+                    value={newCategory}
+                    placeholder="Enter new category name"
+                    className="w-full mt-3 p-2.5 rounded-lg border border-[#FFD700] focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
+                    onChange={e => setNewCategory(e.target.value)}
+                    required
                   />
                 )}
               </div>
@@ -246,6 +308,21 @@ const ManageServices = () => {
                   onChange={e => setCurrentService({...currentService, name: e.target.value})}
                   className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
                   placeholder="e.g. Premium Bridal Makeup"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-xs font-cinzel tracking-wide text-gray-700 uppercase mb-1.5 font-semibold">GST % (Optional)</label>
+                <input 
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={currentService.gstPercentage || ''} 
+                  onChange={e => setCurrentService({...currentService, gstPercentage: e.target.value})}
+                  className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
+                  placeholder="e.g. 18 (Leave empty or 0 if no GST)"
                 />
               </div>
             </div>
@@ -306,39 +383,11 @@ const ManageServices = () => {
               </button>
             </div>
 
-            {/* GST Percentage (Optional) */}
-            <div className="pt-6 border-t border-gray-100">
-              <div className="flex items-center gap-3 mb-4">
-                <h4 className="text-sm font-cinzel tracking-wide text-gray-900 uppercase font-bold">GST (Optional)</h4>
-                <span className="text-[0.65rem] font-medium text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-full border border-gray-200">
-                  Leave empty if not applicable
-                </span>
-              </div>
-              <div className="max-w-sm">
-                <label className="block text-xs font-cinzel tracking-wide text-gray-700 uppercase mb-1.5 font-semibold">GST Percentage</label>
-                <input
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.1"
-                  value={currentService.gstPercentage || ''}
-                  onChange={e => setCurrentService({...currentService, gstPercentage: e.target.value})}
-                  className="w-full p-2.5 rounded-lg border border-gray-200 focus:outline-none focus:border-[#FFD700] bg-gray-50 text-sm text-gray-800 transition-colors"
-                  placeholder="Optional GST %"
-                />
-                {currentService.gstPercentage && Number(currentService.gstPercentage) > 0 && currentService.price && currentService.options.length === 0 && (
-                  <div className="mt-2 px-3 py-2 rounded-lg bg-amber-50 border border-amber-200">
-                    <span className="text-xs font-cinzel text-amber-800 font-semibold">
-                      Final Price After GST: ₹{(Number(currentService.price) + (Number(currentService.price) * Number(currentService.gstPercentage) / 100)).toFixed(2)}
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
+
 
             <div className="flex justify-end gap-3 pt-6 mt-4 border-t border-gray-100">
               <button 
-                type="button" onClick={() => setIsEditing(false)}
+                type="button" onClick={() => { setIsEditing(false); setSelectedCategory(''); setNewCategory(''); }}
                 className="px-5 py-2 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wide text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Cancel
@@ -378,6 +427,8 @@ const ManageServices = () => {
                 <button 
                   onClick={() => {
                     setCurrentService({ category: '', name: '', price: '', options: [], gstPercentage: '' });
+                    setSelectedCategory('');
+                    setNewCategory('');
                     setIsEditing(true);
                   }}
                   className="whitespace-nowrap w-full sm:w-auto flex justify-center items-center gap-2 px-5 py-2 rounded-lg font-cinzel text-xs uppercase tracking-wide transition-all font-bold shadow-md hover:shadow-lg bg-[#111] text-white"
@@ -506,17 +557,25 @@ const ManageServices = () => {
                                   ) : (
                                     <span className="font-semibold text-base text-gray-900">₹{service.price}</span>
                                   )}
-                                  {service.gstPercentage > 0 && (
-                                    <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[0.6rem] font-cinzel font-bold uppercase tracking-wide bg-amber-50 text-amber-700 border border-amber-200">
-                                      GST {service.gstPercentage}%
-                                    </span>
-                                  )}
+
                                 </div>
                                 
                                 <div className="flex justify-end gap-3 w-full sm:w-auto pt-4 sm:pt-0 border-t sm:border-0 border-gray-100">
                                   <button 
                                     onClick={() => {
-                                      setCurrentService(service);
+                                      const hasGst = service.gstPercentage > 0;
+                                      const editableService = {
+                                        ...service,
+                                        price: hasGst && service.basePrice !== undefined ? service.basePrice : service.price,
+                                        options: (service.options || []).map(opt => ({
+                                          ...opt,
+                                          price: hasGst && opt.basePrice !== undefined ? opt.basePrice : opt.price
+                                        })),
+                                        gstPercentage: service.gstPercentage || ''
+                                      };
+                                      setCurrentService(editableService);
+                                      setSelectedCategory(service.category || '');
+                                      setNewCategory('');
                                       setIsEditing(true);
                                     }}
                                     className="p-2 rounded-md text-gray-400 hover:text-[#B8860B] hover:bg-yellow-50 transition-colors"

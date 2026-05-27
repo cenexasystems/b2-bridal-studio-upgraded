@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_URL;
+
 const CartDrawer = () => {
   const { items, itemCount, subtotal, total, isOpen, closeCart, removeFromCart, updateQuantity } = useCart();
 
@@ -91,7 +93,11 @@ const CartDrawer = () => {
                       {/* Thumbnail */}
                       {item.image && (
                         <div className="w-16 h-16 flex-shrink-0 rounded overflow-hidden" style={{ border: '1px solid rgba(255,195,0,0.1)' }}>
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                          <img 
+                            src={item.image.startsWith('data:') || item.image.startsWith('http') ? item.image : `${API}/uploads/${item.image}`} 
+                            alt={item.name} 
+                            className="w-full h-full object-cover" 
+                          />
                         </div>
                       )}
 

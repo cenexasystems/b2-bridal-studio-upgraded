@@ -11,14 +11,8 @@ const SlotBlock = require('../models/SlotBlock');
 // Ensure uploads directory exists (required for Render and fresh environments)
 fs.mkdirSync(path.join(__dirname, '..', 'uploads'), { recursive: true });
 
-// Multer config for payment proof uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, 'proof-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Multer config for payment proof uploads (in-memory storage to survive ephemeral redeploys)
+const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
@@ -96,13 +90,13 @@ router.post('/', upload.single('paymentProof'), async (req, res) => {
       branch,
       items: typeof items === 'string' ? JSON.parse(items) : (items || []),
       total: Number(total),
-      gstAmount: gstAmount ? Number(gstAmount) : 0,
+      gstAmount: Number(gstAmount) || 0,
       couponCode: couponCode || null,
       discountPercentage: discountPercentage ? Number(discountPercentage) : null,
       discountAmount: discountAmount ? Number(discountAmount) : null,
       finalAmount: finalAmount ? Number(finalAmount) : Number(total),
       dateTime: dateTime || new Date().toISOString(),
-      paymentProof: req.file ? req.file.filename : null,
+      paymentProof: req.file ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}` : null,
       status: 'Pending'
     });
 

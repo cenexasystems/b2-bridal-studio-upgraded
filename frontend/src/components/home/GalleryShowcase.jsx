@@ -34,7 +34,7 @@ const GalleryShowcase = () => {
             <motion.h2 variants={fadeUp} className="font-cinzel font-bold uppercase mb-4" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)', letterSpacing: '0.05em', color: '#F8F5F0' }}>
               Gallery of Excellence
             </motion.h2>
-            <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.7)' }}>
+            <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.92)' }}>
               A glimpse into the transformations we create every day.
             </motion.p>
           </motion.div>

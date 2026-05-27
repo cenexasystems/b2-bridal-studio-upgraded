@@ -102,9 +102,7 @@ const ViewBookings = () => {
                         🏷️ {bill.couponCode} (-₹{bill.discountAmount.toFixed(2)})
                       </div>
                     )}
-                    {bill.gst > 0 && (
-                      <div className="text-xs text-gray-400 mt-0.5 font-cormorant italic">inc. GST ₹{bill.gst.toFixed(2)}</div>
-                    )}
+
                   </td>
                 </tr>
               ))}

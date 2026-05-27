@@ -70,7 +70,7 @@ Our professional certification courses cover all these trends and more. Join our
 *Ready to begin your bridal makeup journey? [Explore our courses](/courses)*
     `,
     image: 'https://images.unsplash.com/photo-1457972729786-0411a3b2b626?auto=format&fit=crop&w=1200&q=80',
-    author: 'Shammugapriya',
+    author: 'Shanmugavadivu Sabarinathan',
     readTime: '8 min read',
     tags: ['bridal makeup', 'trends', 'wedding', '2024'],
   },
@@ -247,7 +247,7 @@ Our bridal services include comprehensive pre-bridal skincare guidance. We work 
 *Book a bridal consultation to begin your glow-up journey.*
     `,
     image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1200&q=80',
-    author: 'Shammugapriya',
+    author: 'Shanmugavadivu Sabarinathan',
     readTime: '7 min read',
     tags: ['skincare', 'bridal prep', 'beauty', 'wedding day'],
   },

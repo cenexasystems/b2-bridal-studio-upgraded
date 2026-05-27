@@ -34,7 +34,7 @@ const Contact = () => {
           <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
             Get in Touch
           </motion.h1>
-          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.35rem', color: 'rgba(248,245,240,0.8)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.35rem', color: 'rgba(248,245,240,0.92)' }}>
             We'd love to hear from you. Reach out and we'll respond within 24 hours.
           </motion.p>
         </motion.div>
@@ -51,7 +51,7 @@ const Contact = () => {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M5 12l5 5L19 7" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
                 <h3 className="font-cinzel text-sm tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#F8F5F0' }}>Redirected to WhatsApp</h3>
-                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.6)' }}>Complete your message on WhatsApp.</p>
+                <p className="font-cormorant italic" style={{ color: 'rgba(248,245,240,0.88)' }}>Complete your message on WhatsApp.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -86,10 +86,18 @@ const Contact = () => {
             {/* Contact cards */}
             <div className="glass-dark p-6 rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.12)' }}>
               {[
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 1', value: 'No. 63, Madavaram Red Hills Rd, Moolakaadu, Chennai — 600060', href: 'https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410' },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 1', value: 'No. 63, Madavaram Red Hills Rd, Moolakaadai, Chennai — 600060', href: 'https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410' },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 2', value: 'C6, Santhi Sadan Enclave, Melakkal Main Road, Kochadai, Madurai – 625016', href: 'https://www.google.com/maps/dir/?api=1&destination=9.9252,78.0747' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>, label: 'Phone', value: '+91 98405 51365 / +91 97908 82561' },
-                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>, label: 'Email', value: 'b2shammu@gmail.com' },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>, label: 'Phone', value: (
+                  <span className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-1 sm:gap-2">
+                    <span>+91 98405 51365</span>
+                    <span className="hidden sm:inline opacity-40">/</span>
+                    <span>+91 97908 82561</span>
+                    <span className="hidden sm:inline opacity-40">/</span>
+                    <span>+91 93615 27951</span>
+                  </span>
+                ) },
+                { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>, label: 'Email', value: 'b2bridalstudio@gmail.com' },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 py-4" style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
@@ -122,7 +130,7 @@ const Contact = () => {
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
                   { href: '#', icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg> },
                 ].map((social, i) => (
-                  <a key={i} href={social.href} className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300" style={{ border: '1px solid rgba(255,195,0,0.2)', color: 'rgba(248,245,240,0.5)' }} onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFD700'; e.currentTarget.style.color = '#FFD700'; e.currentTarget.style.background = 'rgba(255,195,0,0.08)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,195,0,0.2)'; e.currentTarget.style.color = 'rgba(248,245,240,0.5)'; e.currentTarget.style.background = 'transparent'; }}>
+                  <a key={i} href={social.href} className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300" style={{ border: '1px solid rgba(255,195,0,0.2)', color: 'rgba(248,245,240,0.75)' }} onMouseEnter={e => { e.currentTarget.style.borderColor = '#FFD700'; e.currentTarget.style.color = '#FFD700'; e.currentTarget.style.background = 'rgba(255,195,0,0.08)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,195,0,0.2)'; e.currentTarget.style.color = 'rgba(248,245,240,0.75)'; e.currentTarget.style.background = 'transparent'; }}>
                     {social.icon}
                   </a>
                 ))}

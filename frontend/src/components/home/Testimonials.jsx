@@ -11,7 +11,7 @@ const staticTestimonials = [
     _id: 'static-1',
     name: 'Priya Lakshmi',
     role: 'Bride, 2023',
-    quote: 'Shammugapriya transformed me into exactly the bride I dreamed of being. The artistry, the attention to detail, and the love poured into every brushstroke — it was a spiritual experience.',
+    quote: 'Shanmugavadivu Sabarinathan transformed me into exactly the bride I dreamed of being. The artistry, the attention to detail, and the love poured into every brushstroke — it was a spiritual experience.',
     stars: 5,
   },
   {
@@ -258,7 +258,7 @@ const Testimonials = () => {
           >
             Client Stories
           </motion.h2>
-          <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.8)' }}>
+          <motion.p variants={fadeUp} className="font-cormorant italic" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.92)' }}>
             The most honest reviews — from those who wore our artistry.
           </motion.p>
 
@@ -354,7 +354,7 @@ const Testimonials = () => {
                     <h3 className="font-cinzel text-lg text-[#F8F5F0] uppercase font-bold tracking-[0.15em] mb-1">
                       Share Your Story
                     </h3>
-                    <p className="font-cormorant text-sm italic text-gray-400">
+                    <p className="font-cormorant text-sm italic text-gray-300">
                       We value your feedback. Let us know how your experience was.
                     </p>
                   </div>
@@ -367,7 +367,7 @@ const Testimonials = () => {
 
                   {/* Star Rating Input */}
                   <div>
-                    <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 mb-2 font-semibold">
+                    <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 mb-2 font-semibold">
                       Your Rating *
                     </label>
                     <div className="flex gap-2">
@@ -396,7 +396,7 @@ const Testimonials = () => {
                   {/* Customer Name */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 font-semibold">
                         Your Name *
                       </label>
                       <span className="text-[0.65rem] text-gray-500 font-sans">
@@ -417,7 +417,7 @@ const Testimonials = () => {
                   {/* Role / Occasion */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 font-semibold">
                         Role / Occasion (Optional)
                       </label>
                       <span className="text-[0.65rem] text-gray-500 font-sans">
@@ -437,7 +437,7 @@ const Testimonials = () => {
                   {/* Review / Experience */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-400 font-semibold">
+                      <label className="block font-cinzel text-[0.6rem] tracking-[0.2em] uppercase text-gray-300 font-semibold">
                         Your Review / Experience *
                       </label>
                       <span className="text-[0.65rem] text-gray-500 font-sans">

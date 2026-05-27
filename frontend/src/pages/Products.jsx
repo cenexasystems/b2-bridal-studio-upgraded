@@ -4,16 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { useCart } from '../context/CartContext';
 const API = import.meta.env.VITE_API_URL;
-const DEMO_PRODUCTS = [
-  { _id: 'p1', name: 'Bridal Makeup Kit Pro', category: 'Makeup', price: 4999, image: '/images/bridal4.jpeg' },
-  { _id: 'p2', name: 'Silk Thread Jhumka Set', category: 'Jewellery', price: 799, image: '/images/jewelry.png' },
-  { _id: 'p3', name: 'Aari Embroidery Frame', category: 'Tools', price: 1499, image: '/images/aari1.jpeg' },
-  { _id: 'p4', name: 'Gold Leaf Nail Art Kit', category: 'Nails', price: 999, image: '/images/aari5.jpeg' },
-  { _id: 'p5', name: 'Mehandi Cone Premium Pack', category: 'Mehandi', price: 599, image: '/images/bridal6.jpeg' },
-  { _id: 'p6', name: 'Hair Styling Tools Bundle', category: 'Hair', price: 3499, image: '/images/fashion1.jpeg' },
-  { _id: 'p7', name: 'Kundan Making Kit', category: 'Jewellery', price: 1299, image: '/images/aari7.jpeg' },
-  { _id: 'p8', name: 'Bridal Skincare Collection', category: 'Skincare', price: 2999, image: '/images/bridal10.jpeg' },
-];
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -23,8 +14,8 @@ const Products = () => {
 
   useEffect(() => {
     axios.get(`${API}/api/products`)
-      .then(res => setProducts(res.data.length > 0 ? res.data : DEMO_PRODUCTS))
-      .catch(() => setProducts(DEMO_PRODUCTS));
+      .then(res => setProducts(res.data || []))
+      .catch(() => setProducts([]));
   }, []);
 
   const isInCart = (id) => items.some(i => (i._id || i.id) === id);
@@ -67,8 +58,69 @@ const Products = () => {
         </motion.div>
       </div>
 
-      {/* Product Grid */}
+      {/* Product Grid or Empty State */}
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12 py-16 pb-24">
+        {products.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+            className="flex flex-col items-center justify-center text-center"
+            style={{ minHeight: '40vh' }}
+          >
+            {/* Decorative gold ring */}
+            <div
+              style={{
+                width: '90px',
+                height: '90px',
+                borderRadius: '50%',
+                border: '2px solid rgba(212,175,55,0.35)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '28px',
+                boxShadow: '0 0 40px rgba(212,175,55,0.08)',
+              }}
+            >
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 01-8 0"/>
+              </svg>
+            </div>
+
+            {/* Gold divider */}
+            <div className="flex items-center gap-4 mb-6">
+              <div className="gold-divider" style={{ width: '50px' }} />
+              <span className="font-cinzel text-[0.55rem] tracking-[0.5em] uppercase" style={{ color: '#d4af37' }}>Collection</span>
+              <div className="gold-divider" style={{ width: '50px' }} />
+            </div>
+
+            <h2
+              className="font-cinzel font-bold uppercase mb-4"
+              style={{
+                fontSize: 'clamp(1.5rem, 4vw, 2.4rem)',
+                color: '#d4af37',
+                letterSpacing: '0.06em',
+                lineHeight: 1.2,
+              }}
+            >
+              No Products Available
+            </h2>
+
+            <p
+              className="font-cormorant italic"
+              style={{
+                fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+                color: 'rgba(248,245,240,0.55)',
+                maxWidth: '380px',
+                lineHeight: 1.7,
+              }}
+            >
+              Products added from the admin panel will appear here.
+            </p>
+          </motion.div>
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, i) => {
             const inCart = isInCart(product._id);
@@ -84,7 +136,7 @@ const Products = () => {
                 {/* Image */}
                 <div className="img-zoom-container relative" style={{ height: '240px' }}>
                   <img
-                    src={product.image || '/images/bridal4.jpeg'}
+                    src={product.image ? (product.image.startsWith('data:') || product.image.startsWith('http') ? product.image : `${API}/uploads/${product.image}`) : '/images/bridal4.jpeg'}
                     alt={product.name}
                     className="w-full h-full object-cover"
                     loading="lazy"
@@ -182,6 +234,7 @@ const Products = () => {
             );
           })}
         </div>
+        )}
       </div>
       {/* Toast Notification */}
       <AnimatePresence>

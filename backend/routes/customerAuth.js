@@ -5,9 +5,74 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
-const nodemailer = require('nodemailer');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+
+// Centralized utility to send transactional emails via Brevo HTTP API
+async function sendEmail({ to, toName, subject, htmlContent }) {
+  const apiKey = process.env.BREVO_API_KEY;
+  const senderEmail = process.env.BREVO_SMTP_USER || process.env.EMAIL_USER;
+
+  if (!apiKey) {
+    console.warn('[Email Service] Warning: BREVO_API_KEY environment variable is not configured. Email will not be sent.');
+    throw new Error('BREVO_API_KEY environment variable is missing.');
+  }
+
+  const payload = {
+    sender: {
+      name: "B2 Bridal Studio",
+      email: senderEmail || "no-reply@b2bridalstudio.com"
+    },
+    to: [
+      {
+        email: to,
+        name: toName || to
+      }
+    ],
+    subject: subject,
+    htmlContent: htmlContent
+  };
+
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'api-key': apiKey
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const responseData = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      console.error('[Email Service] Brevo HTTP API error response:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: responseData
+      });
+      throw new Error(`Brevo API returned status ${response.status}: ${JSON.stringify(responseData)}`);
+    }
+
+    console.log(`[Email Service] Email sent successfully to ${to}. Message ID: ${responseData.messageId}`);
+    return { success: true, messageId: responseData.messageId };
+
+  } catch (error) {
+    console.error('[Email Service] Detailed API error logging:', {
+      message: error.message,
+      stack: error.stack
+    });
+    throw error;
+  }
+}
+
+// Startup logs to check Brevo HTTP API environment variables
+if (process.env.BREVO_API_KEY) {
+  console.log('[Email Service] Brevo HTTP API integration initialized. Ready to send emails.');
+} else {
+  console.warn('[Email Service] Warning: BREVO_API_KEY environment variable is not set.');
+}
 
 // 🔹 REGISTER
 router.post('/register', async (req, res) => {
@@ -175,56 +240,54 @@ router.post('/forgot-password', async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // Send email
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
+    // Prepare reset URL
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
-    const mailOptions = {
-      from: `"B2 Bridal Studio" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Password Reset - B2 Bridal Studio',
-      html: `
-        <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #1a1a1a; color: #f5f5f5; padding: 40px; border: 2px solid #c9a84c;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
-            <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
-          </div>
-          
-          <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Password Reset Request</h2>
-          
-          <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">Dear ${user.name || 'Valued Customer'},</p>
-          
-          <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">
-            We received a request to reset your password. Click the button below to set a new password. This link is valid for <strong style="color: #c9a84c;">1 hour</strong>.
-          </p>
-          
-          <div style="text-align: center; margin: 35px 0;">
-            <a href="${resetUrl}" style="background-color: #c9a84c; color: #1a1a1a; padding: 14px 40px; text-decoration: none; font-size: 16px; font-weight: bold; letter-spacing: 1px; border-radius: 4px; display: inline-block;">
-              RESET PASSWORD
-            </a>
-          </div>
-          
-          <p style="color: #888; font-size: 13px; line-height: 1.6;">
-            If you did not request a password reset, please ignore this email. Your password will remain unchanged.
-          </p>
-          
-          <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center;">
-            <p style="color: #666; font-size: 12px; margin: 0;">
-              &copy; ${new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
-            </p>
-          </div>
+    const htmlContent = `
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #1a1a1a; color: #f5f5f5; padding: 40px; border: 2px solid #c9a84c;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
+          <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
         </div>
-      `
-    };
+        
+        <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Password Reset Request</h2>
+        
+        <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">Dear ${user.name || 'Valued Customer'},</p>
+        
+        <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">
+          We received a request to reset your password. Click the button below to set a new password. This link is valid for <strong style="color: #c9a84c;">1 hour</strong>.
+        </p>
+        
+        <div style="text-align: center; margin: 35px 0;">
+          <a href="${resetUrl}" style="background-color: #c9a84c; color: #1a1a1a; padding: 14px 40px; text-decoration: none; font-size: 16px; font-weight: bold; letter-spacing: 1px; border-radius: 4px; display: inline-block;">
+            RESET PASSWORD
+          </a>
+        </div>
+        
+        <p style="color: #888; font-size: 13px; line-height: 1.6;">
+          If you did not request a password reset, please ignore this email. Your password will remain unchanged.
+        </p>
+        
+        <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center;">
+          <p style="color: #666; font-size: 12px; margin: 0;">
+            &copy; ${new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
+          </p>
+        </div>
+      </div>
+    `;
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await sendEmail({
+        to: email,
+        toName: user.name,
+        subject: 'Password Reset - B2 Bridal Studio',
+        htmlContent
+      });
+      console.log(`[Forgot Password] Reset email request completed successfully for: ${email}`);
+    } catch (mailError) {
+      console.error('[Forgot Password] Send HTTP mail error:', mailError.message);
+      throw new Error(`Failed to send password reset email: ${mailError.message}`);
+    }
 
     res.json({ message: 'If an account exists with this email, a reset link has been sent.' });
 
@@ -327,54 +390,51 @@ router.post('/send-otp', async (req, res) => {
       await customer.save();
     }
 
-    // Send email using Nodemailer
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    const mailOptions = {
-      from: `"B2 Bridal Studio" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: 'Your One-Time Password (OTP) - B2 Bridal Studio',
-      html: `
-        <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #1a1a1a; color: #f5f5f5; padding: 40px; border: 2px solid #c9a84c;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
-            <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
-          </div>
-          
-          <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Email Verification OTP</h2>
-          
-          <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">Dear ${name || 'Valued Customer'},</p>
-          
-          <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">
-            Thank you for choosing B2 Bridal Studio. Please use the following One-Time Password (OTP) to complete your login/registration process. This OTP is valid for <strong style="color: #c9a84c;">5 minutes</strong>.
-          </p>
-          
-          <div style="text-align: center; margin: 35px 0;">
-            <span style="background-color: rgba(201, 168, 76, 0.15); color: #c9a84c; border: 1px dashed #c9a84c; padding: 12px 30px; font-size: 28px; font-weight: bold; letter-spacing: 6px; border-radius: 4px; display: inline-block;">
-              ${otpVal}
-            </span>
-          </div>
-          
-          <p style="color: #888; font-size: 13px; line-height: 1.6;">
-            If you did not request this OTP, please ignore this email or contact support if you have concerns.
-          </p>
-          
-          <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center;">
-            <p style="color: #666; font-size: 12px; margin: 0;">
-              &copy; ${new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
-            </p>
-          </div>
+    const htmlContent = `
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #1a1a1a; color: #f5f5f5; padding: 40px; border: 2px solid #c9a84c;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
+          <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
         </div>
-      `
-    };
+        
+        <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Email Verification OTP</h2>
+        
+        <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">Dear ${name || 'Valued Customer'},</p>
+        
+        <p style="color: #d4d4d4; line-height: 1.8; font-size: 15px;">
+          Thank you for choosing B2 Bridal Studio. Please use the following One-Time Password (OTP) to complete your login/registration process. This OTP is valid for <strong style="color: #c9a84c;">5 minutes</strong>.
+        </p>
+        
+        <div style="text-align: center; margin: 35px 0;">
+          <span style="background-color: rgba(201, 168, 76, 0.15); color: #c9a84c; border: 1px dashed #c9a84c; padding: 12px 30px; font-size: 28px; font-weight: bold; letter-spacing: 6px; border-radius: 4px; display: inline-block;">
+            ${otpVal}
+          </span>
+        </div>
+        
+        <p style="color: #888; font-size: 13px; line-height: 1.6;">
+          If you did not request this OTP, please ignore this email or contact support if you have concerns.
+        </p>
+        
+        <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center;">
+          <p style="color: #666; font-size: 12px; margin: 0;">
+            &copy; ${new Date().getFullYear()} B2 Bridal Studio. All rights reserved.
+          </p>
+        </div>
+      </div>
+    `;
 
-    await transporter.sendMail(mailOptions);
+    try {
+      await sendEmail({
+        to: email,
+        toName: name,
+        subject: 'Your One-Time Password (OTP) - B2 Bridal Studio',
+        htmlContent
+      });
+      console.log(`[OTP] OTP email request completed successfully for: ${email}`);
+    } catch (mailError) {
+      console.error('[OTP] Send HTTP OTP error:', mailError.message);
+      throw new Error(`Failed to send OTP email: ${mailError.message}`);
+    }
 
     res.json({ message: "OTP sent successfully" });
 

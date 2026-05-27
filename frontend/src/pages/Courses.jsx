@@ -158,7 +158,7 @@ const Courses = () => {
             <motion.h1 variants={fadeUp} className="font-cinzel font-bold uppercase" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F8F5F0', letterSpacing: '0.05em' }}>
               Our Courses
             </motion.h1>
-            <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.7)' }}>
+            <motion.p variants={fadeUp} className="font-cormorant italic mt-4" style={{ fontSize: '1.15rem', color: 'rgba(248,245,240,0.92)' }}>
               Master the art of beauty and craftsmanship with our professionally curated programs.
             </motion.p>
           </motion.div>
@@ -217,7 +217,7 @@ const Courses = () => {
             {categoryData?.title}
           </motion.h1>
           <motion.div variants={fadeUp} className="mt-4">
-            <Link to="/courses" className="font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2" style={{ color: 'rgba(255,195,0,0.6)' }}>
+            <Link to="/courses" className="font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2" style={{ color: 'rgba(255,195,0,0.85)' }}>
               <svg width="10" height="8" viewBox="0 0 10 8" fill="none" stroke="currentColor" strokeWidth="1"><path d="M9 4H1M4 7L1 4l3-3" strokeLinecap="round" /></svg>
               All Categories
             </Link>
@@ -229,15 +229,15 @@ const Courses = () => {
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12 pt-10 pb-4">
         <div className="glass-dark p-4 flex flex-wrap items-center justify-end gap-4" style={{ border: '1px solid rgba(255,195,0,0.1)' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
-          <span className="font-cormorant text-base" style={{ color: 'rgba(248,245,240,0.6)' }}>Select Branch:</span>
+          <span className="font-cormorant text-base" style={{ color: 'rgba(248,245,240,0.92)' }}>Select Branch:</span>
           <select
             value={selectedBranch}
             onChange={e => setSelectedBranch(e.target.value)}
             className="px-4 py-2.5 font-cormorant rounded-sm outline-none"
             style={{ background: 'rgba(255,195,0,0.08)', border: '1px solid rgba(255,195,0,0.2)', color: '#F8F5F0', fontSize: '1.05rem' }}
           >
-            <option value="branch1" style={{ background: '#111' }}>Chennai — Moolakaadu</option>
-            <option value="branch2" style={{ background: '#111' }}>Madurai Branch</option>
+            <option value="branch1" style={{ background: '#111' }}>Chennai — Moolakaadai</option>
+            <option value="branch2" style={{ background: '#111' }}>Madurai — Kochadai</option>
           </select>
         </div>
       </div>
@@ -268,7 +268,7 @@ const Courses = () => {
               <div className="p-5 flex-1 flex flex-col">
                 <h3 className="font-playfair text-base mb-3 leading-tight" style={{ color: '#F8F5F0' }}>{course.title}</h3>
                 <div className="mb-4 flex-1">
-                  <h4 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2 flex items-center gap-2" style={{ color: 'rgba(255,195,0,0.7)' }}>
+                  <h4 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2 flex items-center gap-2" style={{ color: 'rgba(255,195,0,0.88)' }}>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" /><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" /></svg>
                     You'll Learn
                   </h4>

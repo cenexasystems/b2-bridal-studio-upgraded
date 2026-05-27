@@ -8,16 +8,8 @@ const path = require('path');
 const router = express.Router();
 
 
-// 🔥 MULTER CONFIG (for file upload)
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
+// 🔥 MULTER CONFIG (for file upload, in-memory storage to survive ephemeral redeploys)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 
@@ -46,7 +38,7 @@ router.post(
         price: Number(req.body.price),
         stock: Number(req.body.stock),
         image: req.file
-          ? `${process.env.BASE_URL}/uploads/${req.file.filename}`
+          ? `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`
           : ''
       });
 
@@ -77,7 +69,7 @@ router.put(
 
       // if new image uploaded
       if (req.file) {
-        updateData.image = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+        updateData.image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
       }
 
       const updatedProduct = await Product.findByIdAndUpdate(
