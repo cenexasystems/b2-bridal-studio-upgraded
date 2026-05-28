@@ -61,7 +61,7 @@ const About = () => {
       {/* ═══ SECTION 1 — INTRO HERO ═══ */}
       <section className="relative overflow-hidden" style={{ padding: '10rem 0 6rem' }} ref={heroRef}>
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center top, rgba(255,195,0,0.06), transparent 60%)' }} />
-        <motion.div variants={staggerContainer} initial="hidden" animate={heroInView ? 'visible' : 'hidden'} className="max-w-[1200px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <motion.div variants={staggerContainer} initial="hidden" animate={heroInView ? 'visible' : 'hidden'} className="max-w-[1200px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Content — Left side */}
           <motion.div variants={slideLeft}>
             <div className="flex items-center gap-3 mb-4">
@@ -83,8 +83,8 @@ const About = () => {
           </motion.div>
 
           {/* Image — Right side */}
-          <motion.div variants={slideRight} className="relative">
-            <div className="img-zoom-container rounded-sm" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
+          <motion.div variants={slideRight} className="relative flex justify-center">
+            <div className="img-zoom-container rounded-sm w-full max-w-[260px]" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
               <img
                 src="/images/about3.jpg"
                 alt="About B2 Bridal Studio"
@@ -234,9 +234,9 @@ const About = () => {
         </div>
         <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: '/images/bridal7.jpeg', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
-            { title: 'How to Build a Luxury Bridal Makeup Career', image: '/images/bridal12.jpeg', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
-            { title: 'The Pre-Bridal Skin Care Ritual', image: '/images/bridal10.jpeg', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
+            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
+            { title: 'How to Build a Luxury Bridal Makeup Career', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
+            { title: 'The Pre-Bridal Skin Care Ritual', image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&w=800&q=80', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
           ].map((post, i) => (
             <motion.article
               key={i}
