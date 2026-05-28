@@ -1484,6 +1484,16 @@ body {
 
 /* ─── Mobile Responsiveness Enhancements (max-width: 768px) ─── */
 @media (max-width: 768px) {
+  /* Prevent fixed mobile navbar from overlapping hero section */
+  .hero-section {
+    padding-top: 64px !important;
+  }
+  .hero-inner-container {
+    padding-top: 40px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
   /* Prevent horizontal text overflows in Hero */
   .typewriter {
     white-space: normal !important;
@@ -1496,6 +1506,15 @@ body {
 }
 
 @media (max-width: 640px) {
+  .hero-section {
+    padding-top: 64px !important;
+  }
+  .hero-inner-container {
+    padding-top: 30px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
   /* Hero button group stacking */
   .hero-btn-group {
     flex-direction: column !important;

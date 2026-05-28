@@ -121,12 +121,12 @@ const Navbar = () => {
         }}
       >
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 md:h-20">
 
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
+            <Link to="/" className="flex items-center gap-3 group shrink-0 whitespace-nowrap">
               <div
-                className="flex items-center justify-center transition-all duration-300 group-hover:scale-105"
+                className="flex items-center justify-center transition-all duration-300 group-hover:scale-105 shrink-0"
                 style={{ width: 48, height: 48, flexShrink: 0 }}
               >
                 <img
@@ -135,9 +135,9 @@ const Navbar = () => {
                   style={{ width: 48, height: 48, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.3))' }}
                 />
               </div>
-              <div>
-                <div className="font-cinzel text-xs tracking-[0.25em] uppercase font-bold" style={{ color: '#D4AF37' }}>B2 Bridal</div>
-                <div className="font-cormorant text-[0.65rem] tracking-[0.2em] uppercase font-semibold" style={{ color: 'rgba(248, 245, 240, 0.7)', lineHeight: 1 }}>Studio</div>
+              <div className="shrink-0 whitespace-nowrap">
+                <div className="font-cinzel text-xs tracking-[0.25em] uppercase font-bold whitespace-nowrap" style={{ color: '#D4AF37' }}>B2 Bridal</div>
+                <div className="font-cormorant text-[0.65rem] tracking-[0.2em] uppercase font-semibold whitespace-nowrap" style={{ color: 'rgba(248, 245, 240, 0.7)', lineHeight: 1 }}>Studio</div>
               </div>
             </Link>
 

@@ -40,6 +40,7 @@ const Hero = () => {
   return (
     <section
       ref={ref}
+      className="hero-section"
       style={{
         minHeight: '100vh',
         background: '#0B0B0D',
