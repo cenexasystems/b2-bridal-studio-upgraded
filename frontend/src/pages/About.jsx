@@ -84,7 +84,7 @@ const About = () => {
 
           {/* Image — Right side */}
           <motion.div variants={slideRight} className="relative flex justify-center">
-            <div className="img-zoom-container rounded-sm w-full max-w-[300px]" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
+            <div className="img-zoom-container rounded-sm w-full max-w-[360px]" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
               <img
                 src="/images/about3.jpg"
                 alt="About B2 Bridal Studio"
@@ -134,8 +134,8 @@ const About = () => {
         <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             { src: '/images/about1.jpeg', alt: 'B2 Bridal Studio — Bridal Artistry' },
-            { src: '/images/about2.jpeg', alt: 'B2 Bridal Studio — Academy Training' },
-            { src: '/images/about3.jpg', alt: 'B2 Bridal Studio — Founder' },
+            { src: '/images/about4.jpeg', alt: 'B2 Bridal Studio — Academy Training' },
+            { src: '/images/about2.jpg', alt: 'B2 Bridal Studio — Founder' },
           ].map((img, i) => (
             <motion.div
               key={i}
