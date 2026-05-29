@@ -208,7 +208,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative py-12 px-4" style={{ background: '#000' }}>
+    <div className="min-h-screen flex items-center justify-center relative pt-28 pb-12 px-4" style={{ background: '#000' }}>
       {/* Background radial glow */}
       <div className="absolute pointer-events-none" style={{ top: '30%', left: '50%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(212,175,55,0.08), transparent 70%)' }} />
 
