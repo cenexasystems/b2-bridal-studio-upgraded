@@ -255,7 +255,7 @@ const ContactSection = () => {
                   label: 'Phone',
                   value: (
                     <span className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-1 sm:gap-2">
-                      <span>98405 51365</span>
+                      <span>99628 38303</span>
                       <span className="hidden sm:inline opacity-40">/</span>
                       <span>97908 82561</span>
                       <span className="hidden sm:inline opacity-40">/</span>
