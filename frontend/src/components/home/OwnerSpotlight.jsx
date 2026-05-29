@@ -162,7 +162,7 @@ const OwnerSpotlight = () => {
 
             <motion.p
               variants={fadeUp}
-              className="font-cormorant leading-relaxed tracking-[0.01em] text-[1.1rem] lg:text-[1.1rem] text-ivory/95 lg:text-ivory/92 mb-6 lg:mb-10"
+              className="font-cormorant leading-relaxed tracking-[0.01em] text-[1.1rem] lg:text-[1.2rem] text-ivory/95 lg:text-ivory/95 mb-6 lg:mb-10"
             >
               Trained under award-winning masters and certified across international beauty academies, she brings world-class expertise to every bride she serves.
             </motion.p>

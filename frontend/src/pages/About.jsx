@@ -77,7 +77,7 @@ const About = () => {
             <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/95 mb-4 md:mb-4">
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/92 mb-4 md:mb-0">
+            <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/95 mb-4 md:mb-0">
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
           </motion.div>
@@ -135,7 +135,7 @@ const About = () => {
           {[
             { src: '/images/about1.jpeg', alt: 'B2 Bridal Studio — Bridal Artistry' },
             { src: '/images/about4.jpeg', alt: 'B2 Bridal Studio — Academy Training' },
-            { src: '/images/about2.jpg', alt: 'B2 Bridal Studio — Founder' },
+            { src: '/images/about2.JPG', alt: 'B2 Bridal Studio — Founder' },
           ].map((img, i) => (
             <motion.div
               key={i}
