@@ -155,16 +155,14 @@ const OwnerSpotlight = () => {
             {/* Bio */}
             <motion.p
               variants={fadeUp}
-              className="font-cormorant leading-relaxed mb-6"
-              style={{ fontSize: '1.2rem', color: 'rgba(248,245,240,0.95)', letterSpacing: '0.01em' }}
+              className="font-cormorant leading-relaxed tracking-[0.01em] text-[1.1rem] lg:text-[1.2rem] text-ivory/95 lg:text-ivory/95 mb-6 lg:mb-6"
             >
               With over 8 years of transformative artistry, Shanmugavadivu Sabarinathan has redefined bridal beauty across Chennai and Madurai. Her work blends classical Indian traditions with contemporary luxury — creating looks that live in memory long after the last guest leaves.
             </motion.p>
 
             <motion.p
               variants={fadeUp}
-              className="font-cormorant leading-relaxed mb-10"
-              style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.92)', letterSpacing: '0.01em' }}
+              className="font-cormorant leading-relaxed tracking-[0.01em] text-[1.1rem] lg:text-[1.1rem] text-ivory/95 lg:text-ivory/92 mb-6 lg:mb-10"
             >
               Trained under award-winning masters and certified across international beauty academies, she brings world-class expertise to every bride she serves.
             </motion.p>

@@ -234,8 +234,15 @@ const Footer = () => {
 
         <div className="flex items-center gap-2">
           <div className="gold-divider" style={{ width: '20px' }} />
-          <span className="font-cinzel text-[0.55rem] tracking-[0.3em] uppercase" style={{ color: 'rgba(255,195,0,0.3)' }}>
-            Luxury. Art. Excellence.
+          <span
+            className="font-cinzel text-[0.6rem] sm:text-[0.65rem] tracking-[0.35em] uppercase font-bold"
+            style={{
+              color: '#FFD700',
+              textShadow: '0 0 10px rgba(255, 215, 0, 0.25)',
+              display: 'inline-block',
+            }}
+          >
+            Luxury • Art • Excellence
           </span>
           <div className="gold-divider" style={{ width: '20px' }} />
         </div>

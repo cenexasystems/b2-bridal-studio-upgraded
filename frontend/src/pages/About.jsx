@@ -74,10 +74,10 @@ const About = () => {
             <p className="font-cormorant italic text-xl mb-4" style={{ color: 'rgba(255,195,0,0.7)' }}>
               A legacy of beauty, artistry, and transformation
             </p>
-            <p className="font-cormorant italic text-lg md:text-xl leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.95)' }}>
+            <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/95 mb-4 md:mb-4">
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-cormorant italic text-lg md:text-xl leading-relaxed" style={{ color: 'rgba(248,245,240,0.92)' }}>
+            <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/92 mb-4 md:mb-0">
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
           </motion.div>

@@ -90,11 +90,11 @@ const Contact = () => {
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 2', value: 'C6, Santhi Sadan Enclave, Melakkal Main Road, Kochadai, Madurai – 625016', href: 'https://www.google.com/maps/dir/?api=1&destination=9.9252,78.0747' },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>, label: 'Phone', value: (
                   <span className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-1 sm:gap-2">
-                    <span>+91 98405 51365</span>
+                    <span>98405 51365</span>
                     <span className="hidden sm:inline opacity-40">/</span>
-                    <span>+91 97908 82561</span>
+                    <span>97908 82561</span>
                     <span className="hidden sm:inline opacity-40">/</span>
-                    <span>+91 93615 27951</span>
+                    <span>93615 27951</span>
                   </span>
                 ) },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>, label: 'Email', value: 'b2bridalstudio@gmail.com' },
@@ -155,7 +155,7 @@ const Contact = () => {
             </div>
             <iframe title="B2 Bridal Studio Chennai" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=No+63+Madavaram+Red+Hills+Rd+Kodungaiyur+Chennai+600060&zoom=16" width="100%" height="250" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410&destination_place_id=" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.15em] uppercase flex items-center gap-2 transition-colors duration-200" style={{ color: 'rgba(255,195,0,0.7)' }} onMouseEnter={e => e.currentTarget.style.color = '#FFD700'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,195,0,0.7)'}>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410&destination_place_id=" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase font-semibold flex items-center gap-2 transition-colors duration-200" style={{ color: '#FFD700' }} onMouseEnter={e => e.currentTarget.style.color = '#FFED8A'} onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 Get Directions
               </a>
@@ -176,7 +176,7 @@ const Contact = () => {
             </div>
             <iframe title="B2 Bridal Studio Madurai" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=C6+Santhi+Sadan+Enclave+Melakkal+Main+Road+Kochadai+Madurai+625016&zoom=16" width="100%" height="250" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=9.9252,78.0747" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.15em] uppercase flex items-center gap-2 transition-colors duration-200" style={{ color: 'rgba(255,195,0,0.7)' }} onMouseEnter={e => e.currentTarget.style.color = '#FFD700'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,195,0,0.7)'}>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=9.9252,78.0747" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase font-semibold flex items-center gap-2 transition-colors duration-200" style={{ color: '#FFD700' }} onMouseEnter={e => e.currentTarget.style.color = '#FFED8A'} onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 Get Directions
               </a>

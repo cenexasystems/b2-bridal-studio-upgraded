@@ -305,7 +305,7 @@ const Auth = () => {
 
                 {/* Full Name */}
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: 'rgba(212,175,55,0.85)' }}>Full Name</label>
+                  <label className="block font-cinzel text-[0.7rem] tracking-[0.25em] uppercase mb-2 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255, 215, 0, 0.15)' }}>Full Name</label>
                   <input
                     type="text"
                     value={form.name}
@@ -318,7 +318,7 @@ const Auth = () => {
 
                 {/* Email Address */}
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: 'rgba(212,175,55,0.85)' }}>Email Address</label>
+                  <label className="block font-cinzel text-[0.7rem] tracking-[0.25em] uppercase mb-2 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255, 215, 0, 0.15)' }}>Email Address</label>
                   <input
                     type="email"
                     value={form.email}
@@ -331,7 +331,7 @@ const Auth = () => {
 
                 {/* Mobile Number */}
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: 'rgba(212,175,55,0.85)' }}>Mobile Number</label>
+                  <label className="block font-cinzel text-[0.7rem] tracking-[0.25em] uppercase mb-2 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255, 215, 0, 0.15)' }}>Mobile Number</label>
                   <input
                     type="tel"
                     value={form.phone}
@@ -345,9 +345,9 @@ const Auth = () => {
 
                 {/* Date of Birth (Optional) */}
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-1 font-bold flex items-center justify-between" style={{ color: 'rgba(212,175,55,0.95)' }}>
+                  <label className="block font-cinzel text-[0.7rem] tracking-[0.25em] uppercase mb-1 font-bold flex items-center justify-between" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255, 215, 0, 0.15)' }}>
                     Date of Birth
-                    <span className="font-cormorant italic text-[0.7rem] normal-case tracking-normal font-normal text-gold-300">
+                    <span className="font-cormorant italic text-[0.75rem] normal-case tracking-normal font-semibold text-gold-300">
                       (optional)
                     </span>
                   </label>
@@ -378,8 +378,8 @@ const Auth = () => {
                       setStep('selection');
                       setGeneralError('');
                     }}
-                    className="text-center font-cormorant text-xs italic py-1 transition-colors hover:text-[#D4AF37]"
-                    style={{ color: 'rgba(248,245,240,0.5)' }}
+                    className="text-center font-cormorant text-sm italic py-1 transition-all duration-300 hover:text-[#FFD700] font-semibold"
+                    style={{ color: 'rgba(248,245,240,0.8)' }}
                   >
                     Back to options
                   </button>
@@ -475,8 +475,8 @@ const Auth = () => {
                       setStep('emailForm');
                       setGeneralError('');
                     }}
-                    className="text-center font-cormorant text-xs italic py-1 transition-colors hover:text-[#D4AF37]"
-                    style={{ color: 'rgba(248,245,240,0.5)' }}
+                    className="text-center font-cormorant text-sm italic py-1 transition-all duration-300 hover:text-[#FFD700] font-semibold"
+                    style={{ color: 'rgba(248,245,240,0.8)' }}
                   >
                     Edit details or email
                   </button>
