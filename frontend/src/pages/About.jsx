@@ -236,7 +236,7 @@ const About = () => {
           {[
             { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.' },
             { title: 'How to Build a Luxury Bridal Makeup Career', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.' },
-            { title: 'The Pre-Bridal Skin Care Ritual', image: 'https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&w=800&q=80', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
+            { title: 'The Pre-Bridal Skin Care Ritual', image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80', excerpt: 'The complete countdown for flawless skin on your wedding day.' },
           ].map((post, i) => (
             <motion.article
               key={i}
