@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { LogOut, LayoutDashboard, Scissors, Receipt, CreditCard, TrendingUp, FileText, Menu, X, Lock, Eye, EyeOff, Package, GraduationCap, Boxes, Users, CalendarCheck, Tag, CalendarOff, Briefcase } from 'lucide-react';
+import { LogOut, LayoutDashboard, Scissors, Receipt, CreditCard, TrendingUp, FileText, Menu, X, Lock, Eye, EyeOff, Package, GraduationCap, Boxes, Users, CalendarCheck, Tag, CalendarOff, Briefcase, Wallet } from 'lucide-react';
 import axios from 'axios';
 import ManageServices from './ManageServices.jsx';
 import ViewBookings from './ViewBookings.jsx';
@@ -15,6 +15,7 @@ import Billing from './Billing';
 import ManageCoupons from './ManageCoupons';
 import SlotManagement from './SlotManagement.jsx';
 import StaffWork from './StaffWork.jsx';
+import ExpenseTracker from './ExpenseTracker.jsx';
 
 
 const AdminDashboard = () => {
@@ -59,6 +60,7 @@ const AdminDashboard = () => {
     { name: 'Staff', path: '/admin/staff', icon: Users },
     { name: 'Attendance', path: '/admin/attendance', icon: CalendarCheck },
     { name: 'Staff Work', path: '/admin/staff-work', icon: Briefcase },
+    { name: 'Expense Tracker', path: '/admin/expenses', icon: Wallet },
     { name: 'Coupons', path: '/admin/coupons', icon: Tag },
     { name: 'Slot Management', path: '/admin/slots', icon: CalendarOff },
     { name: 'Revenue', path: '/admin/revenue', icon: TrendingUp },
@@ -233,6 +235,7 @@ const AdminDashboard = () => {
               <Route path="staff" element={<ManageStaff />} />
               <Route path="attendance" element={<Attendance />} />
               <Route path="staff-work" element={<StaffWork />} />
+              <Route path="expenses" element={<ExpenseTracker />} />
               <Route path="revenue" element={<Revenue />} />
               <Route path="billing" element={<Billing />} />
               <Route path="coupons" element={<ManageCoupons />} />

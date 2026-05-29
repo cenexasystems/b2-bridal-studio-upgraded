@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import {
   TrendingUp, Wifi, WifiOff, ExternalLink, Trash2,
-  CalendarRange, X, Search, RotateCcw
+  CalendarRange, X, Search, RotateCcw, Wallet
 } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL;
@@ -374,6 +374,7 @@ const Revenue = () => {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, online: 0, offline: 0, count: 0 });
   const [filter, setFilter] = useState('all'); // 'all' | 'online' | 'offline'
+  const [expenses, setExpenses] = useState([]);
 
   /* ── new date-filter state ── */
   const [appliedFrom, setAppliedFrom] = useState('');
@@ -385,12 +386,14 @@ const Revenue = () => {
     const fetchRevenue = async () => {
       try {
         const token = sessionStorage.getItem('revenueToken') || localStorage.getItem('adminToken');
-        const [entriesRes, statsRes] = await Promise.all([
+        const [entriesRes, statsRes, expensesRes] = await Promise.all([
           axios.get(`${API}/api/revenue`, { headers: { Authorization: `Bearer ${token}` } }),
           axios.get(`${API}/api/revenue/stats`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API}/api/expenses`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);
         setEntries(entriesRes.data);
         setStats(statsRes.data);
+        setExpenses(expensesRes.data);
       } catch (err) {
         console.error('Failed to fetch revenue', err);
       } finally {
@@ -448,6 +451,34 @@ const Revenue = () => {
     };
   }, [isDateFiltered, dateFiltered, stats]);
 
+  /* ── date-range filtered expenses (memoised) ── */
+  const dateFilteredExpenses = useMemo(() => {
+    if (!appliedFrom) return expenses;
+    const from = new Date(appliedFrom);
+    from.setHours(0, 0, 0, 0);
+    const to = appliedTo ? new Date(appliedTo) : new Date();
+    to.setHours(23, 59, 59, 999);
+    return expenses.filter(e => {
+      const d = new Date(e.expenseDate);
+      return d >= from && d <= to;
+    });
+  }, [expenses, appliedFrom, appliedTo]);
+
+  // Dynamic calculations for expenses & net revenue
+  const totalRevenue = useMemo(() => {
+    return isDateFiltered
+      ? dateFiltered.reduce((s, e) => s + Number(e.total || 0), 0)
+      : stats.total;
+  }, [isDateFiltered, dateFiltered, stats.total]);
+
+  const totalExpenses = useMemo(() => {
+    return dateFilteredExpenses.reduce((s, e) => s + Number(e.amount || 0), 0);
+  }, [dateFilteredExpenses]);
+
+  const netRevenue = useMemo(() => {
+    return totalRevenue - totalExpenses;
+  }, [totalRevenue, totalExpenses]);
+
   /* ── handlers ── */
   const handleApply = (from, to) => {
     setAppliedFrom(from);
@@ -489,16 +520,17 @@ const Revenue = () => {
       />
 
       {/* ══════════════════════════════════════════
-          STATS CARDS — now reflect date filter
+          STATS CARDS — now reflect date filter & expenses
       ══════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {/* Total */}
+      {/* Primary Financial Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        {/* Total Revenue */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6" style={isDateFiltered ? { borderColor: 'rgba(212,175,55,0.25)' } : {}}>
-          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-            Total Revenue
+          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1 flex justify-between items-center">
+            <span>Total Revenue</span>
             {isDateFiltered && (
               <span style={{
-                marginLeft: 6, padding: '1px 7px', borderRadius: 10,
+                padding: '1px 7px', borderRadius: 10,
                 background: 'rgba(212,175,55,0.1)', color: '#B8960C',
                 fontSize: '0.55rem', fontFamily: 'Cinzel, serif',
                 fontWeight: 700, letterSpacing: '0.08em',
@@ -508,18 +540,54 @@ const Revenue = () => {
             )}
           </div>
           <div className="text-3xl font-bold text-gray-900">
-            ₹{displayStats.total?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+            ₹{totalRevenue?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
-          <div className="text-xs text-gray-400 mt-1">{displayStats.count} bills generated</div>
+          <div className="text-xs text-gray-400 mt-1">{isDateFiltered ? dateFiltered.length : stats.count} bills generated</div>
         </div>
 
+        {/* Total Expenses */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6" style={isDateFiltered ? { borderColor: 'rgba(239, 68, 68, 0.2)' } : {}}>
+          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1 flex justify-between items-center">
+            <span className="flex items-center gap-1"><Wallet size={12} className="text-rose-500" /> Total Expenses</span>
+            {isDateFiltered && (
+              <span style={{
+                padding: '1px 7px', borderRadius: 10,
+                background: 'rgba(239, 68, 68, 0.1)', color: '#EF4444',
+                fontSize: '0.55rem', fontFamily: 'Cinzel, serif',
+                fontWeight: 700, letterSpacing: '0.08em',
+              }}>
+                Filtered
+              </span>
+            )}
+          </div>
+          <div className="text-3xl font-bold text-rose-600">
+            ₹{totalExpenses?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+          </div>
+          <div className="text-xs text-gray-400 mt-1">{dateFilteredExpenses.length} expenses logged</div>
+        </div>
+
+        {/* Net Revenue */}
+        <div className="bg-[#FAF8F5] rounded-xl shadow-sm border border-amber-200/40 p-6" style={{ background: 'linear-gradient(135deg, #FFFDF9 0%, #FAF6EE 100%)', border: '1.5px solid rgba(212,175,55,0.3)' }}>
+          <div className="text-xs font-semibold text-amber-800 uppercase tracking-wider mb-1 flex justify-between items-center font-cinzel">
+            <span>Net Revenue</span>
+            <span className="text-[0.6rem] text-amber-600/80 font-serif italic lowercase">revenue - expenses</span>
+          </div>
+          <div className="text-3xl font-bold text-amber-700">
+            ₹{netRevenue?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+          </div>
+          <div className="text-xs text-gray-500 mt-1 italic font-cormorant">Overall profit after expenses</div>
+        </div>
+      </div>
+
+      {/* Secondary Revenue Channel Breakdown Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Online */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <div className="flex items-center gap-1.5 mb-1">
             <Wifi size={12} className="text-blue-400" />
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Online</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Online Revenue</div>
           </div>
-          <div className="text-3xl font-bold text-blue-600">
+          <div className="text-2xl font-bold text-blue-600">
             ₹{displayStats.online?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
           <div className="text-xs text-gray-400 mt-1">
@@ -528,12 +596,12 @@ const Revenue = () => {
         </div>
 
         {/* Offline */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <div className="flex items-center gap-1.5 mb-1">
             <WifiOff size={12} className="text-amber-500" />
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Offline</div>
+            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Offline Revenue</div>
           </div>
-          <div className="text-3xl font-bold text-amber-600">
+          <div className="text-2xl font-bold text-amber-600">
             ₹{displayStats.offline?.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </div>
           <div className="text-xs text-gray-400 mt-1">

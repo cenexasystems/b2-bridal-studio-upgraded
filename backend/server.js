@@ -62,6 +62,8 @@ app.use('/api/coupons', require('./routes/coupons'));
 app.use('/api/slot-blocks', require('./routes/slotBlocks'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/staff-work', require('./routes/staffWork'));
+app.use('/api/expenses', require('./routes/expenses'));
+
 
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
