@@ -329,6 +329,7 @@ const Services = () => {
   };
 
   const isBridalCategory = (name) => name.toLowerCase().includes('bridal');
+  const isHairExtensionCategory = (name) => name.toLowerCase() === 'hair extension';
 
   const filteredCategories = services.map(cat => {
     const matchedServices = cat.services.filter(service => 
@@ -345,8 +346,12 @@ const Services = () => {
       return 0;
     });
 
+
   const addToCart = (serviceItem) => {
     if (cart.find(item => item._id === serviceItem._id)) return;
+
+    // Hair Extension services are inquiry-only — never add to cart
+    if (isHairExtensionCategory(serviceItem.category || '')) return;
 
     const isAddingBridal = isBridalCategory(serviceItem.category || '');
     const cartHasBridal = cart.some(item => isBridalCategory(item.category || ''));
@@ -363,6 +368,12 @@ const Services = () => {
 
     setCart([...cart, serviceItem]);
     setToast({ show: true, message: `"${serviceItem.name}" added successfully. Scroll down to view your cart.`, serviceName: serviceItem.name });
+  };
+
+  const handleHairExtensionWhatsAppInquiry = (service) => {
+    const message = `Hello B2 Bridal Studio! I would like to inquire about the Hair Extension service "${service.name}". Please let me know the pricing and availability. Thank you!`;
+    const whatsappUrl = `https://wa.me/919361527951?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const removeFromCart = (serviceId) => {
@@ -540,7 +551,11 @@ const Services = () => {
               {filteredCategories.map((category) => (
                 <div key={category.category} className="card-luxury rounded-sm overflow-hidden">
                   <button onClick={() => toggleCategory(category.category)} className="w-full px-6 py-4 flex justify-between items-center transition-colors" style={{ background: 'rgba(255,195,0,0.03)' }}>
-                    <span className="font-cinzel text-sm tracking-[0.2em] uppercase font-semibold" style={{ color: '#F8F5F0' }}>{isBridalCategory(category.category) ? `${category.category} (WhatsApp Inquiry Only)` : category.category}</span>
+                    <span className="font-cinzel text-sm tracking-[0.2em] uppercase font-semibold" style={{ color: '#F8F5F0' }}>
+                      {isBridalCategory(category.category) || isHairExtensionCategory(category.category)
+                        ? `${category.category} (WhatsApp Inquiry Only)`
+                        : category.category}
+                    </span>
                     {expandedCategory === category.category
                       ? <ChevronUp size={16} style={{ color: '#FFD700' }} />
                       : <ChevronDown size={16} style={{ color: 'rgba(248,245,240,0.3)' }} />}
@@ -560,19 +575,21 @@ const Services = () => {
                         return (
                           <div key={service._id} className="glass-dark p-5 rounded-sm flex flex-col justify-between">
                             <div>
-                              <div className="flex justify-between items-start mb-3">
-                                <div>
+                            <div className="flex justify-between items-start mb-3">
+                                 <div>
                                   <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase block mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{category.category}</span>
                                   <h3 className="font-playfair text-base font-semibold" style={{ color: '#F8F5F0' }}>{service.name}</h3>
-                                  {category.category === 'Bridal Services' && (
+                                  {(category.category === 'Bridal Services' || isHairExtensionCategory(category.category)) && (
                                     <span className="inline-block text-[0.55rem] font-cinzel tracking-[0.1em] uppercase px-1.5 py-0.5 rounded-sm mt-1.5" style={{ background: 'rgba(255, 215, 0, 0.1)', color: '#FFD700', border: '1px solid rgba(255, 215, 0, 0.2)' }}>
                                       WhatsApp Inquiry Only
                                     </span>
                                   )}
                                 </div>
                                 <span className="font-cinzel text-sm font-bold min-w-max ml-3 text-right" style={{ color: '#FFD700' }}>
-                                  ₹{priceToDisplay}
-                                  {serviceGst > 0 && (
+                                  {isHairExtensionCategory(category.category)
+                                    ? 'Starting From ₹10,000'
+                                    : `₹${priceToDisplay}`}
+                                  {!isHairExtensionCategory(category.category) && serviceGst > 0 && (
                                     <span style={{ fontSize: '0.65rem', color: 'rgba(248,245,240,0.5)', display: 'block', textAlign: 'right', fontWeight: 'normal', textTransform: 'none' }}>
                                       (incl. GST)
                                     </span>
@@ -585,7 +602,21 @@ const Services = () => {
                                 </select>
                               )}
                             </div>
-                            {isBridalCategory(category.category) ? (
+                            {isHairExtensionCategory(category.category) ? (
+                              <button
+                                onClick={() => handleHairExtensionWhatsAppInquiry(service)}
+                                className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm"
+                                style={{
+                                  border: 'none',
+                                  background: 'linear-gradient(135deg, #25D366, #128C7E)',
+                                  color: '#FFF',
+                                  fontWeight: 700,
+                                  boxShadow: '0 2px 10px rgba(37,211,102,0.25)'
+                                }}
+                              >
+                                <MessageCircle size={14} /> Inquire via WhatsApp
+                              </button>
+                            ) : isBridalCategory(category.category) ? (
                               <button
                                 onClick={() => handleSingleServiceWhatsAppInquiry(service, activeOption, category.category)}
                                 className="w-full py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 mt-2 transition-all rounded-sm"

@@ -41,6 +41,26 @@ mongoose.connect(process.env.MONGODB_URI)
     } catch (seedErr) {
       console.error('[Seed] Error seeding default users:', seedErr.message);
     }
+
+    // Auto-seed Hair Extension services
+    try {
+      const Service = require('./models/Service');
+      const existing = await Service.findOne({ category: 'Hair Extension' });
+      if (!existing) {
+        const hairExtensions = [
+          'Weft Extension', 'Micro Beads', 'Nano Beads', '8D Extension',
+          '6D Extension', 'Tape Extension', 'Invisible Tape Extension',
+          'Tape & Invisible Extension', 'K-Tip Extension', 'Seamless Extension',
+          'Clip Extension', "Men's Patch"
+        ];
+        await Service.insertMany(
+          hairExtensions.map(name => ({ category: 'Hair Extension', name, price: 10000 }))
+        );
+        console.log('[Seed] Hair Extension services seeded successfully.');
+      }
+    } catch (seedErr) {
+      console.error('[Seed] Error seeding Hair Extension services:', seedErr.message);
+    }
   })
   .catch(err => console.error('MongoDB connection error:', err));
 
