@@ -7,7 +7,17 @@ const attendanceSchema = new mongoose.Schema({
   },
   date: Date,
   entryTime: String,
-  exitTime: String
+  exitTime: String,
+  status: {
+    type: String,
+    enum: ['Present', 'Leave'],
+    default: 'Present'
+  },
+  leaveReason: String,
+  exitLocked: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
