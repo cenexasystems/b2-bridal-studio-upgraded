@@ -7,6 +7,11 @@ const Attendance = require('../models/Attendance');
 router.post('/', async (req, res) => {
   try {
     const payload = { ...req.body };
+    // Force status to 'Leave' if leaveReason is present and non-empty
+    if (payload.leaveReason && payload.leaveReason.trim()) {
+      payload.status = 'Leave';
+    }
+
     if (payload.status === 'Leave') {
       delete payload.entryTime;
       delete payload.exitTime;
