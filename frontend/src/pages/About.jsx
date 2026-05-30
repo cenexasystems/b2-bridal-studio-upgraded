@@ -71,7 +71,7 @@ const About = () => {
             <h1 className="font-cinzel font-bold uppercase leading-tight mb-6" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#F8F5F0', letterSpacing: '0.03em' }}>
               About B2 Bridal Studio
             </h1>
-            <p className="font-cormorant italic text-xl mb-4" style={{ color: 'rgba(255,195,0,0.7)' }}>
+            <p className="font-cormorant italic text-2xl mb-4 font-bold" style={{ color: '#FFD700' }}>
               A legacy of beauty, artistry, and transformation
             </p>
             <p className="font-cormorant italic leading-relaxed text-[1.1rem] md:text-xl text-ivory/95 md:text-ivory/95 mb-4 md:mb-4">

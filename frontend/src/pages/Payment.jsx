@@ -107,7 +107,7 @@ const Payment = () => {
             className="glass-dark p-4 sm:p-8 rounded-sm text-center"
             style={{ border: '1px solid rgba(255,195,0,0.15)' }}
           >
-            <span className="font-cinzel text-[0.55rem] tracking-[0.3em] uppercase block mb-6" style={{ color: '#FFD700' }}>Scan to Pay</span>
+            <span className="font-cinzel text-[0.65rem] tracking-[0.3em] uppercase block mb-6 font-bold" style={{ color: '#FFD700' }}>Scan to Pay</span>
             
             {/* QR Code */}
             <div className="mx-auto mb-6 p-2 inline-block rounded-sm" style={{ background: '#fff' }}>
@@ -118,26 +118,26 @@ const Payment = () => {
 
             {/* UPI ID */}
             <div className="mb-6">
-              <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>UPI ID</span>
+              <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase block mb-2 font-bold" style={{ color: '#FFD700' }}>UPI ID</span>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="font-inter text-base font-medium" style={{ color: '#FFD700' }}>{UPI_ID}</span>
                 <button
                   onClick={() => { navigator.clipboard.writeText(UPI_ID); }}
-                  className="px-3 py-1 font-cinzel text-[0.5rem] tracking-[0.15em] uppercase transition-all cursor-pointer"
-                  style={{ border: '1px solid rgba(255,195,0,0.3)', color: '#FFD700' }}
+                  className="px-3 py-1 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase transition-all cursor-pointer font-bold animate-glow-pulse"
+                  style={{ border: '1px solid #FFD700', color: '#FFD700' }}
                 >
                   Copy
                 </button>
               </div>
 
               {/* GPay Number */}
-              <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-2" style={{ color: 'rgba(255,195,0,0.5)' }}>GPay Number</span>
+              <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase block mb-2 font-bold" style={{ color: '#FFD700' }}>GPay Number</span>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="font-inter text-base font-medium" style={{ color: '#FFD700' }}>9840551365</span>
                 <button
                   onClick={() => { navigator.clipboard.writeText('9840551365'); }}
-                  className="px-3 py-1 font-cinzel text-[0.5rem] tracking-[0.15em] uppercase transition-all cursor-pointer"
-                  style={{ border: '1px solid rgba(255,195,0,0.3)', color: '#FFD700' }}
+                  className="px-3 py-1 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase transition-all cursor-pointer font-bold animate-glow-pulse"
+                  style={{ border: '1px solid #FFD700', color: '#FFD700' }}
                 >
                   Copy
                 </button>
@@ -177,14 +177,14 @@ const Payment = () => {
             className="glass-dark p-4 sm:p-8 rounded-sm flex flex-col"
             style={{ border: '1px solid rgba(255,195,0,0.15)' }}
           >
-            <span className="font-cinzel text-[0.55rem] tracking-[0.3em] uppercase block mb-6" style={{ color: '#FFD700' }}>Order Summary</span>
+            <span className="font-cinzel text-[0.65rem] tracking-[0.3em] uppercase block mb-6 font-bold" style={{ color: '#FFD700' }}>Order Summary</span>
 
             <div className="flex-1 overflow-y-auto mb-6" style={{ maxHeight: '300px' }}>
               {items.map(item => (
                 <div key={item._id || item.id} className="flex justify-between items-center py-3" style={{ borderBottom: '1px solid rgba(255,195,0,0.06)' }}>
                   <div>
                     <span className="font-cormorant text-sm block" style={{ color: '#F8F5F0' }}>{item.name}</span>
-                    <span className="font-cinzel text-[0.5rem] tracking-[0.1em]" style={{ color: 'rgba(255,195,0,0.4)' }}>Qty: {item.quantity}</span>
+                    <span className="font-cinzel text-[0.6rem] tracking-[0.1em] font-bold" style={{ color: '#FFD700' }}>Qty: {item.quantity}</span>
                   </div>
                   <span className="font-cinzel text-sm" style={{ color: '#FFD700' }}>₹{(item.price * item.quantity).toLocaleString()}</span>
                 </div>

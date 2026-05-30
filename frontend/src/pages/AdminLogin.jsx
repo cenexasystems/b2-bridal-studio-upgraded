@@ -48,7 +48,7 @@ const AdminLogin = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md px-4 relative z-10">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <img src="/b2-admin-logo.png" alt="B2 Bridal Studio" style={{ width: 72, height: 72, objectFit: 'contain', filter: 'drop-shadow(0 2px 12px rgba(212,175,55,0.2))' }} />
+          <img src="/b2-admin-logo.svg" alt="B2 Bridal Studio" style={{ width: 72, height: 72, objectFit: 'contain', filter: 'drop-shadow(0 2px 12px rgba(212,175,55,0.2))' }} />
           <h2 className="mt-4 text-2xl font-extrabold tracking-wide uppercase font-cinzel" style={{ color: '#1a1a1a' }}>
             Admin Portal
           </h2>

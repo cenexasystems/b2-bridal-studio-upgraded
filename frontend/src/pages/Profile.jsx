@@ -60,7 +60,7 @@ const Profile = () => {
       {/* Bookings */}
       <section style={{ padding: '0 0 6rem' }}>
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="font-cinzel text-xs tracking-[0.25em] uppercase mb-6" style={{ color: '#FFD700' }}>Your Bookings</h2>
+          <h2 className="font-cinzel text-sm tracking-[0.25em] uppercase mb-6 font-bold" style={{ color: '#FFD700' }}>Your Bookings</h2>
 
           {loading ? (
             <div className="flex justify-center py-16">
@@ -69,9 +69,9 @@ const Profile = () => {
           ) : bookings.length === 0 ? (
             <div className="glass-dark p-12 rounded-sm text-center" style={{ border: '1px solid rgba(255,195,0,0.1)' }}>
               <span className="text-4xl block mb-4">📋</span>
-              <h3 className="font-cinzel text-sm tracking-[0.1em] uppercase mb-2" style={{ color: '#F8F5F0' }}>No Bookings Yet</h3>
-              <p className="font-cormorant italic mb-6" style={{ color: 'rgba(248,245,240,0.4)' }}>You haven't made any bookings yet.</p>
-              <Link to="/services" className="btn-outline-gold py-2 px-6 text-xs">Browse Services</Link>
+              <h3 className="font-cinzel text-base tracking-[0.1em] uppercase mb-2 font-bold" style={{ color: '#FFFFFF' }}>No Bookings Yet</h3>
+              <p className="font-cormorant italic mb-6 text-sm font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>You haven't made any bookings yet.</p>
+              <Link to="/services" className="btn-outline-gold py-2 px-6 text-[0.8rem] font-bold">Browse Services</Link>
             </div>
           ) : (
             <div className="flex flex-col gap-4">
@@ -86,27 +86,27 @@ const Profile = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
                     className="glass-dark rounded-sm overflow-hidden"
-                    style={{ border: '1px solid rgba(255,195,0,0.12)' }}
+                    style={{ border: '1.5px solid rgba(255,215,0,0.2)' }}
                   >
                     <div className="p-6">
                       {/* Header */}
                       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                         <div className="flex items-center gap-3">
-                          <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase px-3 py-1 rounded-sm" style={{ background: sc.bg, border: `1px solid ${sc.border}`, color: sc.color }}>
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase px-3 py-1 rounded-sm font-extrabold" style={{ background: sc.bg, border: `1.5px solid ${sc.border}`, color: sc.color }}>
                             {displayStatus}
                           </span>
-                          <span className="font-cinzel text-[0.5rem] tracking-[0.15em] uppercase px-3 py-1" style={{ background: 'rgba(255,195,0,0.06)', color: 'rgba(255,195,0,0.5)', border: '1px solid rgba(255,195,0,0.1)' }}>
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.15em] uppercase px-3 py-1 font-extrabold" style={{ background: 'rgba(255,215,0,0.12)', color: '#FFD700', border: '1.5px solid #FFD700' }}>
                             {booking.branch}
                           </span>
                         </div>
                         <div className="text-right">
                           {booking.dateTime && (
-                            <div className="font-cormorant italic text-xs mb-1" style={{ color: 'rgba(255,195,0,0.65)' }}>
+                            <div className="font-cormorant text-base mb-1 font-bold" style={{ color: '#FFD700' }}>
                               📅 {new Date(booking.dateTime).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                               {' '}&nbsp;🕐 {new Date(booking.dateTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                             </div>
                           )}
-                          <span className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.35)' }}>
+                          <span className="font-cormorant text-[0.9rem] font-bold" style={{ color: '#FFFFFF' }}>
                             Booked: {new Date(booking.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                           </span>
                         </div>
@@ -115,25 +115,25 @@ const Profile = () => {
                       {/* Items */}
                       <div className="mb-4">
                         {booking.items.map((item, j) => (
-                          <div key={j} className="flex justify-between py-1.5 text-sm" style={{ borderBottom: j < booking.items.length - 1 ? '1px solid rgba(255,195,0,0.04)' : 'none' }}>
-                            <span className="font-cormorant" style={{ color: 'rgba(248,245,240,0.65)' }}>{item.quantity || 1}x {item.name}</span>
-                            <span className="font-cinzel text-xs" style={{ color: 'rgba(255,195,0,0.5)' }}>₹{item.price}</span>
+                          <div key={j} className="flex justify-between py-1.5 text-lg font-bold" style={{ borderBottom: j < booking.items.length - 1 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
+                            <span className="font-cormorant font-extrabold" style={{ color: '#FFFFFF' }}>{item.quantity || 1}x {item.name}</span>
+                            <span className="font-cinzel text-base font-extrabold" style={{ color: '#FFD700' }}>₹{item.price}</span>
                           </div>
                         ))}
                       </div>
 
                       {/* Footer */}
-                      <div className="flex flex-wrap items-center justify-between gap-3 pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}>
+                      <div className="flex flex-wrap items-center justify-between gap-3 pt-3" style={{ borderTop: '1.5px solid rgba(255,195,0,0.15)' }}>
                         <div>
-                          <span className="font-cinzel text-[0.5rem] tracking-[0.15em] uppercase" style={{ color: 'rgba(248,245,240,0.35)' }}>Transaction: </span>
-                          <span className="font-inter text-xs" style={{ color: 'rgba(248,245,240,0.5)' }}>{booking.transactionId}</span>
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.15em] uppercase font-extrabold" style={{ color: '#FFFFFF' }}>Transaction: </span>
+                          <span className="font-inter text-base font-extrabold" style={{ color: '#FFFFFF' }}>{booking.transactionId}</span>
                         </div>
                         <div className="text-right">
-                          <span className="font-cinzel text-base font-bold" style={{ color: '#FFD700' }}>
+                          <span className="font-cinzel text-xl font-extrabold" style={{ color: '#FFD700' }}>
                             ₹{(booking.finalAmount || booking.total).toFixed(2)}
                           </span>
                           {booking.couponCode && (
-                            <div className="font-cormorant text-xs italic mt-1" style={{ color: '#22c55e' }}>
+                            <div className="font-cormorant text-sm italic mt-1 font-bold" style={{ color: '#22c55e' }}>
                               Coupon: {booking.couponCode} (-₹{booking.discountAmount})
                             </div>
                           )}
@@ -151,10 +151,10 @@ const Profile = () => {
 
                       {/* Bill link */}
                       {displayStatus === 'Completed' && booking.billId && (
-                        <div className="mt-4 pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}>
-                          <Link to={`/bill/${booking.billId}`} className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase flex items-center gap-2" style={{ color: '#FFD700' }}>
+                        <div className="mt-4 pt-3" style={{ borderTop: '1.5px solid rgba(255,195,0,0.15)' }}>
+                          <Link to={`/bill/${booking.billId}`} className="font-cinzel text-[0.8rem] tracking-[0.2em] uppercase flex items-center gap-2 font-extrabold" style={{ color: '#FFD700' }}>
                             View Bill
-                            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" stroke="#FFD700" strokeWidth="1.2" strokeLinecap="round"><path d="M1 4h10M7 1l4 3-4 3"/></svg>
+                            <svg width="14" height="10" viewBox="0 0 12 8" fill="none" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round"><path d="M1 4h10M7 1l4 3-4 3"/></svg>
                           </Link>
                         </div>
                       )}

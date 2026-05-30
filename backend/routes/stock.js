@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 // ➖ USE PRODUCT (IMPORTANT 🔥)
 router.post('/:id/use', async (req, res) => {
   try {
-    const { usedQuantity } = req.body;
+    const { usedQuantity, usedByStaffId, staffName, serviceLinked } = req.body;
 
     const stock = await Stock.findById(req.params.id);
 
@@ -50,6 +50,10 @@ router.post('/:id/use', async (req, res) => {
       return res.status(400).json({ message: 'Invalid quantity' });
     }
 
+    if (!usedByStaffId || !staffName) {
+      return res.status(400).json({ message: 'Staff selection is required for stock consumption' });
+    }
+
     if (usedQuantity > stock.remainingQuantity) {
       return res.status(400).json({ message: 'Not enough stock' });
     }
@@ -57,9 +61,12 @@ router.post('/:id/use', async (req, res) => {
     // ✅ update remaining
     stock.remainingQuantity -= usedQuantity;
 
-    // ✅ save usage history WITH DATE
+    // ✅ save usage history WITH DATE AND STAFF INFO
     stock.usageHistory.push({
-      usedQuantity,
+      usedQuantity: Number(usedQuantity),
+      usedByStaffId,
+      staffName,
+      serviceLinked: serviceLinked || '',
       date: new Date()
     });
 

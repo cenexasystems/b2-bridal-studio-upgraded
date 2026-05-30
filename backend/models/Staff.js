@@ -5,7 +5,8 @@ const staffSchema = new mongoose.Schema({
   name: String,
   phone: String,
   email: String,
-  age: Number
+  age: Number,
+  experienceYears: { type: Number, required: true }
 });
 
 module.exports = mongoose.model('Staff', staffSchema);

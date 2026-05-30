@@ -9,15 +9,15 @@ const API = import.meta.env.VITE_API_URL;
 const CATEGORIES = {
   beautician: {
     title: 'Beautician Courses',
-    image: '/images/bridal4.jpeg',
+    image: '/images/Beautician.png',
   },
   fashion: {
     title: 'Fashion & Design',
-    image: '/images/fashion.jpeg',
+    image: '/images/Fashion.png',
   },
   embroidery: {
     title: 'Embroidery & Crafts',
-    image: '/images/embroidary.jpeg',
+    image: '/images/Embroidary.png',
   },
   jewellery: {
     title: 'Jewellery Making',
@@ -39,21 +39,21 @@ const CATEGORIES = {
 
 /* Per-course image mapping — assigns a relevant real image to each individual course based on its title */
 const COURSE_IMAGES_BY_TITLE = {
-  'beautician salon course': '/images/courses/beautician-salon.jpeg',
-  'makeup artist course': '/images/courses/makeup-artist.jpeg',
+  'beautician salon course': '/images/courses/beautician.png',
+  'makeup artist course': '/images/courses/makeup.png',
   'nail artist course': '/images/courses/nail-art.png',
   'mehandi artist course': '/images/courses/mehandi.png',
   'hair extension course': '/images/courses/hair-extension.png',
   'hairstyle course': '/images/courses/hairstyling.png',
-  'fashion designing course': '/images/courses/fashion-designing.jpeg',
-  'saree draping & pre-pleating course': '/images/courses/saree-draping.jpeg',
+  'fashion designing course': '/images/courses/fashion.png',
+  'saree draping & pre-pleating course': '/images/courses/sareedraping.png',
   'saree draping & pre-pleating': '/images/courses/saree-draping.jpeg',
-  'aari embroidery course': '/images/courses/aari-embroidery.jpeg',
-  'aari brooches work': '/images/courses/aari-brooches.jpeg',
-  'machine embroidery': '/images/courses/machine-embroidery.jpeg',
-  'hand embroidery': '/images/courses/hand-embroidery.jpeg',
-  'fabric painting': '/images/courses/fabric-painting.jpeg',
-  'simple chemical work': '/images/courses/chemical-work.jpeg',
+  'aari embroidery course': '/images/courses/aari.png',
+  'aari brooches work': '/images/courses/aaribrooches.png',
+  'machine embroidery': '/images/courses/machine.png',
+  'hand embroidery': '/images/courses/hand.png',
+  'fabric painting': '/images/courses/fabricpainting.png',
+  'simple chemical work': '/images/courses/chemical.png',
   'silk thread jewellery': '/images/courses/silk-thread-jewellery.png',
   'kundan jewellery': '/images/courses/kundan-jewellery.png',
   'crystal jewellery': '/images/courses/crystal-jewellery.png',
@@ -73,7 +73,7 @@ const COURSE_IMAGES_BY_TITLE = {
   'silambam training': '/images/courses/silambam.png',
   'karate training': '/images/courses/karate.png',
   'soft toys making': '/images/courses/soft-toys.png',
-  'bakery products course': '/images/courses/bakery-products.jpeg',
+  'bakery products course': '/images/courses/bakery.png',
   'palm leaf craft course': '/images/courses/palm-leaf-craft.png',
 };
 

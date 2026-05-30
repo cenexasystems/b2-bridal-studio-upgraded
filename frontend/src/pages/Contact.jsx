@@ -57,20 +57,20 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Full Name</label>
+                    <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Full Name</label>
                     <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="input-luxury rounded-sm" />
                   </div>
                   <div>
-                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Email</label>
+                    <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Email</label>
                     <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" required className="input-luxury rounded-sm" />
                   </div>
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Phone</label>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Phone</label>
                   <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="00000 00000" required className="input-luxury rounded-sm" />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Message</label>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Message</label>
                   <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your occasion..." required rows={5} className="input-luxury rounded-sm resize-none" />
                 </div>
                 <button type="submit" className="btn-gold w-full justify-center mt-2">
@@ -89,12 +89,12 @@ const Contact = () => {
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 1', value: 'No. 63, Madavaram Red Hills Rd, Moolakaadai, Chennai — 600060', href: 'https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410' },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>, label: 'Branch 2', value: 'C6, Santhi Sadan Enclave, Melakkal Main Road, Kochadai, Madurai – 625016', href: 'https://www.google.com/maps/dir/?api=1&destination=9.9252,78.0747' },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>, label: 'Phone', value: (
-                  <span className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-1 sm:gap-2">
-                    <span>99628 38303</span>
+                  <span className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-1 sm:gap-2" style={{ fontFamily: '"Times New Roman", Times, serif' }}>
+                    <span>9361527951</span>
                     <span className="hidden sm:inline opacity-40">/</span>
-                    <span>97908 82561</span>
+                    <span>9962838303</span>
                     <span className="hidden sm:inline opacity-40">/</span>
-                    <span>93615 27951</span>
+                    <span>9790882561</span>
                   </span>
                 ) },
                 { icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>, label: 'Email', value: 'b2bridalstudio02@gmail.com' },
@@ -102,7 +102,7 @@ const Contact = () => {
                 <div key={i} className="flex gap-4 py-4" style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{item.label}</div>
+                    <div className="font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-1 font-bold" style={{ color: '#FFD700' }}>{item.label}</div>
                     {item.href ? (
                       <a
                         href={item.href}

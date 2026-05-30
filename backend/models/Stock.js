@@ -11,7 +11,10 @@ const stockSchema = new mongoose.Schema({
 
   usageHistory: [
     {
-      usedQuantity: Number,
+      usedQuantity: { type: Number, required: true },
+      usedByStaffId: { type: String, required: true },
+      staffName: { type: String, required: true },
+      serviceLinked: { type: String },
       date: { type: Date, default: Date.now }
     }
   ]

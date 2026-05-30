@@ -131,6 +131,9 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: "Wrong password" });
     }
 
+    user.lastLoginDate = new Date();
+    await user.save();
+
     const token = jwt.sign(
       { id: user._id, email: user.email, role: 'customer' },
       JWT_SECRET,
@@ -194,6 +197,9 @@ router.post('/google-auth', async (req, res) => {
         await user.save();
       }
     }
+
+    user.lastLoginDate = new Date();
+    await user.save();
 
     const token = jwt.sign(
       { id: user._id, email: user.email, role: 'customer' },
@@ -475,6 +481,9 @@ router.post('/verify-otp', async (req, res) => {
     customer.otpExpires = undefined;
     await customer.save();
 
+    customer.lastLoginDate = new Date();
+    await customer.save();
+
     const token = jwt.sign(
       { id: customer._id, email: customer.email, role: 'customer' },
       JWT_SECRET,
@@ -495,6 +504,36 @@ router.post('/verify-otp', async (req, res) => {
   } catch (err) {
     console.error('Verify OTP error:', err.message);
     res.status(500).json({ error: "Verification failed. Please try again." });
+  }
+});
+
+// 📥 GET ALL CUSTOMERS (Secure - Owner only)
+const { verifyToken, verifyRole } = require('../middleware/auth');
+router.get('/list', verifyToken, verifyRole(['owner']), async (req, res) => {
+  try {
+    const customers = await Customer.find().sort({ createdAt: -1 });
+    res.json(customers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✏️ UPDATE CUSTOMER STATUS (Secure - Owner only)
+router.patch('/:id/status', verifyToken, verifyRole(['owner']), async (req, res) => {
+  try {
+    const { accountStatus } = req.body;
+    if (!['Active', 'Suspended'].includes(accountStatus)) {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
+    const customer = await Customer.findByIdAndUpdate(
+      req.params.id,
+      { accountStatus },
+      { new: true }
+    );
+    if (!customer) return res.status(404).json({ error: 'Customer not found' });
+    res.json(customer);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 

@@ -136,8 +136,8 @@ const Navbar = () => {
                 />
               </div>
               <div className="shrink-0 whitespace-nowrap">
-                <div className="font-cinzel text-xs tracking-[0.25em] uppercase font-bold whitespace-nowrap" style={{ color: '#D4AF37' }}>B2 Bridal</div>
-                <div className="font-cormorant text-[0.65rem] tracking-[0.2em] uppercase font-semibold whitespace-nowrap" style={{ color: 'rgba(248, 245, 240, 0.7)', lineHeight: 1 }}>Studio</div>
+                <div className="font-cinzel text-[0.8rem] tracking-[0.25em] uppercase font-extrabold whitespace-nowrap" style={{ color: '#D4AF37' }}>B2 Bridal</div>
+                <div className="font-cormorant text-[0.7rem] tracking-[0.2em] uppercase font-bold whitespace-nowrap" style={{ color: '#FFFFFF', lineHeight: 1 }}>Studio</div>
               </div>
             </Link>
 

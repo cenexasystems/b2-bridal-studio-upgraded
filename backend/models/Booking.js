@@ -4,8 +4,8 @@ const bookingSchema = new mongoose.Schema({
   userId: { type: String },
   name: { type: String, required: true },
   phone: { type: String, required: true },
-  upiId: { type: String, required: true },
-  transactionId: { type: String, required: true },
+  upiId: { type: String },
+  transactionId: { type: String },
   branch: { type: String, enum: ['Chennai', 'Madurai'], required: true },
   items: [{
     name: String,

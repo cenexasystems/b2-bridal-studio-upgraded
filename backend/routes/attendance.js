@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
   try {
     const payload = { ...req.body };
 
-    if (payload.status === 'Leave') {
+    if (['Leave', 'Absent', 'Permission'].includes(payload.status)) {
       delete payload.entryTime;
       delete payload.exitTime;
       payload.exitLocked = false;

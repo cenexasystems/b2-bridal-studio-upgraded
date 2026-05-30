@@ -62,8 +62,8 @@ const CertCard = ({ cert, onClick }) => (
         </div>
 
         <div
-          className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase"
-          style={{ color: 'rgba(255,195,0,0.6)' }}
+          className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase font-bold"
+          style={{ color: '#FFD700' }}
         >
           {cert.issuer}
         </div>
@@ -72,8 +72,8 @@ const CertCard = ({ cert, onClick }) => (
       <div className="mt-3 flex justify-between items-end">
         <div className="gold-divider-left" style={{ width: '30px' }} />
         <div
-          className="font-cinzel text-[0.65rem] tracking-[0.2em]"
-          style={{ color: 'rgba(255,195,0,0.4)' }}
+          className="font-cinzel text-[0.75rem] tracking-[0.2em] font-bold"
+          style={{ color: '#FFD700' }}
         >
           {cert.year}
         </div>

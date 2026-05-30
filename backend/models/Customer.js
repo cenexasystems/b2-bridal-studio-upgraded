@@ -12,7 +12,9 @@ const customerSchema = new mongoose.Schema({
   otpExpires: { type: Date },
   isVerified: { type: Boolean, default: false },
   resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date }
+  resetPasswordExpires: { type: Date },
+  lastLoginDate: { type: Date },
+  accountStatus: { type: String, enum: ['Active', 'Suspended'], default: 'Active' }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Customer', customerSchema);
