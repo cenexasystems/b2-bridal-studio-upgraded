@@ -577,7 +577,7 @@ const Services = () => {
                             <div>
                             <div className="flex justify-between items-start mb-3">
                                  <div>
-                                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase block mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{category.category}</span>
+                                  <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1 font-bold" style={{ color: '#FFD700' }}>{category.category}</span>
                                   <h3 className="font-playfair text-base font-semibold" style={{ color: '#F8F5F0' }}>{service.name}</h3>
                                   {(category.category === 'Bridal Services' || isHairExtensionCategory(category.category)) && (
                                     <span className="inline-block text-[0.55rem] font-cinzel tracking-[0.1em] uppercase px-1.5 py-0.5 rounded-sm mt-1.5" style={{ background: 'rgba(255, 215, 0, 0.1)', color: '#FFD700', border: '1px solid rgba(255, 215, 0, 0.2)' }}>
@@ -663,19 +663,19 @@ const Services = () => {
 
               {/* Branch */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>Branch *</label>
+                <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Branch *</label>
                 <div className="flex gap-2">
                   {['Chennai', 'Madurai'].map(branch => (
                     <button
                       key={branch}
                       type="button"
                       onClick={() => { setBookingBranch(branch); setBookingErrors(prev => ({ ...prev, branch: '' })); }}
-                      className="flex-1 py-2.5 font-cinzel text-[0.6rem] tracking-[0.15em] uppercase rounded-sm transition-all"
+                      className="flex-1 py-2.5 font-cinzel text-[0.7rem] tracking-[0.15em] uppercase rounded-sm transition-all"
                       style={{
-                        border: bookingBranch === branch ? '1px solid #FFD700' : '1px solid rgba(255,195,0,0.2)',
-                        background: bookingBranch === branch ? 'rgba(255,215,0,0.12)' : 'transparent',
-                        color: bookingBranch === branch ? '#FFD700' : 'rgba(248,245,240,0.68)',
-                        fontWeight: bookingBranch === branch ? 700 : 400,
+                        border: bookingBranch === branch ? '2px solid #FFD700' : '1px solid rgba(255,215,0,0.4)',
+                        background: bookingBranch === branch ? 'rgba(255,215,0,0.2)' : 'transparent',
+                        color: bookingBranch === branch ? '#FFD700' : 'rgba(255,215,0,0.6)',
+                        fontWeight: bookingBranch === branch ? 700 : 600,
                       }}
                     >
                       {branch}
@@ -687,7 +687,7 @@ const Services = () => {
 
               {/* Date */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>    Date *</label>
+                <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>    Date *</label>
                 <div className="relative">
                   <input
                     type="date"
@@ -704,7 +704,7 @@ const Services = () => {
 
               {/* Time — hourly slots only */}
               <div>
-                <label className="block font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-2" style={{ color: 'rgba(255,195,0,0.75)' }}>    Time Slot *</label>
+                <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>    Time Slot *</label>
                 {isDayBlocked && (
                   <div className="p-3 text-xs rounded-sm mb-3 text-center" style={{ color: '#ef4444', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
                     This date is unavailable for booking.
@@ -757,20 +757,20 @@ const Services = () => {
               )}
 
             </div>
-            <h3 className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,195,0,0.75)' }}>Selected Services</h3>
+            <h3 className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-3 font-bold" style={{ color: '#FFD700' }}>Selected Services</h3>
             {cart.length === 0 ? (
               <p className="font-cormorant italic text-sm text-center py-4" style={{ color: 'rgba(248,245,240,0.68)' }}>No services selected.</p>
             ) : (
               <ul className="flex flex-col gap-3 mb-4">{cart.map(item => (
                 <li key={item._id} className="flex justify-between items-center group text-sm">
-                  <div className="flex-1 min-w-0"><span className="block font-cormorant truncate" style={{ color: '#F8F5F0' }}>{item.name}</span><span className="font-cinzel text-xs" style={{ color: 'rgba(255,195,0,0.6)' }}>₹{item.price}</span></div>
+                  <div className="flex-1 min-w-0"><span className="block font-cormorant truncate" style={{ color: '#F8F5F0' }}>{item.name}</span><span className="font-cinzel text-xs font-bold" style={{ color: '#FFD700' }}>₹{item.price}</span></div>
                   <button onClick={() => removeFromCart(item._id)} className="p-1.5 rounded-sm transition-all" style={{ color: '#f87171', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.15)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.08)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.15)'; }}><Trash2 size={14} /></button>
                 </li>
               ))}</ul>
             )}
             {cart.length > 0 && (
               <div className="pt-4 mb-4 flex flex-col gap-2 text-sm" style={{ borderTop: '1px solid rgba(255,195,0,0.1)' }}>
-                <div className="flex justify-between font-cinzel text-sm pt-2" style={{ color: '#F8F5F0' }}><span>Total</span><span style={{ color: '#FFD700' }}>₹{total.toFixed(2)}</span></div>
+                <div className="flex justify-between font-cinzel text-base pt-2 font-bold" style={{ color: '#FFD700' }}><span>Total</span><span style={{ color: '#FFD700' }}>₹{total.toFixed(2)}</span></div>
               </div>
             )}
             {hasBridalService ? (
