@@ -73,9 +73,21 @@ const Attendance = () => {
       if (!form.entryTime) {
         newErrors.entryTime = 'Entry time is required for Present records';
       }
-    } else if (['Leave', 'Absent', 'Permission'].includes(form.status)) {
+    } else if (form.status === 'Permission') {
+      if (!form.entryTime) {
+        newErrors.entryTime = 'Permission From Time is required';
+      }
+      if (!form.exitTime) {
+        newErrors.exitTime = 'Permission To Time is required';
+      } else if (form.entryTime && form.exitTime <= form.entryTime) {
+        newErrors.exitTime = 'To time must be after From time';
+      }
       if (!form.leaveReason || !form.leaveReason.trim()) {
-        newErrors.leaveReason = `${form.status} details/reason are required`;
+        newErrors.leaveReason = 'Permission reason is required';
+      }
+    } else if (form.status === 'Absent') {
+      if (!form.leaveReason || !form.leaveReason.trim()) {
+        newErrors.leaveReason = 'Absence reason/notes are required';
       }
     }
  
@@ -86,26 +98,36 @@ const Attendance = () => {
   /* ─── submit handler ────────────────────────────────────── */
   const handleAdd = async () => {
     if (!validate()) return;
-
-    const isPresent = form.status === 'Present';
  
-    // Build a clean, explicit payload — no undefined values sent
-    const payload = !isPresent
-      ? {
-          staffId:     form.staffId,
-          date:        form.date,
-          status:      form.status,
-          leaveReason: form.leaveReason.trim(),
-          exitLocked:  false,
-        }
-      : {
-          staffId:    form.staffId,
-          date:       form.date,
-          status:     'Present',
-          entryTime:  form.entryTime,
-          exitTime:   form.exitTime || undefined,
-          exitLocked: !!form.exitTime,
-        };
+    let payload = {};
+    if (form.status === 'Present') {
+      payload = {
+        staffId:    form.staffId,
+        date:       form.date,
+        status:     'Present',
+        entryTime:  form.entryTime,
+        exitTime:   form.exitTime || undefined,
+        exitLocked: !!form.exitTime,
+      };
+    } else if (form.status === 'Permission') {
+      payload = {
+        staffId:     form.staffId,
+        date:        form.date,
+        status:      'Permission',
+        entryTime:   form.entryTime, // From Time
+        exitTime:    form.exitTime,  // To Time
+        leaveReason: form.leaveReason.trim(),
+        exitLocked:  true,
+      };
+    } else { // Absent
+      payload = {
+        staffId:     form.staffId,
+        date:        form.date,
+        status:      'Absent',
+        leaveReason: form.leaveReason.trim(),
+        exitLocked:  false,
+      };
+    }
 
     try {
       await axios.post(`${API}/api/attendance`, payload);
@@ -422,8 +444,8 @@ const Attendance = () => {
           <label className="text-xs font-cinzel font-bold uppercase tracking-wide text-gray-700">
             Attendance Type <span className="text-amber-600">*</span>
           </label>
-          <div className="flex bg-gray-50 p-1 rounded-xl w-full max-w-2xl border border-gray-200 flex-wrap gap-1 md:gap-0">
-            {['Present', 'Leave', 'Absent', 'Permission'].map((type) => (
+          <div className="flex bg-gray-50 p-1 rounded-xl w-full max-w-xl border border-gray-200 flex-wrap gap-1 md:gap-0">
+            {['Present', 'Absent', 'Permission'].map((type) => (
               <button
                 key={type}
                 type="button"
@@ -447,13 +469,13 @@ const Attendance = () => {
           </div>
         </div>
 
-        {/* Row 3 — Present Flow Fields */}
-        {form.status === 'Present' && (
+        {/* Row 3 — Present & Permission Time Fields */}
+        {(form.status === 'Present' || form.status === 'Permission') && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            {/* Entry time */}
+            {/* Entry/From time */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-cinzel font-semibold uppercase tracking-wide text-gray-700">
-                Entry Time <span className="text-amber-600">*</span>
+                {form.status === 'Present' ? 'Entry Time' : 'Permission From Time'} <span className="text-amber-600">*</span>
               </label>
               <input
                 type="time"
@@ -473,22 +495,36 @@ const Attendance = () => {
               )}
             </div>
 
-            {/* Exit time */}
+            {/* Exit/To time */}
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-cinzel font-semibold uppercase tracking-wide text-gray-700">
-                Exit Time <span className="text-xs font-normal text-gray-400 ml-1">(Optional)</span>
+                {form.status === 'Present' ? (
+                  <>Exit Time <span className="text-xs font-normal text-gray-400 ml-1">(Optional)</span></>
+                ) : (
+                  <>Permission To Time <span className="text-amber-600">*</span></>
+                )}
               </label>
               <input
                 type="time"
                 value={form.exitTime}
-                onChange={(e) => setForm({ ...form, exitTime: e.target.value })}
-                className="w-full p-3 rounded-lg border border-gray-200 focus:outline-none focus:ring-1 focus:ring-[#FFD700]/30 bg-gray-50 font-cormorant text-lg text-gray-800 transition-colors"
+                onChange={(e) => {
+                  setForm({ ...form, exitTime: e.target.value });
+                  if (errors.exitTime) setErrors({ ...errors, exitTime: null });
+                }}
+                className={`w-full p-3 rounded-lg border focus:outline-none focus:ring-1 bg-gray-50 font-cormorant text-lg text-gray-800 transition-colors ${
+                  errors.exitTime
+                    ? 'border-red-300 focus:border-red-400 focus:ring-red-200'
+                    : 'border-gray-200 focus:border-[#FFD700] focus:ring-[#FFD700]/30'
+                }`}
               />
+              {errors.exitTime && (
+                <span className="text-red-500 text-xs font-medium mt-0.5">{errors.exitTime}</span>
+              )}
             </div>
           </div>
         )}
 
-        {/* Row 3 — Leave Flow Fields */}
+        {/* Row 4 — Reason / Details for Absent & Permission & Leave */}
         {form.status !== 'Present' && (
           <div className="flex flex-col gap-1.5 mb-6">
             <label className="text-xs font-cinzel font-semibold uppercase tracking-wide text-gray-700">
@@ -536,7 +572,7 @@ const Attendance = () => {
                 <th className="p-4      text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700">Status</th>
                 <th className="p-4      text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700">Entry Time</th>
                 <th className="p-4      text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700">Exit Time</th>
-                <th className="p-4      text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700">Leave Reason</th>
+                <th className="p-4      text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700">Reason / Notes</th>
                 <th className="p-4 pr-6 text-xs font-cinzel font-bold uppercase tracking-wider text-gray-700 text-right">Actions</th>
               </tr>
             </thead>
@@ -580,18 +616,18 @@ const Attendance = () => {
 
                       {/* Entry time */}
                       <td className="p-4">
-                        {isLeave ? (
+                        {(r.status === 'Leave' || r.status === 'Absent') ? (
                           <span className="text-gray-300 text-sm">—</span>
                         ) : (
                           r.entryTime
-                            ? <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-200">{r.entryTime}</span>
+                            ? <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${r.status === 'Permission' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-green-50 text-green-700 border-green-200'}`}>{r.entryTime}</span>
                             : <span className="italic text-sm text-gray-300">—</span>
                         )}
                       </td>
 
                       {/* Exit time */}
                       <td className="p-4">
-                        {isLeave ? (
+                        {(r.status === 'Leave' || r.status === 'Absent') ? (
                           <span className="text-gray-300 text-sm">—</span>
                         ) : isEditing ? (
                           <input
@@ -602,17 +638,19 @@ const Attendance = () => {
                             autoFocus
                           />
                         ) : r.exitTime ? (
-                          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">{r.exitTime}</span>
+                          <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${r.status === 'Permission' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>{r.exitTime}</span>
                         ) : (
                           <span className="italic text-sm text-gray-300">Not marked</span>
                         )}
                       </td>
 
-                      {/* Leave Reason */}
+                      {/* Reason */}
                       <td className="p-4 max-w-[200px]">
-                        {isLeave ? (
+                        {r.status !== 'Present' ? (
                           <span
-                            className="text-sm text-amber-800 font-cormorant leading-snug block truncate"
+                            className={`text-sm font-cormorant leading-snug block truncate font-semibold ${
+                              r.status === 'Leave' ? 'text-amber-800' : r.status === 'Absent' ? 'text-red-700' : 'text-indigo-700'
+                            }`}
                             title={r.leaveReason || ''}
                           >
                             {r.leaveReason || '—'}

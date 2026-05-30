@@ -4,7 +4,7 @@ import {
   TrendingUp, Calendar, Users, Award, 
   Clock, CheckCircle, Search, RotateCcw, 
   Download, FileText, ChevronRight, Star, 
-  ShieldCheck, ArrowUpRight, BarChart2
+  ShieldCheck, ArrowUpRight
 } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL;
@@ -300,14 +300,13 @@ const StaffReports = () => {
 
   // Export CSV
   const handleExportCSV = () => {
-    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Leave Days', 'Permission Days', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)', 'Productivity Score'];
+    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Days', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)', 'Productivity Score'];
     const rows = staffMetrics.map(m => [
       m.staffId,
       m.name,
       m.totalWorkingDays,
       m.presentDays,
       m.absentDays,
-      m.leaveDays,
       m.permissionDays,
       m.totalWorkingHours.toFixed(1),
       `${m.attendancePercent}%`,
@@ -489,16 +488,16 @@ const StaffReports = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
         
         {/* ── 🏆 STAFF RANKING LEADERBOARD ── */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:col-span-1">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:col-span-3">
           <h2 className="text-sm font-cinzel font-bold uppercase tracking-wider mb-5 pb-3 border-b border-gray-100 flex items-center gap-2">
             <Award size={18} className="text-[#FFD700]" /> Staff Leaderboard
           </h2>
           {staffMetrics.length === 0 ? (
             <p className="text-center font-cormorant italic text-gray-500 py-6">No performance statistics recorded yet.</p>
           ) : (
-            <div className="space-y-4">
-              {staffMetrics.slice(0, 5).map((m, idx) => (
-                <div key={m.staffId} className="flex flex-col gap-1.5 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-sm transition-all">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {staffMetrics.slice(0, 6).map((m, idx) => (
+                <div key={m.staffId} className="flex flex-col gap-3 p-4 rounded-xl bg-gray-50 border border-gray-100 hover:shadow-sm transition-all">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2.5">
                       <span className={`w-6 h-6 rounded-full flex items-center justify-center font-mono text-[0.65rem] font-bold ${
@@ -532,67 +531,6 @@ const StaffReports = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── 📈 PERFORMANCE CHARTS / ANALYTICS ── */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:col-span-2">
-          <h2 className="text-sm font-cinzel font-bold uppercase tracking-wider mb-5 pb-3 border-b border-gray-100 flex items-center gap-2">
-            <BarChart2 size={18} className="text-[#D4AF37]" /> Revenue Contribution by Staff
-          </h2>
-          {staffMetrics.length === 0 ? (
-            <p className="text-center font-cormorant italic text-gray-500 py-12">No data logged.</p>
-          ) : (
-            <div className="space-y-6 py-4">
-              {staffMetrics.map((m) => {
-                const totalRev = summaryStats.totalRevenue || 1;
-                const percentage = Math.round((m.revenueGenerated / totalRev) * 100);
-                
-                return (
-                  <div key={m.staffId} className="space-y-1.5">
-                    <div className="flex justify-between items-end text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500" />
-                        <span className="font-cinzel font-bold text-gray-800">{m.name}</span>
-                        <span className="text-[0.62rem] text-gray-400 font-mono">({m.staffId})</span>
-                      </div>
-                      <div className="font-medium text-gray-700">
-                        ₹{m.revenueGenerated.toLocaleString('en-IN')} <span className="text-gray-400 text-[0.62rem]">({percentage}%)</span>
-                      </div>
-                    </div>
-                    <div className="w-full h-3 bg-gray-100 rounded-lg overflow-hidden border border-gray-50">
-                      <div 
-                        className="h-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 rounded-lg transition-all duration-500"
-                        style={{ width: `${percentage}%` }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-
-              <div className="pt-4 border-t border-dashed border-gray-200 mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-3 bg-amber-50/30 rounded-lg text-center">
-                  <div className="text-[0.55rem] font-cinzel font-bold uppercase tracking-wider text-amber-800">Top Performer</div>
-                  <div className="text-xs font-bold font-playfair text-gray-900 mt-1">{staffMetrics[0]?.name || 'N/A'}</div>
-                </div>
-                <div className="p-3 bg-blue-50/30 rounded-lg text-center">
-                  <div className="text-[0.55rem] font-cinzel font-bold uppercase tracking-wider text-blue-800">Highest Retention</div>
-                  <div className="text-xs font-bold font-playfair text-gray-900 mt-1">{staffMetrics[0]?.name || 'N/A'} (35%)</div>
-                </div>
-                <div className="p-3 bg-indigo-50/30 rounded-lg text-center">
-                  <div className="text-[0.55rem] font-cinzel font-bold uppercase tracking-wider text-indigo-800">Best Attendance</div>
-                  <div className="text-xs font-bold font-playfair text-gray-900 mt-1">
-                    {staffMetrics.sort((a,b)=>b.attendancePercent - a.attendancePercent)[0]?.name || 'N/A'}
-                  </div>
-                </div>
-                <div className="p-3 bg-emerald-50/30 rounded-lg text-center">
-                  <div className="text-[0.55rem] font-cinzel font-bold uppercase tracking-wider text-emerald-800">Most Customers</div>
-                  <div className="text-xs font-bold font-playfair text-gray-900 mt-1">
-                    {staffMetrics.sort((a,b)=>b.totalCustomers - a.totalCustomers)[0]?.name || 'N/A'}
-                  </div>
-                </div>
-              </div>
             </div>
           )}
         </div>
@@ -631,7 +569,6 @@ const StaffReports = () => {
                   <td className="p-4">
                     <div className="flex flex-wrap gap-1 text-[0.62rem] max-w-[200px]">
                       <span className="px-1.5 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded font-semibold">P: {m.presentDays}d</span>
-                      <span className="px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded font-semibold">L: {m.leaveDays}d</span>
                       <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded font-semibold">Perm: {m.permissionDays}d</span>
                       <span className="px-1.5 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded font-semibold">A: {m.absentDays}d</span>
                     </div>

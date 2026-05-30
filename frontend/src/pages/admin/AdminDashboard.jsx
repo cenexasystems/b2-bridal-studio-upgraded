@@ -121,6 +121,7 @@ const CustomerLogins = () => {
             <tr className="bg-gray-50 border-b border-gray-100 text-gray-700">
               <th className="p-4 pl-6 text-xs font-cinzel font-bold uppercase tracking-wider">Customer</th>
               <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Phone / Email</th>
+              <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Date of Birth</th>
               <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Registered</th>
               <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Last Login</th>
               <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Status</th>
@@ -139,6 +140,13 @@ const CustomerLogins = () => {
                 <td className="p-4 text-gray-700">
                   <div className="font-medium text-xs">{c.phone || 'N/A'}</div>
                   <div className="text-gray-500 font-cormorant text-base mt-0.5">{c.email}</div>
+                </td>
+                <td className="p-4 text-gray-600 font-cormorant text-lg">
+                  {c.dob ? (
+                    new Date(c.dob).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                  ) : (
+                    <span className="italic text-gray-300">N/A</span>
+                  )}
                 </td>
                 <td className="p-4 text-gray-600 font-cormorant text-lg">
                   {new Date(c.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -248,6 +256,13 @@ const AdminDashboard = () => {
       navigate('/admin-login');
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (!location.pathname.startsWith('/admin/owner')) {
+      sessionStorage.removeItem('ownerToken');
+      sessionStorage.removeItem('revenueToken');
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
