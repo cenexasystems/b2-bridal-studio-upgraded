@@ -47,6 +47,7 @@ const ConfirmBooking = () => {
     const e = {};
     if (!form.name.trim()) e.name = 'Name is required';
     if (!/^\d{10}$/.test(form.phone)) e.phone = 'Enter valid 10-digit WhatsApp number';
+    if (!paymentProof) e.paymentProof = 'Payment proof screenshot is required';
     if (items.length === 0) e.items = 'Cart is empty';
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -203,7 +204,7 @@ const ConfirmBooking = () => {
 
               {/* Payment Proof */}
               <div>
-                <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Payment Proof (Screenshot/PDF) (Optional)</label>
+                <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Payment Proof (Screenshot/PDF) *</label>
                 
                 <label 
                   htmlFor="paymentProofInput"

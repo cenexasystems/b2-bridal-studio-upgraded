@@ -36,8 +36,8 @@ router.post('/', upload.single('paymentProof'), async (req, res) => {
       gstAmount
     } = req.body;
 
-    if (!name || !phone || !branch || !total) {
-      return res.status(400).json({ error: 'Missing required booking fields' });
+    if (!name || !phone || !branch || !total || !req.file) {
+      return res.status(400).json({ error: 'Missing required booking fields: Payment Proof is mandatory.' });
     }
 
     // Check slot capacity & slot blocking

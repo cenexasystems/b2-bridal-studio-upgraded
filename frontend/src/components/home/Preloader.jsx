@@ -77,8 +77,8 @@ const Preloader = ({ onComplete }) => {
             className="text-center"
           >
             <div
-              className="font-cinzel text-xs tracking-[0.4em] uppercase mb-2"
-              style={{ color: 'rgba(255,195,0,0.6)' }}
+              className="font-cinzel text-sm tracking-[0.4em] uppercase mb-2 font-bold"
+              style={{ color: '#FFFFFF' }}
             >
               Est. 2018
             </div>

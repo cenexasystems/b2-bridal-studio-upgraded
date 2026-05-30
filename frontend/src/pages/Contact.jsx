@@ -57,20 +57,20 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Full Name</label>
+                    <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Full Name</label>
                     <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your name" required className="input-luxury rounded-sm" />
                   </div>
                   <div>
-                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Email</label>
+                    <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Email</label>
                     <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" required className="input-luxury rounded-sm" />
                   </div>
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Phone</label>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Phone</label>
                   <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="00000 00000" required className="input-luxury rounded-sm" />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>Message</label>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>Message</label>
                   <textarea name="message" value={form.message} onChange={handleChange} placeholder="Tell us about your occasion..." required rows={5} className="input-luxury rounded-sm resize-none" />
                 </div>
                 <button type="submit" className="btn-gold w-full justify-center mt-2">
@@ -102,7 +102,7 @@ const Contact = () => {
                 <div key={i} className="flex gap-4 py-4" style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>{item.label}</div>
+                    <div className="font-cinzel text-[0.75rem] tracking-[0.2em] uppercase mb-1 font-bold" style={{ color: '#FFD700' }}>{item.label}</div>
                     {item.href ? (
                       <a
                         href={item.href}

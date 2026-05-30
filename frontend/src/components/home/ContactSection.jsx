@@ -126,7 +126,7 @@ const ContactSection = () => {
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.3em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>
                     Full Name
                   </label>
                   <input
@@ -141,7 +141,7 @@ const ContactSection = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.3em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>
                     Phone Number
                   </label>
                   <input
@@ -160,7 +160,7 @@ const ContactSection = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
+                  <label className="block font-cinzel text-[0.75rem] tracking-[0.3em] uppercase mb-2 font-bold" style={{ color: '#FFD700' }}>
                     Message
                   </label>
                   <textarea
@@ -235,7 +235,7 @@ const ContactSection = () => {
                 >
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
-                    <div className="font-cinzel text-[0.65rem] tracking-[0.25em] uppercase mb-1 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
+                    <div className="font-cinzel text-[0.75rem] tracking-[0.25em] uppercase mb-1 font-bold" style={{ color: '#FFD700' }}>
                       {item.label}
                     </div>
                     {item.href ? (
