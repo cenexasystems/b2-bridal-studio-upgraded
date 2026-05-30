@@ -4,29 +4,10 @@ import { fadeUp, slideLeft, slideRight, staggerContainer } from '../../animation
 
 const WHATSAPP_NUMBER = '919361527951';
 
-const COUNTRY_CODES = [
-  { code: '+91', country: 'IN', label: 'India', minLen: 10, maxLen: 10 },
-  { code: '+1', country: 'US', label: 'USA', minLen: 10, maxLen: 10 },
-  { code: '+44', country: 'GB', label: 'UK', minLen: 10, maxLen: 11 },
-  { code: '+971', country: 'AE', label: 'UAE', minLen: 9, maxLen: 9 },
-  { code: '+65', country: 'SG', label: 'Singapore', minLen: 8, maxLen: 8 },
-  { code: '+60', country: 'MY', label: 'Malaysia', minLen: 9, maxLen: 10 },
-  { code: '+61', country: 'AU', label: 'Australia', minLen: 9, maxLen: 9 },
-  { code: '+966', country: 'SA', label: 'Saudi Arabia', minLen: 9, maxLen: 9 },
-  { code: '+974', country: 'QA', label: 'Qatar', minLen: 8, maxLen: 8 },
-  { code: '+968', country: 'OM', label: 'Oman', minLen: 8, maxLen: 8 },
-  { code: '+973', country: 'BH', label: 'Bahrain', minLen: 8, maxLen: 8 },
-  { code: '+94', country: 'LK', label: 'Sri Lanka', minLen: 9, maxLen: 9 },
-  { code: '+977', country: 'NP', label: 'Nepal', minLen: 10, maxLen: 10 },
-  { code: '+880', country: 'BD', label: 'Bangladesh', minLen: 10, maxLen: 10 },
-  { code: '+49', country: 'DE', label: 'Germany', minLen: 10, maxLen: 11 },
-];
-
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
   const [form, setForm] = useState({ name: '', phone: '', message: '' });
-  const [countryCode, setCountryCode] = useState('+91');
   const [phoneError, setPhoneError] = useState('');
   const [sent, setSent] = useState(false);
 
@@ -39,15 +20,9 @@ const ContactSection = () => {
   };
 
   const validatePhone = () => {
-    const cc = COUNTRY_CODES.find(c => c.code === countryCode);
-    if (!cc) return true;
     const digits = form.phone.replace(/\D/g, '');
-    if (digits.length < cc.minLen) {
-      setPhoneError(`Phone must be at least ${cc.minLen} digits for ${cc.label}`);
-      return false;
-    }
-    if (digits.length > cc.maxLen) {
-      setPhoneError(`Phone must be at most ${cc.maxLen} digits for ${cc.label}`);
+    if (digits.length < 10) {
+      setPhoneError('Phone number must be at least 10 digits');
       return false;
     }
     return true;
@@ -56,8 +31,7 @@ const ContactSection = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validatePhone()) return;
-    const fullPhone = `${countryCode} ${form.phone}`;
-    const text = `Hello B2 Bridal Studio!%0A%0A*Name:* ${encodeURIComponent(form.name)}%0A*Phone:* ${encodeURIComponent(fullPhone)}%0A*Message:* ${encodeURIComponent(form.message)}`;
+    const text = `Hello B2 Bridal Studio!%0A%0A*Name:* ${encodeURIComponent(form.name)}%0A*Phone:* ${encodeURIComponent(form.phone)}%0A*Message:* ${encodeURIComponent(form.message)}`;
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
     window.open(whatsappUrl, '_blank');
     setSent(true);
@@ -170,32 +144,17 @@ const ContactSection = () => {
                   <label className="block font-cinzel text-[0.65rem] tracking-[0.3em] uppercase mb-2 font-semibold" style={{ color: 'rgba(255,195,0,0.85)' }}>
                     Phone Number
                   </label>
-                  <div className="flex gap-2">
-                    <select
-                      id="contact-country-code"
-                      value={countryCode}
-                      onChange={e => { setCountryCode(e.target.value); setPhoneError(''); }}
-                      className="input-luxury"
-                      style={{ width: '130px', flexShrink: 0, cursor: 'pointer', appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23FFD700' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', paddingRight: '28px' }}
-                    >
-                      {COUNTRY_CODES.map(cc => (
-                        <option key={cc.code} value={cc.code}>
-                          {cc.code} {cc.country}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handlePhoneChange}
-                      placeholder="Mobile number"
-                      required
-                      className="input-luxury flex-1"
-                      maxLength={COUNTRY_CODES.find(c => c.code === countryCode)?.maxLen || 15}
-                    />
-                  </div>
+                  <input
+                    id="contact-phone"
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handlePhoneChange}
+                    placeholder="Mobile number"
+                    required
+                    className="input-luxury w-full"
+                    maxLength={15}
+                  />
                   {phoneError && (
                     <p className="mt-1.5 font-cormorant text-xs" style={{ color: '#f87171' }}>{phoneError}</p>
                   )}

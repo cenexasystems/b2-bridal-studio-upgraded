@@ -337,7 +337,7 @@ const AdminDashboard = () => {
         >
           {!isCollapsed && (
             <div className="flex items-center gap-3">
-              <img src="/b2-admin-logo.png" alt="B2" style={{ width: 36, height: 36, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.3))' }} />
+              <img src="/b2-admin-logo.svg" alt="B2" style={{ width: 36, height: 36, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.3))' }} />
               <div>
                 <h1 className="text-sm font-bold tracking-wide uppercase font-cinzel" style={{ color: '#1a1a1a' }}>Admin Panel</h1>
                 <p className="text-[0.6rem] font-cormorant italic" style={{ color: '#777' }}>B2 Bridal Studio</p>
