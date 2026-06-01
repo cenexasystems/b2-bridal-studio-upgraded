@@ -339,8 +339,8 @@ const AdminDashboard = () => {
             <div className="flex items-center gap-3">
               <img src="/b2-admin-logo.svg" alt="B2" style={{ width: 36, height: 36, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.3))' }} />
               <div>
-                <h1 className="text-sm font-bold tracking-wide uppercase font-cinzel" style={{ color: '#1a1a1a' }}>Admin Panel</h1>
-                <p className="text-[0.85rem] font-cormorant italic font-semibold tracking-wide" style={{ color: '#D4AF37', marginTop: '-2px' }}>B2 Bridal Studio</p>
+                <div className="font-cinzel font-extrabold uppercase tracking-[0.2em] whitespace-nowrap" style={{ fontSize: '14px', color: '#FFD700', lineHeight: 1.2 }}>B2 Bridal</div>
+                <div className="font-cormorant font-extrabold uppercase tracking-[0.18em] whitespace-nowrap" style={{ fontSize: '14px', color: '#FFD700', lineHeight: 1.1, marginTop: '1px' }}>Studio</div>
               </div>
             </div>
           )}
