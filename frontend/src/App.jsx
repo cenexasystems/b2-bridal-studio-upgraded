@@ -88,6 +88,8 @@ function App() {
               {/* Blog routes */}
               <Route path="/blog" element={<PublicLayout><BlogList /></PublicLayout>} />
               <Route path="/blog/:slug" element={<PublicLayout><BlogDetail /></PublicLayout>} />
+              <Route path="/blogs" element={<PublicLayout><BlogList /></PublicLayout>} />
+              <Route path="/blogs/:slug" element={<PublicLayout><BlogDetail /></PublicLayout>} />
 
               {/* BOOKING / PAYMENT ROUTES */}
               <Route path="/payment" element={<PublicLayout><Payment /></PublicLayout>} />

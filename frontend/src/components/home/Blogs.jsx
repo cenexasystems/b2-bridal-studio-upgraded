@@ -11,6 +11,7 @@ const blogs = [
     preview: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.',
     image: '/images/blog/bridal_makeup_looks_2024.png',
     readTime: '5 min read',
+    slug: '10-bridal-makeup-looks-dominating-2024-weddings',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const blogs = [
     preview: 'Our master trainers share the exact roadmap — from certification to premium clientele — for aspiring bridal artists.',
     image: '/images/blog/luxury_makeup_career.png',
     readTime: '7 min read',
+    slug: 'build-luxury-bridal-makeup-career',
   },
   {
     id: 3,
@@ -27,13 +29,14 @@ const blogs = [
     preview: 'Six weeks out, four weeks, two weeks — the complete countdown for flawless skin on your wedding day.',
     image: '/images/blog/pre_bridal_skincare.png',
     readTime: '6 min read',
+    slug: 'pre-bridal-skincare-ritual',
   },
 ];
 
 const BlogCard = ({ blog, delay }) => {
-  const slug = blog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const slug = blog.slug || blog.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   return (
-  <Link to={`/blog/${slug}`} style={{ textDecoration: 'none' }}>
+  <Link to={`/blogs/${slug}`} style={{ textDecoration: 'none' }}>
   <motion.article
     initial={{ opacity: 0, y: 40 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -153,7 +156,7 @@ const Blogs = () => {
             </motion.h2>
           </div>
           <motion.div variants={fadeUp}>
-            <Link to="/blog" className="btn-outline-gold py-2 text-xs">
+            <Link to="/blogs" className="btn-outline-gold py-2 text-xs">
               View All Articles
             </Link>
           </motion.div>

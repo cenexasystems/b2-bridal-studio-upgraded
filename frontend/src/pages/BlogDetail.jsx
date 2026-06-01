@@ -17,13 +17,13 @@ const renderContent = (content) => {
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="font-cinzel font-bold uppercase mt-12 mb-5" style={{ fontSize: '1.45rem', letterSpacing: '0.05em', color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)' }}>
+        <h2 key={i} className="font-playfair font-bold mt-12 mb-5" style={{ fontSize: '1.65rem', color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)', fontStyle: 'normal' }}>
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-playfair font-semibold mt-8 mb-4" style={{ fontSize: '1.25rem', color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.25)' }}>
+        <h3 key={i} className="font-playfair font-bold mt-8 mb-4" style={{ fontSize: '1.35rem', color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.25)', fontStyle: 'normal' }}>
           {line.slice(4)}
         </h3>
       );
@@ -42,8 +42,8 @@ const renderContent = (content) => {
       elements.push(
         <ul key={`ul-${i}`} className="mb-6 ml-2" style={{ listStyle: 'none' }}>
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-3 font-inter text-[1.05rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
-              <span className="mt-2 w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#FFD700', boxShadow: '0 0 8px rgba(255,215,0,0.5)' }} />
+            <li key={j} className="flex items-start gap-3 mb-3 font-cormorant italic text-[1.2rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
+              <span className="mt-2.5 w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#FFD700', boxShadow: '0 0 8px rgba(255,215,0,0.5)' }} />
               <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
             </li>
           ))}
@@ -60,7 +60,7 @@ const renderContent = (content) => {
       elements.push(
         <ol key={`ol-${i}`} className="mb-6 ml-2 counter-reset-custom">
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-4 font-inter text-[1.05rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
+            <li key={j} className="flex items-start gap-3 mb-4 font-cormorant italic text-[1.2rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
               <span className="font-cinzel text-xs mt-1.5 flex-shrink-0 font-bold" style={{ color: '#FFD700', minWidth: '1.5rem', textShadow: '0 0 8px rgba(255,215,0,0.4)' }}>{j + 1}.</span>
               <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
             </li>
@@ -70,7 +70,7 @@ const renderContent = (content) => {
       continue;
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
-        <p key={i} className="font-inter text-[1.05rem] font-bold mb-3" style={{ color: '#FFE566', textShadow: '0 0 8px rgba(255,229,102,0.35)' }}>
+        <p key={i} className="font-cormorant italic text-[1.2rem] font-bold mb-3" style={{ color: '#FFE566', textShadow: '0 0 8px rgba(255,229,102,0.35)' }}>
           {line.slice(2, -2)}
         </p>
       );
@@ -80,15 +80,15 @@ const renderContent = (content) => {
       const contentText = line.slice(1, -1);
       const html = contentText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-signature italic text-3xl text-center mt-6 mb-8 leading-relaxed" style={{ color: '#FFD700', textShadow: '0 0 12px rgba(255,215,0,0.45)', textTransform: 'none' }} dangerouslySetInnerHTML={{ __html: html }} />
+        <p key={i} className="font-cormorant italic text-[1.4rem] tracking-wide mt-6 mb-8 leading-relaxed text-left" style={{ color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)', textTransform: 'none' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     } else {
       const html = line
         .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em style="color:#FFD700; font-family:var(--font-signature); font-size:1.65rem; font-style:normal">$1</em>')
+        .replace(/\*(.*?)\*/g, '<em style="color:#FFD700; font-family:var(--font-cormorant); font-size:1.35rem; font-style:italic">$1</em>')
         .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-inter text-[1.05rem] font-medium leading-[2.0] mb-5" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }} dangerouslySetInnerHTML={{ __html: html }} />
+        <p key={i} className="font-cormorant italic text-[1.2rem] font-medium leading-[1.8] mb-5" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     }
     i++;
@@ -111,7 +111,7 @@ const BlogDetail = () => {
     fetch(`${API}/api/blogs/${slug}`)
       .then(r => { if (!r.ok) throw new Error('Not found'); return r.json(); })
       .then(setBlog)
-      .catch(() => navigate('/blog'))
+      .catch(() => navigate('/blogs'))
       .finally(() => setLoading(false));
   }, [slug, navigate]);
 
@@ -154,15 +154,7 @@ const BlogDetail = () => {
         >
           {/* Back */}
           <Link
-            to="/blog"
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.history.length > 1) {
-                navigate(-1);
-              } else {
-                navigate('/about');
-              }
-            }}
+            to="/blogs"
             className="inline-flex items-center gap-2 mb-8 font-cinzel text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300"
             style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}
             onMouseEnter={e => e.currentTarget.style.color = '#FFE566'}
@@ -180,7 +172,7 @@ const BlogDetail = () => {
           </div>
 
           {/* Title */}
-          <h1 className="font-playfair font-bold leading-tight mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#F8F5F0' }}>
+          <h1 className="font-playfair font-bold leading-tight mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#F8F5F0', fontStyle: 'normal' }}>
             {blog.title}
           </h1>
 
@@ -248,15 +240,7 @@ const BlogDetail = () => {
           <span className="font-cinzel text-[0.6rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>Continue Reading</span>
           <h3 className="font-cinzel font-bold uppercase mt-3 mb-6" style={{ fontSize: '1.3rem', color: '#F8F5F0', letterSpacing: '0.04em' }}>Explore More Articles</h3>
           <Link
-            to="/blog"
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.history.length > 1) {
-                navigate(-1);
-              } else {
-                navigate('/about');
-              }
-            }}
+            to="/blogs"
             className="btn-outline-gold py-3 px-8 text-xs"
           >
             Back to Journal

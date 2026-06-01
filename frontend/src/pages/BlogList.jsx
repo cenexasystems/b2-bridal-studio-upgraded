@@ -29,7 +29,7 @@ const BlogCard = ({ blog, index }) => (
     transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     className="group flex flex-col card-luxury"
   >
-    <Link to={`/blog/${blog.slug}`} className="block">
+    <Link to={`/blogs/${blog.slug}`} className="block">
       <div className="overflow-hidden" style={{ aspectRatio: '16/10', position: 'relative' }}>
         <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
@@ -46,14 +46,14 @@ const BlogCard = ({ blog, index }) => (
         <span style={{ color: 'rgba(255, 215, 0, 0.4)' }}>·</span>
         <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFD700', textShadow: '0 0 6px rgba(255,215,0,0.2)' }}>{blog.readTime}</span>
       </div>
-      <Link to={`/blog/${blog.slug}`}>
+      <Link to={`/blogs/${blog.slug}`}>
         <h3 className="font-playfair font-semibold leading-snug mb-3 transition-colors duration-300 group-hover:text-gold-500" style={{ fontSize: '1.15rem', color: '#F8F5F0' }}>{blog.title}</h3>
       </Link>
       <div className="gold-divider-left mb-4" />
       <p className="font-cormorant leading-relaxed flex-1 mb-5" style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.75)' }}>{blog.preview}</p>
       <div className="flex items-center justify-between">
         <span className="font-cormorant italic text-sm font-semibold" style={{ color: '#FFE566', textShadow: '0 0 6px rgba(255,229,102,0.2)' }}>By {blog.author}</span>
-        <Link to={`/blog/${blog.slug}`} className="flex items-center gap-2 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-all duration-300 group-hover:gap-3 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}>
+        <Link to={`/blogs/${blog.slug}`} className="flex items-center gap-2 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-all duration-300 group-hover:gap-3 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}>
           Read More
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round"><path d="M1 5h12M7 1l6 4-6 4"/></svg>
         </Link>
@@ -64,7 +64,7 @@ const BlogCard = ({ blog, index }) => (
 
 const FeaturedBlog = ({ blog }) => (
   <motion.article initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="group">
-    <Link to={`/blog/${blog.slug}`} className="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden" style={{ border: '1px solid rgba(255, 215, 0, 0.2)', background: 'rgba(255,255,255,0.02)', textDecoration: 'none' }}>
+    <Link to={`/blogs/${blog.slug}`} className="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden" style={{ border: '1px solid rgba(255, 215, 0, 0.2)', background: 'rgba(255,255,255,0.02)', textDecoration: 'none' }}>
       <div className="overflow-hidden" style={{ minHeight: '340px', position: 'relative' }}>
         <img src={blog.image} alt={blog.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
         <div className="absolute top-6 left-6 font-cinzel text-[0.55rem] tracking-[0.25em] uppercase px-4 py-2 font-bold" style={{ background: '#FFD700', color: '#000' }}>★ Featured</div>
