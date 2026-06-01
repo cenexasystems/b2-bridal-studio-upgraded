@@ -69,7 +69,7 @@ Our professional certification courses cover all these trends and more. Join our
 
 *Ready to begin your bridal makeup journey? [Explore our courses](/courses)*
     `,
-    image: 'https://images.unsplash.com/photo-1457972729786-0411a3b2b626?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/bridal_makeup_looks_2024.png',
     author: 'Shanmugavadivu Sabarinathan',
     readTime: '8 min read',
     tags: ['bridal makeup', 'trends', 'wedding', '2024'],
@@ -152,7 +152,7 @@ B2 Bridal Studio's professional certification programs are designed to take you 
 
 *Explore our professional courses and take the first step toward your dream career.*
     `,
-    image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/luxury_makeup_career.png',
     author: 'B2 Academy Team',
     readTime: '10 min read',
     tags: ['career', 'bridal artist', 'education', 'professional'],
@@ -246,7 +246,7 @@ Our bridal services include comprehensive pre-bridal skincare guidance. We work 
 
 *Book a bridal consultation to begin your glow-up journey.*
     `,
-    image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/pre_bridal_skincare.png',
     author: 'Shanmugavadivu Sabarinathan',
     readTime: '7 min read',
     tags: ['skincare', 'bridal prep', 'beauty', 'wedding day'],
@@ -326,7 +326,7 @@ Did you know we offer professional jewellery-making courses? Learn to create cus
 
 *Discover our Jewellery Making courses and create something extraordinary.*
     `,
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/wedding_jewellery_guide.png',
     author: 'Priya Devi',
     readTime: '9 min read',
     tags: ['jewellery', 'wedding', 'style guide', 'bridal'],
@@ -404,7 +404,7 @@ Whether you're a bride-to-be or an aspiring artist, B2 Bridal Studio welcomes yo
 
 *Your beautiful story starts here.*
     `,
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/behind_scenes_studio.png',
     author: 'B2 Bridal Studio',
     readTime: '6 min read',
     tags: ['studio life', 'behind the scenes', 'bridal', 'experience'],
@@ -484,7 +484,7 @@ Our comprehensive fashion design programs cover everything from traditional tech
 
 *Explore our Fashion Design courses and start creating.*
     `,
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/blog/fashion_design_trends.png',
     author: 'Priya Devi',
     readTime: '8 min read',
     tags: ['fashion design', 'trends', '2024', 'sustainable fashion'],

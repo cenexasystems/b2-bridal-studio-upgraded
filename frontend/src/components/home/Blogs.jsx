@@ -9,7 +9,7 @@ const blogs = [
     category: 'Bridal Trends',
     title: '10 Bridal Makeup Looks Dominating 2024 Weddings',
     preview: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.',
-    image: '/images/bridal7.jpeg',
+    image: '/images/blog/bridal_makeup_looks_2024.png',
     readTime: '5 min read',
   },
   {
@@ -17,7 +17,7 @@ const blogs = [
     category: 'Academy Insights',
     title: 'How to Build a Luxury Bridal Makeup Career from Scratch',
     preview: 'Our master trainers share the exact roadmap — from certification to premium clientele — for aspiring bridal artists.',
-    image: '/images/bridal12.jpeg',
+    image: '/images/blog/luxury_makeup_career.png',
     readTime: '7 min read',
   },
   {
@@ -25,7 +25,7 @@ const blogs = [
     category: 'Skin Care',
     title: 'The Pre-Bridal Skin Care Ritual Every Bride Should Follow',
     preview: 'Six weeks out, four weeks, two weeks — the complete countdown for flawless skin on your wedding day.',
-    image: '/images/bridal10.jpeg',
+    image: '/images/blog/pre_bridal_skincare.png',
     readTime: '6 min read',
   },
 ];

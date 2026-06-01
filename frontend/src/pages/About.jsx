@@ -235,9 +235,9 @@ const About = () => {
         </div>
         <div className="max-w-[1100px] mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.', slug: '10-bridal-makeup-looks-dominating-2024-weddings' },
-            { title: 'How to Build a Luxury Bridal Makeup Career', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.', slug: 'build-luxury-bridal-makeup-career' },
-            { title: 'The Pre-Bridal Skin Care Ritual', image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80', excerpt: 'The complete countdown for flawless skin on your wedding day.', slug: 'pre-bridal-skincare-ritual' },
+            { title: '10 Bridal Makeup Looks Dominating 2024 Weddings', image: '/images/blog/bridal_makeup_looks_2024.png', excerpt: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.', slug: '10-bridal-makeup-looks-dominating-2024-weddings' },
+            { title: 'How to Build a Luxury Bridal Makeup Career', image: '/images/blog/luxury_makeup_career.png', excerpt: 'Our master trainers share the exact roadmap — from certification to premium clientele.', slug: 'build-luxury-bridal-makeup-career' },
+            { title: 'The Pre-Bridal Skin Care Ritual', image: '/images/blog/pre_bridal_skincare.png', excerpt: 'The complete countdown for flawless skin on your wedding day.', slug: 'pre-bridal-skincare-ritual' },
           ].map((post, i) => (
             <motion.article
               key={i}
