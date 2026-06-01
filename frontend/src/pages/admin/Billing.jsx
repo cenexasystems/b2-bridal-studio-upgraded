@@ -455,7 +455,7 @@ export default function Billing() {
                     }}
                     className={`flex-grow py-2 rounded-lg font-cinzel text-[0.65rem] font-bold uppercase tracking-wider transition-all border ${
                       discountType === opt.key
-                        ? 'bg-[#111] text-amber-400 border-black shadow-sm'
+                        ? 'bg-[#111] text-[#FFD700] border-black shadow-sm'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200 border-transparent'
                     }`}
                   >
@@ -539,7 +539,7 @@ export default function Billing() {
                   onClick={() => { setCategory(cat === 'other' ? 'products' : cat); setSelectedItem(''); setShowCustomForm(false); }}
                   className={`flex-1 py-2.5 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wide transition-all capitalize ${
                     (cat === 'other' ? category === 'products' : category === cat)
-                      ? 'bg-[#111] text-amber-400 shadow-md'
+                      ? 'bg-[#111] text-[#FFD700] shadow-md'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -650,7 +650,7 @@ export default function Billing() {
         <div className="bg-white rounded-xl border border-gray-100 shadow-[0_2px_15px_rgba(0,0,0,0.04)] flex flex-col">
           {/* Bill header */}
           <div className="bg-[#111] text-center py-5 rounded-t-xl">
-            <p className="text-amber-400 font-cinzel font-bold tracking-wide text-sm uppercase">B2 Bridal Studio</p>
+            <p className="text-[#FFD700] font-cinzel font-bold tracking-wide text-sm uppercase">B2 Bridal Studio</p>
             <p className="text-amber-200/60 text-xs mt-0.5 font-cormorant italic">Offline Bill Preview</p>
           </div>
 
