@@ -17,13 +17,13 @@ const renderContent = (content) => {
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="font-playfair font-bold mt-12 mb-5" style={{ fontSize: '1.65rem', color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)', fontStyle: 'normal' }}>
+        <h2 key={i} className="font-playfair font-bold mt-12 mb-5 tracking-wide" style={{ fontSize: '1.5rem', color: '#FFE566', textShadow: '0 0 5px rgba(255,229,102,0.2)', fontStyle: 'normal', lineHeight: '1.4' }}>
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-playfair font-bold mt-8 mb-4" style={{ fontSize: '1.35rem', color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.25)', fontStyle: 'normal' }}>
+        <h3 key={i} className="font-playfair font-bold mt-8 mb-4 tracking-wide" style={{ fontSize: '1.2rem', color: '#FFE566', textShadow: '0 0 4px rgba(255,229,102,0.15)', fontStyle: 'normal', lineHeight: '1.4' }}>
           {line.slice(4)}
         </h3>
       );
@@ -42,9 +42,9 @@ const renderContent = (content) => {
       elements.push(
         <ul key={`ul-${i}`} className="mb-6 ml-2" style={{ listStyle: 'none' }}>
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-3 font-cormorant italic text-[1.2rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
-              <span className="mt-2.5 w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#FFD700', boxShadow: '0 0 8px rgba(255,215,0,0.5)' }} />
-              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
+            <li key={j} className="flex items-start gap-3 mb-3 font-cormorant italic text-[1.2rem] font-medium" style={{ color: '#FFFFFF', textShadow: '0 0 4px rgba(255,255,255,0.15)', lineHeight: '1.9', letterSpacing: '0.025em' }}>
+              <span className="mt-2.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'rgba(255, 255, 255, 0.65)', boxShadow: '0 0 4px rgba(255, 255, 255, 0.2)' }} />
+              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.2); font-weight:700">$1</strong>') }} />
             </li>
           ))}
         </ul>
@@ -60,9 +60,9 @@ const renderContent = (content) => {
       elements.push(
         <ol key={`ol-${i}`} className="mb-6 ml-2 counter-reset-custom">
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-4 font-cormorant italic text-[1.2rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
-              <span className="font-cinzel text-xs mt-1.5 flex-shrink-0 font-bold" style={{ color: '#FFD700', minWidth: '1.5rem', textShadow: '0 0 8px rgba(255,215,0,0.4)' }}>{j + 1}.</span>
-              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
+            <li key={j} className="flex items-start gap-3 mb-4 font-cormorant italic text-[1.2rem] font-medium" style={{ color: '#FFFFFF', textShadow: '0 0 4px rgba(255,255,255,0.15)', lineHeight: '1.9', letterSpacing: '0.025em' }}>
+              <span className="font-cormorant text-base mt-0.5 flex-shrink-0 font-medium italic" style={{ color: 'rgba(255, 255, 255, 0.75)', minWidth: '1.5rem' }}>{j + 1}.</span>
+              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.2); font-weight:700">$1</strong>') }} />
             </li>
           ))}
         </ol>
@@ -70,7 +70,7 @@ const renderContent = (content) => {
       continue;
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
-        <p key={i} className="font-cormorant italic text-[1.2rem] font-bold mb-3" style={{ color: '#FFE566', textShadow: '0 0 8px rgba(255,229,102,0.35)' }}>
+        <p key={i} className="font-cormorant italic text-[1.2rem] font-bold mb-3" style={{ color: '#FFFFFF', textShadow: '0 0 4px rgba(255,255,255,0.15)', lineHeight: '1.9', letterSpacing: '0.025em' }}>
           {line.slice(2, -2)}
         </p>
       );
@@ -78,17 +78,17 @@ const renderContent = (content) => {
       // skip empty lines
     } else if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
       const contentText = line.slice(1, -1);
-      const html = contentText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
+      const html = contentText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFFFFF;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-cormorant italic text-[1.4rem] tracking-wide mt-6 mb-8 leading-relaxed text-left" style={{ color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)', textTransform: 'none' }} dangerouslySetInnerHTML={{ __html: html }} />
+        <p key={i} className="font-cormorant italic text-[1.35rem] tracking-wide mt-6 mb-8 leading-relaxed text-left" style={{ color: '#FFFFFF', textShadow: '0 0 5px rgba(255,255,255,0.15)', textTransform: 'none', lineHeight: '1.95', letterSpacing: '0.03em' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     } else {
       const html = line
-        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em style="color:#FFD700; font-family:var(--font-cormorant); font-size:1.35rem; font-style:italic">$1</em>')
-        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFFFFF; text-shadow: 0 0 5px rgba(255,255,255,0.2); font-weight:700">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em style="color:#FFFFFF; font-family:var(--font-cormorant); font-style:italic">$1</em>')
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFFFFF;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-cormorant italic text-[1.2rem] font-medium leading-[1.8] mb-5" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }} dangerouslySetInnerHTML={{ __html: html }} />
+        <p key={i} className="font-cormorant italic text-[1.2rem] font-medium mb-5" style={{ color: '#FFFFFF', textShadow: '0 0 4px rgba(255,255,255,0.15)', lineHeight: '1.95', letterSpacing: '0.025em' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     }
     i++;
@@ -155,12 +155,10 @@ const BlogDetail = () => {
           {/* Back */}
           <Link
             to="/blogs"
-            className="inline-flex items-center gap-2 mb-8 font-cinzel text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300"
-            style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#FFE566'}
-            onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}
+            className="btn-outline-gold mb-8 inline-flex items-center gap-2 group"
+            style={{ padding: '0.6rem 1.5rem', letterSpacing: '0.15em', fontSize: '0.7rem', textDecoration: 'none' }}
           >
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round"><path d="M13 5H1M7 9L1 5l6-4"/></svg>
+            <svg width="12" height="8" viewBox="0 0 14 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="transition-transform duration-300 group-hover:-translate-x-1" style={{ marginRight: '4px' }}><path d="M13 5H1M7 9L1 5l6-4"/></svg>
             Back to Journal
           </Link>
 
@@ -172,7 +170,7 @@ const BlogDetail = () => {
           </div>
 
           {/* Title */}
-          <h1 className="font-playfair font-bold leading-tight mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#F8F5F0', fontStyle: 'normal' }}>
+          <h1 className="font-playfair font-bold tracking-wider mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#FFD700', fontStyle: 'normal', textShadow: '0 0 15px rgba(255,215,0,0.4)', lineHeight: '1.35', letterSpacing: '0.04em' }}>
             {blog.title}
           </h1>
 
