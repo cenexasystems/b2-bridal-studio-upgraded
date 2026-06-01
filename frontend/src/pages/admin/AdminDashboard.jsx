@@ -340,7 +340,7 @@ const AdminDashboard = () => {
               <img src="/b2-admin-logo.svg" alt="B2" style={{ width: 36, height: 36, objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.3))' }} />
               <div>
                 <h1 className="text-sm font-bold tracking-wide uppercase font-cinzel" style={{ color: '#1a1a1a' }}>Admin Panel</h1>
-                <p className="text-[0.85rem] font-cormorant italic font-semibold tracking-wide" style={{ color: '#D4AF37', marginTop: '-2px' }}>B2 Bridal Studio</p>
+                <p className="font-cormorant italic font-semibold tracking-wide" style={{ color: '#FFD700', fontSize: '14px', marginTop: '-2px' }}>B2 Bridal Studio</p>
               </div>
             </div>
           )}
