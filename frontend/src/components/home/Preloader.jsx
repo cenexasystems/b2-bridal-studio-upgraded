@@ -83,7 +83,7 @@ const Preloader = ({ onComplete }) => {
               Est. 2018
             </div>
             <div
-              className="font-cinzel text-lg tracking-[0.3em] uppercase"
+              className="font-cinzel text-lg tracking-[0.3em] uppercase font-bold"
               style={{
                 background: 'linear-gradient(135deg, #FFE566, #FFD700, #FFD700)',
                 WebkitBackgroundClip: 'text',
