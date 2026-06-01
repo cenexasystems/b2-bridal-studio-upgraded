@@ -153,9 +153,13 @@ const BlogDetail = () => {
           className="max-w-3xl mx-auto px-6 lg:px-8"
         >
           {/* Back */}
-          <a
-            href="/blogs"
-            className="inline-flex items-center gap-2 mb-8 font-cormorant italic text-[1.25rem] transition-all duration-300 group"
+          <Link
+            to="/blogs"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/blogs');
+            }}
+            className="inline-flex items-center gap-2 mb-8 font-cormorant italic text-[1.25rem] transition-all duration-300 group cursor-pointer"
             style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)', textDecoration: 'none' }}
             onMouseEnter={e => {
               e.currentTarget.style.color = '#FFD700';
@@ -168,7 +172,7 @@ const BlogDetail = () => {
           >
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="transition-transform duration-300 group-hover:-translate-x-1" style={{ marginRight: '4px' }}><path d="M13 5H1M7 9L1 5l6-4"/></svg>
             Back to Journal
-          </a>
+          </Link>
 
 
           {/* Category + Meta */}
