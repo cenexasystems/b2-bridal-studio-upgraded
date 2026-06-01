@@ -96,7 +96,14 @@ const Footer = () => {
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
               </svg>
             </SocialLink>
-            <SocialLink href="https://www.instagram.com/b2_bridal_studio_" label="Instagram">
+            <SocialLink href="https://www.instagram.com/b2_bridal_studio_" label="Instagram – B2 Bridal Studio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="14" height="14">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </SocialLink>
+            <SocialLink href="https://www.instagram.com/tharagai_b2_entrepreneur/" label="Instagram – Tharagai B2 Entrepreneur">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="14" height="14">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <circle cx="12" cy="12" r="4"/>
@@ -193,12 +200,12 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-cormorant leading-snug transition-colors duration-200 hover:text-[#FFD700]"
-                    style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)', textDecoration: 'none' }}
+                    style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)', textDecoration: 'none', fontFamily: '"Times New Roman", Times, serif' }}
                   >
                     {item.text}
                   </a>
                 ) : (
-                  <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)', fontFamily: /^\d/.test(item.text) ? '"Times New Roman", Times, serif' : undefined }}>
+                  <span className="font-cormorant leading-snug" style={{ fontSize: '0.95rem', color: 'rgba(248,245,240,0.92)', fontFamily: '"Times New Roman", Times, serif' }}>
                     {item.text}
                   </span>
                 )}

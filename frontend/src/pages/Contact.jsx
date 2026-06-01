@@ -108,11 +108,13 @@ const Contact = () => {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="leading-snug transition-colors duration-200 hover:text-[#FFD700]"
+                        className="transition-colors duration-200 hover:text-[#FFD700]"
                         style={{
                           fontFamily: '"Times New Roman", Times, serif',
-                          fontSize: '19px',
-                          color: 'rgba(248,245,240,0.9)',
+                          fontSize: '17px',
+                          fontWeight: 500,
+                          lineHeight: 1.375,
+                          color: 'rgba(248,245,240,0.92)',
                           textDecoration: 'none'
                         }}
                       >
@@ -120,11 +122,12 @@ const Contact = () => {
                       </a>
                     ) : (
                       <div
-                        className="leading-snug"
                         style={{
                           fontFamily: '"Times New Roman", Times, serif',
-                          fontSize: '19px',
-                          color: 'rgba(248,245,240,0.9)'
+                          fontSize: '17px',
+                          fontWeight: 500,
+                          lineHeight: 1.375,
+                          color: 'rgba(248,245,240,0.92)'
                         }}
                       >
                         {item.value}
