@@ -151,7 +151,7 @@ const PaymentVerification = () => {
                 <tr key={b._id} className="hover:bg-[#FFFCF5] transition-colors">
                   <td className="p-4 pl-6">
                     <div className="font-medium text-gray-900 font-playfair">{b.name}</div>
-                    <div className="text-xs text-gray-500 font-cormorant">{b.phone}</div>
+                    <div className="text-[0.8rem] font-semibold text-gray-600 font-cormorant mt-0.5">{b.phone}</div>
                     {b.dateTime && (
                       <div className="text-xs text-indigo-600 mt-1 font-medium">
                         📅 {formatScheduled(b.dateTime)}
@@ -167,9 +167,11 @@ const PaymentVerification = () => {
                     <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">{b.branch}</span>
                   </td>
                   <td className="p-4 text-sm text-gray-600">
-                    <ul className="list-disc pl-4 space-y-0.5 font-cormorant">
+                    <ul className="list-disc pl-4 space-y-1.5 font-cormorant">
                       {b.items.map((item, i) => (
-                        <li key={i} className="text-xs">{item.name} <span className="text-gray-400">(₹{item.price})</span></li>
+                        <li key={i} className="text-[0.85rem] font-medium text-gray-700">
+                          {item.name} <span className="text-xs font-semibold text-gray-500 ml-1">(₹{item.price})</span>
+                        </li>
                       ))}
                     </ul>
                   </td>
