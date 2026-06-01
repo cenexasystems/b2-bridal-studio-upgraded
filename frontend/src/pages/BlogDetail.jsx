@@ -144,7 +144,7 @@ const BlogDetail = () => {
 
       {/* Hero */}
       <section className="relative overflow-hidden" style={{ padding: '9rem 0 0' }}>
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center top, rgba(255,195,0,0.05), transparent 60%)' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center top, rgba(255,195,0,0.05), transparent 60%)' }} />
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -152,6 +152,7 @@ const BlogDetail = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mx-auto px-6 lg:px-8"
         >
+          
           {/* Back */}
           <Link
             to="/blogs"
@@ -159,7 +160,7 @@ const BlogDetail = () => {
               e.preventDefault();
               navigate('/blogs');
             }}
-            className="inline-flex items-center gap-2 mb-8 font-cormorant italic text-[1.25rem] transition-all duration-300 group cursor-pointer"
+            className="inline-flex items-center gap-2 mb-8 font-cormorant italic text-[1.25rem] transition-all duration-300 group cursor-pointer relative z-10"
             style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)', textDecoration: 'none' }}
             onMouseEnter={e => {
               e.currentTarget.style.color = '#FFD700';
