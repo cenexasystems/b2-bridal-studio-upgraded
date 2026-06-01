@@ -17,13 +17,13 @@ const renderContent = (content) => {
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="font-cinzel font-bold uppercase mt-12 mb-4" style={{ fontSize: '1.3rem', letterSpacing: '0.04em', color: '#F8F5F0' }}>
+        <h2 key={i} className="font-cinzel font-bold uppercase mt-12 mb-5" style={{ fontSize: '1.45rem', letterSpacing: '0.05em', color: '#FFD700', textShadow: '0 0 10px rgba(255,215,0,0.35)' }}>
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-playfair font-semibold mt-8 mb-3" style={{ fontSize: '1.1rem', color: '#FFD700' }}>
+        <h3 key={i} className="font-playfair font-semibold mt-8 mb-4" style={{ fontSize: '1.25rem', color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.25)' }}>
           {line.slice(4)}
         </h3>
       );
@@ -40,11 +40,11 @@ const renderContent = (content) => {
         i++;
       }
       elements.push(
-        <ul key={`ul-${i}`} className="mb-6 ml-1" style={{ listStyle: 'none' }}>
+        <ul key={`ul-${i}`} className="mb-6 ml-2" style={{ listStyle: 'none' }}>
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-2 font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.65)' }}>
-              <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#FFD700' }} />
-              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566">$1</strong>') }} />
+            <li key={j} className="flex items-start gap-3 mb-3 font-inter text-[1.05rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
+              <span className="mt-2 w-2 h-2 rounded-full flex-shrink-0" style={{ background: '#FFD700', boxShadow: '0 0 8px rgba(255,215,0,0.5)' }} />
+              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
             </li>
           ))}
         </ul>
@@ -58,11 +58,11 @@ const renderContent = (content) => {
         i++;
       }
       elements.push(
-        <ol key={`ol-${i}`} className="mb-6 ml-1 counter-reset-custom">
+        <ol key={`ol-${i}`} className="mb-6 ml-2 counter-reset-custom">
           {items.map((item, j) => (
-            <li key={j} className="flex items-start gap-3 mb-3 font-inter text-sm leading-relaxed" style={{ color: 'rgba(248,245,240,0.65)' }}>
-              <span className="font-cinzel text-xs mt-0.5 flex-shrink-0" style={{ color: '#FFD700', minWidth: '1.5rem' }}>{j + 1}.</span>
-              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566">$1</strong>') }} />
+            <li key={j} className="flex items-start gap-3 mb-4 font-inter text-[1.05rem] font-medium leading-relaxed" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }}>
+              <span className="font-cinzel text-xs mt-1.5 flex-shrink-0 font-bold" style={{ color: '#FFD700', minWidth: '1.5rem', textShadow: '0 0 8px rgba(255,215,0,0.4)' }}>{j + 1}.</span>
+              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>') }} />
             </li>
           ))}
         </ol>
@@ -70,25 +70,25 @@ const renderContent = (content) => {
       continue;
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
-        <p key={i} className="font-inter text-sm font-semibold mb-2" style={{ color: '#FFE566' }}>
+        <p key={i} className="font-inter text-[1.05rem] font-bold mb-3" style={{ color: '#FFE566', textShadow: '0 0 8px rgba(255,229,102,0.35)' }}>
           {line.slice(2, -2)}
         </p>
       );
     } else if (line.trim() === '') {
       // skip empty lines
     } else if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+      const contentText = line.slice(1, -1);
+      const html = contentText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-cormorant italic text-base mb-4" style={{ color: 'rgba(255,195,0,0.6)' }}>
-          {line.slice(1, -1)}
-        </p>
+        <p key={i} className="font-signature italic text-3xl text-center mt-6 mb-8 leading-relaxed" style={{ color: '#FFD700', textShadow: '0 0 12px rgba(255,215,0,0.45)', textTransform: 'none' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     } else {
       const html = line
-        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566">$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline">$1</a>');
+        .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#FFE566; text-shadow: 0 0 8px rgba(255,229,102,0.35); font-weight:700">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em style="color:#FFD700; font-family:var(--font-signature); font-size:1.65rem; font-style:normal">$1</em>')
+        .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:#FFD700;text-decoration:underline;font-weight:bold">$1</a>');
       elements.push(
-        <p key={i} className="font-inter text-sm leading-[1.9] mb-4" style={{ color: 'rgba(248,245,240,0.65)' }} dangerouslySetInnerHTML={{ __html: html }} />
+        <p key={i} className="font-inter text-[1.05rem] font-medium leading-[2.0] mb-5" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.2)' }} dangerouslySetInnerHTML={{ __html: html }} />
       );
     }
     i++;
@@ -153,13 +153,25 @@ const BlogDetail = () => {
           className="max-w-3xl mx-auto px-6 lg:px-8"
         >
           {/* Back */}
-          <Link to="/blog" className="inline-flex items-center gap-2 mb-8 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-colors duration-300" style={{ color: 'rgba(255,195,0,0.5)', textDecoration: 'none' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#FFD700'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,195,0,0.5)'}
+          <Link
+            to="/blog"
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate('/about');
+              }
+            }}
+            className="inline-flex items-center gap-2 mb-8 font-cinzel text-xs tracking-[0.2em] uppercase font-bold transition-all duration-300"
+            style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}
+            onMouseEnter={e => e.currentTarget.style.color = '#FFE566'}
+            onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}
           >
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"><path d="M13 5H1M7 9L1 5l6-4"/></svg>
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round"><path d="M13 5H1M7 9L1 5l6-4"/></svg>
             Back to Journal
           </Link>
+
 
           {/* Category + Meta */}
           <div className="flex items-center gap-3 mb-4">
@@ -235,7 +247,20 @@ const BlogDetail = () => {
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="max-w-xl mx-auto px-6 text-center">
           <span className="font-cinzel text-[0.6rem] tracking-[0.4em] uppercase" style={{ color: '#FFD700' }}>Continue Reading</span>
           <h3 className="font-cinzel font-bold uppercase mt-3 mb-6" style={{ fontSize: '1.3rem', color: '#F8F5F0', letterSpacing: '0.04em' }}>Explore More Articles</h3>
-          <Link to="/blog" className="btn-outline-gold py-3 px-8 text-xs">Back to Journal</Link>
+          <Link
+            to="/blog"
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate('/about');
+              }
+            }}
+            className="btn-outline-gold py-3 px-8 text-xs"
+          >
+            Back to Journal
+          </Link>
         </motion.div>
       </section>
     </div>

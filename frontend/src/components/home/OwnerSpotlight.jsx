@@ -35,7 +35,7 @@ const OwnerSpotlight = () => {
         className="absolute left-6 top-1/2 -translate-y-1/2 -rotate-90 font-cinzel text-[0.6rem] tracking-[0.4em] uppercase hidden xl:block"
         style={{ color: 'rgba(255,195,0,0.2)' }}
       >
-        01 — Artist
+        Artist
       </div>
 
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12" ref={ref}>
