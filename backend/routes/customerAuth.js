@@ -250,7 +250,7 @@ router.post('/forgot-password', async (req, res) => {
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
     const htmlContent = `
-      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
           <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
@@ -397,7 +397,7 @@ router.post('/send-otp', async (req, res) => {
     }
 
     const htmlContent = `
-      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
           <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
           <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
