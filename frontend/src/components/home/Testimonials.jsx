@@ -64,18 +64,21 @@ const StarRating = ({ count }) => (
   </div>
 );
 
-const TestimonialCard = ({ testimonial }) => (
+const TestimonialCard = ({ testimonial, isFloating }) => (
   <div
-    className="glass-dark flex-shrink-0 px-6 py-8 sm:px-8 sm:py-10 flex flex-col items-center text-center rounded-sm"
+    className={`glass-dark px-6 py-8 sm:px-8 sm:py-10 flex flex-col items-center text-center rounded-sm h-full ${isFloating ? 'animate-float-subtle' : ''}`}
     style={{
-      width: 'clamp(280px, 85vw, 380px)',
-      minHeight: '320px',
-      border: '1px solid rgba(255,195,0,0.15)',
+      width: '100%',
+      minHeight: '360px',
+      border: '1px solid rgba(255,195,0,0.18)',
+      boxShadow: '0 15px 35px rgba(0,0,0,0.4), inset 0 0 15px rgba(255,195,0,0.02)',
+      background: 'linear-gradient(135deg, rgba(15,15,12,0.98) 0%, rgba(5,5,5,0.99) 100%)',
+      boxSizing: 'border-box',
     }}
   >
     {/* Quote mark */}
     <div
-      className="font-playfair font-bold mb-4 leading-none select-none"
+      className="font-playfair font-bold mb-3 leading-none select-none"
       style={{ fontSize: '3.5rem', lineHeight: 0.8, color: 'rgba(255,215,0,0.25)' }}
     >
       "
@@ -90,7 +93,7 @@ const TestimonialCard = ({ testimonial }) => (
     <blockquote
       className="font-cormorant italic leading-relaxed mb-6 flex-1 text-ellipsis overflow-hidden"
       style={{
-        fontSize: '1.15rem',
+        fontSize: '1.2rem',
         fontWeight: 500,
         color: 'rgba(248,245,240,0.93)',
         maxWidth: '100%',
@@ -110,7 +113,7 @@ const TestimonialCard = ({ testimonial }) => (
         </span>
       </div>
       <div>
-        <div className="font-cinzel text-sm tracking-[0.1em] uppercase text-white">
+        <div className="font-cinzel text-sm tracking-[0.1em] uppercase text-white font-extrabold">
           {testimonial.name}
         </div>
         <div className="font-cormorant text-xs italic mt-0.5" style={{ color: 'rgba(255,215,0,0.65)' }}>
@@ -120,6 +123,26 @@ const TestimonialCard = ({ testimonial }) => (
     </div>
   </div>
 );
+
+const slideVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? '60px' : '-60px',
+    opacity: 0,
+    scale: 0.95
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    zIndex: 1
+  },
+  exit: (direction) => ({
+    x: direction < 0 ? '60px' : '-60px',
+    opacity: 0,
+    scale: 0.95,
+    zIndex: 0
+  })
+};
 
 const Testimonials = () => {
   const ref = useRef(null);
@@ -138,6 +161,11 @@ const Testimonials = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  // Carousel States
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
+
   // Fetch reviews from Database
   useEffect(() => {
     const fetchReviews = async () => {
@@ -153,6 +181,22 @@ const Testimonials = () => {
     };
     fetchReviews();
   }, []);
+
+  // Auto-sliding effect
+  useEffect(() => {
+    if (isHovered || list.length <= 1) return;
+    const interval = setInterval(() => {
+      setDirection(1);
+      setActiveIndex((prev) => (prev + 1) % list.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [list.length, isHovered]);
+
+  const handleDotClick = (index) => {
+    if (index === activeIndex) return;
+    setDirection(index > activeIndex ? 1 : -1);
+    setActiveIndex(index);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -193,8 +237,9 @@ const Testimonials = () => {
         stars,
       });
 
-      // Update marquee list instantly with the new review at the front
+      // Update list instantly with the new review at the front
       setList((prev) => [res.data, ...prev]);
+      setActiveIndex(0); // Show the newly submitted review
       setSuccess(true);
       
       // Reset form fields
@@ -214,9 +259,6 @@ const Testimonials = () => {
       setSubmitting(false);
     }
   };
-
-  // Duplicate list to achieve continuous seamless scroller animation
-  const doubledTestimonials = [...list, ...list];
 
   return (
     <section
@@ -281,13 +323,62 @@ const Testimonials = () => {
           </motion.div>
         </motion.div>
 
-        {/* Auto-scrolling carousel */}
-        <div className="testimonial-mask overflow-hidden mb-12">
-          <div className="testimonial-track">
-            {doubledTestimonials.map((testimonial, i) => (
-              <TestimonialCard key={`${testimonial._id}-${i}`} testimonial={testimonial} />
-            ))}
-          </div>
+        <style>{`
+          @keyframes floatSubtle {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+          }
+          .animate-float-subtle {
+            animation: floatSubtle 4s ease-in-out infinite;
+          }
+        `}</style>
+
+        {/* Auto-sliding premium carousel */}
+        <div 
+          className="relative mx-auto mb-8 flex justify-center items-center" 
+          style={{ width: 'clamp(280px, 85vw, 550px)', minHeight: '380px', perspective: '1000px' }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={activeIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { duration: 0.7, ease: [0.25, 1, 0.5, 1] },
+                opacity: { duration: 0.7, ease: 'easeInOut' },
+                scale: { duration: 0.7, ease: 'easeInOut' }
+              }}
+              style={{ position: 'absolute', width: '100%', height: '100%' }}
+            >
+              {list[activeIndex] && (
+                <TestimonialCard testimonial={list[activeIndex]} isFloating={true} />
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center items-center gap-3 mb-10">
+          {list.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className="w-2.5 h-2.5 rounded-full transition-all duration-300 relative cursor-pointer"
+              style={{
+                background: index === activeIndex ? '#FFD700' : 'rgba(255, 215, 0, 0.25)',
+                transform: index === activeIndex ? 'scale(1.3)' : 'scale(1)',
+                boxShadow: index === activeIndex ? '0 0 10px rgba(255, 215, 0, 0.6)' : 'none',
+                border: 'none',
+              }}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
         </div>
 
         {/* Action Button to Open Submission Modal */}
