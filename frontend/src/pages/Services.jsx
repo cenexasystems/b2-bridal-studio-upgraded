@@ -726,12 +726,13 @@ const Services = () => {
                       key={branch}
                       type="button"
                       onClick={() => { setBookingBranch(branch); setBookingErrors(prev => ({ ...prev, branch: '' })); }}
-                      className="flex-1 py-2.5 font-cinzel text-[0.7rem] tracking-[0.15em] uppercase rounded-sm transition-all"
+                      className="flex-1 py-2.5 font-cinzel text-[0.7rem] tracking-[0.15em] uppercase rounded-sm transition-all cursor-pointer"
                       style={{
-                        border: bookingBranch === branch ? '2px solid #FFD700' : '1px solid rgba(255,215,0,0.4)',
-                        background: bookingBranch === branch ? 'rgba(255,215,0,0.2)' : 'transparent',
-                        color: bookingBranch === branch ? '#FFD700' : 'rgba(255,215,0,0.6)',
-                        fontWeight: bookingBranch === branch ? 700 : 600,
+                        border: '2px solid #FFD700',
+                        background: bookingBranch === branch ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'transparent',
+                        color: bookingBranch === branch ? '#000' : '#FFD700',
+                        fontWeight: 'bold',
+                        boxShadow: bookingBranch === branch ? '0 2px 8px rgba(255,215,0,0.2)' : 'none',
                       }}
                     >
                       {branch}

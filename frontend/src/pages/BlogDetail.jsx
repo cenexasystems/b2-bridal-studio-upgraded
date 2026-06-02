@@ -183,7 +183,7 @@ const BlogDetail = () => {
           </div>
 
           {/* Title */}
-          <h1 className="font-playfair font-bold tracking-wider mb-5" style={{ fontSize: 'clamp(1.6rem, 3.8vw, 2.6rem)', color: '#FFE566', fontStyle: 'normal', textShadow: '0 0 5px rgba(255,229,102,0.2)', lineHeight: '1.35', letterSpacing: '0.04em' }}>
+          <h1 className="font-playfair font-bold tracking-wider mb-5" style={{ fontSize: 'clamp(1.3rem, 3.2vw, 2.1rem)', color: '#FFFFFF', fontStyle: 'normal', textShadow: '0 0 5px rgba(255,255,255,0.15)', lineHeight: '1.35', letterSpacing: '0.04em' }}>
             {blog.title}
           </h1>
 
@@ -193,7 +193,7 @@ const BlogDetail = () => {
               <span className="font-cinzel text-xs font-bold" style={{ color: '#FFD700' }}>{blog.author?.charAt(0)}</span>
             </div>
             <div>
-              <div className="font-inter" style={{ color: '#F8F5F0', fontSize: '13.5px' }}>{blog.author}</div>
+              <div className="font-cormorant" style={{ color: '#FFD700', fontSize: '20px', fontWeight: 'bold', textShadow: '0 0 6px rgba(255,215,0,0.3)', letterSpacing: '0.02em' }}>{blog.author}</div>
               <div className="font-cormorant italic text-sm font-bold mt-1" style={{ color: '#FFFFFF', textShadow: '0 0 5px rgba(255,255,255,0.25)' }}>
                 {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </div>

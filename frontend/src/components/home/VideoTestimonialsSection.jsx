@@ -161,14 +161,26 @@ const VideoTestimonialsSection = () => {
                         {/* LEFT ARROW */}
                         <button
                             onClick={() => paginate(-1)}
-                            className="absolute left-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:bg-rgba(212,175,55,0.15) active:scale-95"
+                            className="absolute left-0 z-20 w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 active:scale-90"
                             style={{
-                                border: '1px solid rgba(212,175,55,0.45)',
-                                color: '#D4AF37',
-                                background: 'rgba(212,175,55,0.06)',
+                                border: 'none',
+                                color: '#FFD700',
+                                background: 'transparent',
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'scale(1.2)';
+                                e.currentTarget.style.color = '#FFFFFF';
+                                e.currentTarget.style.filter = 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.color = '#FFD700';
+                                e.currentTarget.style.filter = 'none';
                             }}
                         >
-                            ←
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
                         </button>
 
                         {/* GLASS VIDEO CARD WITH DRAG SUPPORT */}
@@ -225,14 +237,26 @@ const VideoTestimonialsSection = () => {
                         {/* RIGHT ARROW */}
                         <button
                             onClick={() => paginate(1)}
-                            className="absolute right-0 z-20 w-12 h-12 flex items-center justify-center backdrop-blur-md cursor-pointer transition-all hover:bg-rgba(212,175,55,0.15) active:scale-95"
+                            className="absolute right-0 z-20 w-12 h-12 flex items-center justify-center cursor-pointer transition-all duration-300 active:scale-90"
                             style={{
-                                border: '1px solid rgba(212,175,55,0.45)',
-                                color: '#D4AF37',
-                                background: 'rgba(212,175,55,0.06)',
+                                border: 'none',
+                                color: '#FFD700',
+                                background: 'transparent',
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'scale(1.2)';
+                                e.currentTarget.style.color = '#FFFFFF';
+                                e.currentTarget.style.filter = 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8))';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.color = '#FFD700';
+                                e.currentTarget.style.filter = 'none';
                             }}
                         >
-                            →
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
                         </button>
                     </div>
                 )}

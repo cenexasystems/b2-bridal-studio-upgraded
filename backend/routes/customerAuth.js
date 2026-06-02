@@ -250,22 +250,22 @@ router.post('/forgot-password', async (req, res) => {
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
 
     const htmlContent = `
-      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #FFD700; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
-          <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
+          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 140px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
+          <div style="width: 60px; height: 2px; background-color: #FFD700; margin: 15px auto;"></div>
         </div>
         
-        <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Password Reset Request</h2>
+        <h2 style="color: #FFD700; font-size: 20px; text-align: center; margin-bottom: 20px;">Password Reset Request</h2>
         
         <p style="color: #111111; line-height: 1.8; font-size: 15px; font-weight: 500;">Dear ${user.name || 'Valued Customer'},</p>
         
         <p style="color: #333333; line-height: 1.8; font-size: 15px;">
-          We received a request to reset your password. Click the button below to set a new password. This link is valid for <strong style="color: #c9a84c;">1 hour</strong>.
+          We received a request to reset your password. Click the button below to set a new password. This link is valid for <strong style="color: #FFD700;">1 hour</strong>.
         </p>
         
         <div style="text-align: center; margin: 35px 0;">
-          <a href="${resetUrl}" style="background-color: #c9a84c; color: #000000; padding: 14px 40px; text-decoration: none; font-size: 16px; font-weight: bold; letter-spacing: 1px; border-radius: 4px; display: inline-block;">
+          <a href="${resetUrl}" style="background-color: #FFD700; color: #000000; padding: 14px 40px; text-decoration: none; font-size: 16px; font-weight: bold; letter-spacing: 1px; border-radius: 4px; display: inline-block;">
             RESET PASSWORD
           </a>
         </div>
@@ -397,22 +397,22 @@ router.post('/send-otp', async (req, res) => {
     }
 
     const htmlContent = `
-      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #c9a84c; border-radius: 2px;">
+      <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #FFD700; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #c9a84c; font-size: 28px; margin: 0; letter-spacing: 2px;">B2 BRIDAL STUDIO</h1>
-          <div style="width: 60px; height: 2px; background-color: #c9a84c; margin: 15px auto;"></div>
+          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 140px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
+          <div style="width: 60px; height: 2px; background-color: #FFD700; margin: 15px auto;"></div>
         </div>
         
-        <h2 style="color: #c9a84c; font-size: 20px; text-align: center; margin-bottom: 20px;">Email Verification OTP</h2>
+        <h2 style="color: #FFD700; font-size: 20px; text-align: center; margin-bottom: 20px;">Email Verification OTP</h2>
         
         <p style="color: #111111; line-height: 1.8; font-size: 15px; font-weight: 500;">Dear ${name || 'Valued Customer'},</p>
         
         <p style="color: #333333; line-height: 1.8; font-size: 15px;">
-          Thank you for choosing B2 Bridal Studio. Please use the following One-Time Password (OTP) to complete your login/registration process. This OTP is valid for <strong style="color: #c9a84c;">5 minutes</strong>.
+          Thank you for choosing B2 Bridal Studio. Please use the following One-Time Password (OTP) to complete your login/registration process. This OTP is valid for <strong style="color: #FFD700;">5 minutes</strong>.
         </p>
         
         <div style="text-align: center; margin: 35px 0;">
-          <span style="background-color: rgba(201, 168, 76, 0.08); color: #c9a84c; border: 1px dashed #c9a84c; padding: 12px 30px; font-size: 28px; font-weight: bold; letter-spacing: 6px; border-radius: 4px; display: inline-block;">
+          <span style="background-color: rgba(255, 215, 0, 0.08); color: #FFD700; border: 1px dashed #FFD700; padding: 12px 30px; font-size: 28px; font-weight: bold; letter-spacing: 6px; border-radius: 4px; display: inline-block;">
             ${otpVal}
           </span>
         </div>
