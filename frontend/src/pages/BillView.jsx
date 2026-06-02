@@ -39,37 +39,74 @@ const BillView = () => {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const generatePDF = () => {
+  const generatePDF = async () => {
     if (!bill) return;
     const doc = new jsPDF();
 
-    // Header
-    doc.setFillColor(0, 0, 0);
-    doc.rect(0, 0, 210, 40, 'F');
-    doc.setTextColor(201, 162, 39);
+    // Header background
+    doc.setFillColor(10, 10, 10);
+    doc.rect(0, 0, 210, 45, 'F');
+
+    // Add Logo
+    try {
+      const logoImg = await new Promise((resolve) => {
+        const img = new Image();
+        img.src = '/b2-icon.svg';
+        img.width = 150;
+        img.height = 150;
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 150;
+            canvas.height = 150;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, 150, 150);
+            resolve(canvas.toDataURL('image/png'));
+          } catch (e) {
+            console.error("Canvas rasterize error:", e);
+            resolve(null);
+          }
+        };
+        img.onerror = () => resolve(null);
+      });
+      if (logoImg) {
+        doc.addImage(logoImg, 'PNG', 97.5, 4, 15, 15);
+      }
+    } catch (e) {
+      console.error("Logo load error:", e);
+    }
+
+    // Header Text
+    doc.setFont('times', 'bold');
+    doc.setTextColor(255, 215, 0); // Bright Gold!
     doc.setFontSize(20);
-    doc.text('B2 Bridal Studio', 105, 18, { align: 'center' });
-    doc.setFontSize(9);
-    doc.setTextColor(180, 170, 150);
-    doc.text('Premium Beauty & Artistry', 105, 26, { align: 'center' });
-
-    // Bill info
-    doc.setTextColor(60, 60, 60);
+    doc.text('B2 Bridal Studio', 105, 28, { align: 'center' });
+    
+    doc.setFont('times', 'italic');
+    doc.setTextColor(230, 220, 200); // Premium cream color
     doc.setFontSize(10);
-    doc.text(`Bill #${bill._id.slice(-8).toUpperCase()}`, 15, 52);
-    doc.text(`Date: ${new Date(bill.date).toLocaleDateString('en-IN')}`, 15, 59);
-    if (bill.branch) doc.text(`Branch: ${bill.branch}`, 15, 66);
-    if (bill.paymentMethod) doc.text(`Payment Mode: ${bill.paymentMethod}`, 15, 73);
+    doc.text('Premium Beauty & Artistry', 105, 35, { align: 'center' });
 
-    // Customer
+    // Bill info block
+    doc.setFont('times', 'normal');
+    doc.setTextColor(50, 50, 50);
+    doc.setFontSize(11);
+    
+    // Left column
+    doc.text(`Bill No: #${bill._id.slice(-8).toUpperCase()}`, 15, 55);
+    doc.text(`Date: ${new Date(bill.date).toLocaleDateString('en-IN')}`, 15, 62);
+    if (bill.branch) doc.text(`Branch: ${bill.branch}`, 15, 69);
+    if (bill.paymentMethod) doc.text(`Payment Mode: ${bill.paymentMethod}`, 15, 76);
+
+    // Right column (Customer details)
     if (bill.customerDetails?.name) {
-      doc.text(`Customer: ${bill.customerDetails.name}`, 120, 52);
-      if (bill.customerDetails.phone) doc.text(`Phone: ${bill.customerDetails.phone}`, 120, 59);
+      doc.text(`Customer: ${bill.customerDetails.name}`, 120, 55);
+      if (bill.customerDetails.phone) doc.text(`Phone: ${bill.customerDetails.phone}`, 120, 62);
       
       if (bill.source === 'online' && bill.customerDetails.date) {
         const { date, time } = getScheduledDetails(bill.customerDetails.date);
-        doc.text(`Scheduled Date: ${date}`, 120, 66);
-        doc.text(`Scheduled Time: ${time}`, 120, 73);
+        doc.text(`Scheduled Date: ${date}`, 120, 69);
+        doc.text(`Scheduled Time: ${time}`, 120, 76);
       }
     }
 
@@ -78,57 +115,70 @@ const BillView = () => {
       i + 1,
       item.name,
       item.quantity || 1,
-      `₹${item.price}`,
-      `₹${(item.price * (item.quantity || 1))}`
+      `Rs. ${item.price}`,
+      `Rs. ${(item.price * (item.quantity || 1))}`
     ]);
 
     autoTable(doc, {
-      startY: 82,
+      startY: 85,
       head: [['#', 'Item', 'Qty', 'Price', 'Amount']],
       body: tableData,
       theme: 'grid',
-      headStyles: { fillColor: [30, 30, 30], textColor: [201, 162, 39], fontSize: 9 },
-      bodyStyles: { fontSize: 9, textColor: [60, 60, 60] },
-      alternateRowStyles: { fillColor: [248, 248, 248] },
+      headStyles: { 
+        fillColor: [15, 15, 15], 
+        textColor: [255, 215, 0], // Bright Gold!
+        font: 'times', 
+        fontStyle: 'bold', 
+        fontSize: 10 
+      },
+      bodyStyles: { 
+        font: 'times', 
+        fontSize: 10, 
+        textColor: [40, 40, 40] 
+      },
+      alternateRowStyles: { fillColor: [250, 250, 250] },
       margin: { left: 15, right: 15 },
     });
 
-    const finalY = doc.lastAutoTable.finalY + 10;
+    const finalY = doc.lastAutoTable.finalY + 12;
     let cursorY = finalY;
-    doc.setFontSize(10);
+    doc.setFont('times', 'normal');
+    doc.setFontSize(11);
 
     const displayOriginalAmount = bill.originalAmount || bill.originalTotal || (bill.total + (bill.discountAmount || 0));
     doc.setTextColor(100, 100, 100);
-    doc.text(`Service Total: ₹${displayOriginalAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
-    cursorY += 7;
+    doc.text(`Service Total: Rs. ${displayOriginalAmount.toFixed(2)}`, 195, cursorY, { align: 'right' });
+    cursorY += 8;
 
     if (bill.discountAmount && bill.discountAmount > 0) {
       doc.setTextColor(34, 139, 34); // Forest green
       if (bill.discountType === 'coupon' || bill.couponCode) {
-        doc.text(`Coupon Discount (${bill.couponCode}): -₹${bill.discountAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
+        doc.text(`Coupon Discount (${bill.couponCode}): -Rs. ${bill.discountAmount.toFixed(2)}`, 195, cursorY, { align: 'right' });
       } else if (bill.discountType === 'manual') {
-        doc.text(`Manual Discount: -₹${bill.discountAmount.toFixed(2)}`, 150, cursorY, { align: 'right' });
+        doc.text(`Manual Discount: -Rs. ${bill.discountAmount.toFixed(2)}`, 195, cursorY, { align: 'right' });
       }
-      cursorY += 7;
+      cursorY += 8;
     }
 
     if (bill.gst && bill.gst > 0) {
       doc.setTextColor(100, 100, 100);
-      doc.text(`GST Included: ₹${bill.gst.toFixed(2)}`, 150, cursorY, { align: 'right' });
-      cursorY += 7;
+      doc.text(`GST Included: Rs. ${bill.gst.toFixed(2)}`, 195, cursorY, { align: 'right' });
+      cursorY += 8;
     }
 
-    cursorY += 3;
+    cursorY += 4;
 
     // Final total (actual paid amount)
-    doc.setFontSize(12);
-    doc.setTextColor(201, 162, 39);
-    doc.text(`Final Amount Paid: ₹${bill.total.toFixed(2)}`, 150, cursorY, { align: 'right' });
+    doc.setFont('times', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(255, 215, 0); // Bright Gold!
+    doc.text(`Final Amount Paid: Rs. ${bill.total.toFixed(2)}`, 195, cursorY, { align: 'right' });
 
     // Footer
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text('Thank you for choosing B2 Bridal Studio', 105, 280, { align: 'center' });
+    doc.setFont('times', 'italic');
+    doc.setFontSize(9);
+    doc.setTextColor(140, 140, 140);
+    doc.text('Thank you for choosing B2 Bridal Studio', 105, 282, { align: 'center' });
 
     doc.save(`B2-Bill-${bill._id.slice(-8).toUpperCase()}.pdf`);
   };
@@ -167,53 +217,53 @@ const BillView = () => {
           {/* Bill Card */}
           <div className="glass-dark rounded-sm overflow-hidden" style={{ border: '1px solid rgba(255,195,0,0.2)' }}>
             {/* Header */}
-            <div className="p-8 text-center" style={{ background: 'linear-gradient(180deg, rgba(255,195,0,0.08), transparent)', borderBottom: '1px solid rgba(255,195,0,0.1)' }}>
-              <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style={{ border: '1px solid rgba(255,195,0,0.4)' }}>
-                <span className="font-cinzel text-lg font-bold text-gold-gradient">B2</span>
+            <div className="p-8 text-center" style={{ background: 'linear-gradient(180deg, rgba(255,215,0,0.08), transparent)', borderBottom: '1px solid rgba(255,215,0,0.15)' }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3" style={{ border: '1px solid rgba(255,215,0,0.4)', boxShadow: '0 0 15px rgba(255,215,0,0.15)', background: '#050505' }}>
+                <img src="/b2-logo-transparent.svg" alt="B2 Logo" style={{ width: '40px', height: '40px', objectFit: 'contain', filter: 'drop-shadow(0 0 3px rgba(255,215,0,0.3))' }} />
               </div>
-              <h1 className="font-cinzel text-sm tracking-[0.3em] uppercase" style={{ color: '#F8F5F0' }}>B2 Bridal Studio</h1>
-              <p className="font-cormorant italic text-xs mt-1" style={{ color: 'rgba(248,245,240,0.4)' }}>Premium Beauty & Artistry</p>
+              <h1 className="font-cinzel text-[1.1rem] tracking-[0.3em] uppercase font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)' }}>B2 Bridal Studio</h1>
+              <p className="font-cormorant italic text-sm mt-1.5 font-semibold" style={{ color: 'rgba(248,245,240,0.6)', letterSpacing: '0.02em' }}>Premium Beauty & Artistry</p>
             </div>
 
             {/* Bill Info */}
-            <div className="p-6 flex flex-wrap gap-6 justify-between" style={{ borderBottom: '1px solid rgba(255,195,0,0.06)' }}>
+            <div className="p-6 flex flex-wrap gap-6 justify-between" style={{ borderBottom: '1px solid rgba(255,215,0,0.08)' }}>
               <div>
-                <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.4)' }}>Bill No</span>
-                <span className="font-inter text-sm" style={{ color: '#F8F5F0' }}>#{bill._id.slice(-8).toUpperCase()}</span>
+                <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Bill No</span>
+                <span className="font-inter text-[0.95rem] font-bold" style={{ color: '#F8F5F0' }}>#{bill._id.slice(-8).toUpperCase()}</span>
               </div>
               <div>
-                <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.4)' }}>Date</span>
-                <span className="font-inter text-sm" style={{ color: '#F8F5F0' }}>{new Date(bill.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Date</span>
+                <span className="font-inter text-[0.95rem] font-bold" style={{ color: '#F8F5F0' }}>{new Date(bill.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
               </div>
               {bill.branch && (
                 <div>
-                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.4)' }}>Branch</span>
-                  <span className="font-inter text-sm" style={{ color: '#F8F5F0' }}>{bill.branch}</span>
+                  <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Branch</span>
+                  <span className="font-inter text-[0.95rem] font-bold" style={{ color: '#F8F5F0' }}>{bill.branch}</span>
                 </div>
               )}
               {bill.paymentMethod && (
                 <div>
-                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-1" style={{ color: 'rgba(255,195,0,0.4)' }}>Mode</span>
-                  <span className="font-inter text-sm" style={{ color: '#F8F5F0' }}>{bill.paymentMethod}</span>
+                  <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Mode</span>
+                  <span className="font-inter text-[0.95rem] font-bold" style={{ color: '#F8F5F0' }}>{bill.paymentMethod}</span>
                 </div>
               )}
             </div>
 
             {/* Customer & Scheduled Appointment */}
             {bill.customerDetails?.name && (
-              <div className="px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-start gap-4" style={{ borderBottom: '1px solid rgba(255,195,0,0.06)' }}>
+              <div className="px-6 py-4 flex flex-col md:flex-row md:justify-between md:items-start gap-4" style={{ borderBottom: '1px solid rgba(255,215,0,0.08)' }}>
                 <div>
-                  <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-2" style={{ color: 'rgba(255,195,0,0.4)' }}>Customer</span>
-                  <span className="font-inter text-sm block" style={{ color: '#F8F5F0' }}>{bill.customerDetails.name}</span>
-                  {bill.customerDetails.phone && <span className="font-inter text-xs" style={{ color: 'rgba(248,245,240,0.4)' }}>{bill.customerDetails.phone}</span>}
+                  <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Customer</span>
+                  <span className="font-inter text-[0.95rem] font-bold block" style={{ color: '#F8F5F0' }}>{bill.customerDetails.name}</span>
+                  {bill.customerDetails.phone && <span className="font-inter text-xs block mt-0.5 font-semibold" style={{ color: 'rgba(248,245,240,0.5)' }}>{bill.customerDetails.phone}</span>}
                 </div>
                 {bill.source === 'online' && bill.customerDetails?.date && (() => {
                   const { date, time } = getScheduledDetails(bill.customerDetails.date);
                   return (
                     <div>
-                      <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-2" style={{ color: 'rgba(255,195,0,0.4)' }}>Appointment Slot</span>
-                      <span className="font-inter text-xs block" style={{ color: '#F8F5F0' }}>Scheduled Date: <strong style={{ color: '#FFD700' }}>{date}</strong></span>
-                      <span className="font-inter text-xs block mt-1" style={{ color: '#F8F5F0' }}>Scheduled Time: <strong style={{ color: '#FFD700' }}>{time}</strong></span>
+                      <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1.5 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Appointment Slot</span>
+                      <span className="font-inter text-sm block font-medium" style={{ color: '#F8F5F0' }}>Scheduled Date: <strong style={{ color: '#FFD700', fontWeight: 'bold' }}>{date}</strong></span>
+                      <span className="font-inter text-sm block mt-1.5 font-medium" style={{ color: '#F8F5F0' }}>Scheduled Time: <strong style={{ color: '#FFD700', fontWeight: 'bold' }}>{time}</strong></span>
                     </div>
                   );
                 })()}
@@ -221,31 +271,31 @@ const BillView = () => {
             )}
 
             {/* Items */}
-            <div className="px-6 py-4">
-              <span className="font-cinzel text-[0.5rem] tracking-[0.2em] uppercase block mb-4" style={{ color: 'rgba(255,195,0,0.4)' }}>Items</span>
+            <div className="px-6 py-4" style={{ borderBottom: '1px solid rgba(255,215,0,0.04)' }}>
+              <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-3 font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>Items</span>
               {bill.items.map((item, i) => (
-                <div key={i} className="flex justify-between py-2.5" style={{ borderBottom: i < bill.items.length - 1 ? '1px solid rgba(255,195,0,0.04)' : 'none' }}>
+                <div key={i} className="flex justify-between py-2.5" style={{ borderBottom: i < bill.items.length - 1 ? '1px solid rgba(255,215,0,0.04)' : 'none' }}>
                   <div>
-                    <span className="font-cormorant text-sm" style={{ color: '#F8F5F0' }}>{item.name}</span>
-                    <span className="font-cinzel text-[0.5rem] ml-2" style={{ color: 'rgba(248,245,240,0.3)' }}>× {item.quantity || 1}</span>
+                    <span className="font-cormorant text-[1.1rem] font-medium" style={{ color: '#F8F5F0' }}>{item.name}</span>
+                    <span className="font-cinzel text-xs ml-2" style={{ color: 'rgba(248,245,240,0.4)' }}>× {item.quantity || 1}</span>
                   </div>
-                  <span className="font-cinzel text-sm" style={{ color: '#FFD700' }}>₹{(item.price * (item.quantity || 1)).toLocaleString()}</span>
+                  <span className="font-cinzel text-[0.95rem] font-bold" style={{ color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)' }}>₹{(item.price * (item.quantity || 1)).toLocaleString()}</span>
                 </div>
               ))}
             </div>
 
             {/* Totals */}
-            <div className="px-6 py-5" style={{ background: 'rgba(255,195,0,0.03)', borderTop: '1px solid rgba(255,195,0,0.1)' }}>
+            <div className="px-6 py-5" style={{ background: 'rgba(255,215,0,0.02)', borderTop: '1px solid rgba(255,215,0,0.1)' }}>
               {(() => {
                 const displayOriginalAmount = bill.originalAmount || bill.originalTotal || (bill.total + (bill.discountAmount || 0));
                 return (
                   <>
-                    <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                    <div className="flex justify-between mb-2 font-cormorant text-[1rem] font-semibold" style={{ color: 'rgba(248,245,240,0.6)' }}>
                       <span>Service Total</span><span>₹{displayOriginalAmount.toFixed(2)}</span>
                     </div>
 
                     {bill.discountAmount && bill.discountAmount > 0 && (
-                      <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: '#4ade80' }}>
+                      <div className="flex justify-between mb-2 font-cormorant text-[1rem] font-bold" style={{ color: '#4ade80' }}>
                         <span className="flex items-center gap-1.5">
                           {bill.couponCode && (
                             <span style={{ fontSize: '0.6rem', padding: '1px 6px', borderRadius: '9999px', background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)', textTransform: 'uppercase' }}>
@@ -260,15 +310,15 @@ const BillView = () => {
                     )}
 
                     {bill.gst && bill.gst > 0 ? (
-                      <div className="flex justify-between mb-2 font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                      <div className="flex justify-between mb-2 font-cormorant text-[1rem] font-semibold" style={{ color: 'rgba(248,245,240,0.6)' }}>
                         <span>GST Included</span><span>₹{bill.gst.toFixed(2)}</span>
                       </div>
                     ) : null}
                   </>
                 );
               })()}
-              <div className="flex justify-between font-cinzel text-lg pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.12)', color: '#F8F5F0' }}>
-                <span>Final Amount Paid</span><span style={{ color: '#FFD700' }}>₹{bill.total.toFixed(2)}</span>
+              <div className="flex justify-between font-cinzel text-[1.15rem] pt-3.5 font-bold" style={{ borderTop: '1px solid rgba(255,215,0,0.15)', color: '#F8F5F0' }}>
+                <span>Final Amount Paid</span><span style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.35)' }}>₹{bill.total.toFixed(2)}</span>
               </div>
             </div>
 
