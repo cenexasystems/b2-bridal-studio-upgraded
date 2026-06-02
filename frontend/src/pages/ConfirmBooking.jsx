@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
 import { fadeUp, staggerContainer } from '../animations/variants';
 import { UploadCloud, FileText, Check } from 'lucide-react';
 
@@ -12,14 +11,12 @@ const HOUR_LABELS = { '10':'10 AM','11':'11 AM','12':'12 PM','13':'1 PM','14':'2
 const ConfirmBooking = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { items: cartItems, total: cartTotal, clearCart } = useCart();
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-  // Support direct service flow (via serviceData) AND cart flow
+  // Support only direct service flow (via serviceData)
   const serviceData = location.state?.serviceData || null;
-  const isServiceFlow = !!serviceData && cartItems.length === 0;
-  const items = isServiceFlow ? (serviceData.items || []) : cartItems;
-  const total = isServiceFlow ? (serviceData.total || 0) : cartTotal;
+  const items = serviceData?.items || [];
+  const total = serviceData?.total || 0;
   const gstTotal = items.reduce((sum, i) => {
     const gstPercent = i.gstPercentage || 0;
     if (gstPercent > 0) {
@@ -101,7 +98,6 @@ const ConfirmBooking = () => {
         throw new Error(errData.error || `Server error: ${response.status}`);
       }
 
-      clearCart();
       localStorage.removeItem('services_cart');
       localStorage.removeItem('services_bookingDate');
       localStorage.removeItem('services_bookingTime');
@@ -315,34 +311,34 @@ const ConfirmBooking = () => {
             className="lg:col-span-2 glass-dark p-6 rounded-sm h-fit sticky top-24"
             style={{ border: '1px solid rgba(255,195,0,0.15)' }}
           >
-            <h3 className="font-cinzel text-xs tracking-[0.2em] uppercase mb-5 pb-3" style={{ color: '#FFD700', borderBottom: '1px solid rgba(255,195,0,0.1)' }}>Cart Summary</h3>
+            <h3 className="font-cinzel text-sm tracking-[0.25em] uppercase mb-5 pb-3 font-bold" style={{ color: '#FFD700', borderBottom: '1px solid rgba(255,195,0,0.1)' }}>Cart Summary</h3>
 
             <div className="flex flex-col gap-3 mb-5">
               {items.map(item => (
                 <div key={item._id || item.id} className="flex justify-between text-sm">
-                  <span className="font-cormorant" style={{ color: 'rgba(248,245,240,0.7)' }}>{item.quantity}x {item.name}</span>
-                  <span className="font-cinzel text-xs" style={{ color: '#FFD700' }}>₹{(item.price * item.quantity).toLocaleString()}</span>
+                  <span className="font-cormorant text-base font-medium" style={{ color: 'rgba(248,245,240,0.95)' }}>{item.quantity}x {item.name}</span>
+                  <span className="font-cinzel text-sm font-bold" style={{ color: '#FFD700' }}>₹{(item.price * item.quantity).toLocaleString()}</span>
                 </div>
               ))}
             </div>
 
             <div className="mt-6 flex flex-col gap-2" style={{ borderTop: '1px solid rgba(255,195,0,0.1)', paddingTop: '16px' }}>
-              <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+              <div className="flex justify-between font-cormorant text-base font-medium" style={{ color: 'rgba(248,245,240,0.85)' }}>
                 <span>Service Total</span><span>₹{total.toFixed(2)}</span>
               </div>
               {gstTotal > 0 && (
-                <div className="flex justify-between font-cormorant text-sm" style={{ color: 'rgba(248,245,240,0.5)' }}>
+                <div className="flex justify-between font-cormorant text-base font-medium" style={{ color: 'rgba(248,245,240,0.85)' }}>
                   <span>GST (Included)</span>
                   <span>₹{(appliedCoupon ? gstTotal * (appliedCoupon.finalAmount / total) : gstTotal).toFixed(2)}</span>
                 </div>
               )}
               {appliedCoupon && (
-                <div className="flex justify-between font-cormorant text-sm text-green-500">
+                <div className="flex justify-between font-cormorant text-base font-medium text-green-400">
                   <span>Discount ({appliedCoupon.discountPercentage}%)</span>
                   <span>-₹{appliedCoupon.discountAmount.toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between font-cinzel text-base mt-2 pt-2" style={{ borderTop: '1px solid rgba(255,195,0,0.08)', color: '#F8F5F0' }}>
+              <div className="flex justify-between font-cinzel text-lg font-bold mt-2 pt-3" style={{ borderTop: '1px solid rgba(255,195,0,0.2)', color: '#FFFFFF' }}>
                 <span>Total Payable</span>
                 <span style={{ color: '#FFD700' }}>
                   ₹{(appliedCoupon ? appliedCoupon.finalAmount : total).toFixed(2)}
@@ -350,17 +346,17 @@ const ConfirmBooking = () => {
               </div>
             </div>
 
-            <div className="mt-5 p-3 rounded-sm" style={{ background: 'rgba(255,195,0,0.05)', border: '1px solid rgba(255,195,0,0.08)' }}>
+            <div className="mt-5 p-4 rounded-sm" style={{ background: 'rgba(255,195,0,0.08)', border: '1px solid rgba(255,195,0,0.15)' }}>
               {scheduledLabel ? (
-                <p className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.4)' }}>
+                <p className="font-cormorant italic text-sm font-medium" style={{ color: 'rgba(248,245,240,0.9)' }}>
                   📅 Scheduled: {scheduledLabel}
                 </p>
               ) : (
                 <>
-                  <p className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.4)' }}>
+                  <p className="font-cormorant italic text-sm font-medium" style={{ color: 'rgba(248,245,240,0.9)' }}>
                     📅 Date: {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
-                  <p className="font-cormorant italic text-xs mt-1" style={{ color: 'rgba(248,245,240,0.4)' }}>
+                  <p className="font-cormorant italic text-sm font-medium mt-1" style={{ color: 'rgba(248,245,240,0.9)' }}>
                     🕐 Time: {new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </>
