@@ -819,7 +819,12 @@ const Services = () => {
             ) : (
               <ul className="flex flex-col gap-3 mb-4">{cart.map(item => (
                 <li key={item._id} className="flex justify-between items-center group text-sm">
-                  <div className="flex-1 min-w-0"><span className="block font-cormorant truncate" style={{ color: '#F8F5F0' }}>{item.name}</span><span className="font-cinzel text-xs font-bold" style={{ color: '#FFD700' }}>₹{item.price}</span></div>
+                  <div className="flex-1 min-w-0">
+                    <span className="block font-cormorant mb-1 truncate" style={{ color: '#F8F5F0', fontSize: '1.125rem', fontWeight: 500, letterSpacing: '0.01em' }}>
+                      {item.name}
+                    </span>
+                    <span className="font-cinzel text-xs font-bold" style={{ color: '#FFD700' }}>₹{item.price}</span>
+                  </div>
                   <button onClick={() => removeFromCart(item._id)} className="p-1.5 rounded-sm transition-all" style={{ color: '#f87171', background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.15)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.08)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.15)'; }}><Trash2 size={14} /></button>
                 </li>
               ))}</ul>
