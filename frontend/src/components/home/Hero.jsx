@@ -43,7 +43,7 @@ const Hero = () => {
       className="hero-section"
       style={{
         minHeight: '100vh',
-        background: '#0B0B0D',
+        background: '#000000',
         position: 'relative',
         overflow: 'hidden',
         display: 'flex',
