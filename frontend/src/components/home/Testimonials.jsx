@@ -335,7 +335,7 @@ const Testimonials = () => {
           {/* Luxury Google Reviews Rating Badge */}
           <motion.div variants={fadeUp} className="flex justify-center items-center gap-4 mt-6">
             <a
-              href="https://www.google.com/search?q=B2+Bridal+Studio"
+              href="https://www.google.com/search?q=B2+Bridal+Studio#sv=CAESzQEKuQEStgEKd0FNbjMteVJYajYwcFlKdk1xZFpGRzZtU2JnNE5sQlNUekY3dlFaMFRwNl92a0lRVW5MdmdUeHItUEJUYUlMeDBlN1hBOTNyMzk0TjBfczZ3LW9qVUJ3Y0U3cDUwZUFlMXNvQTZOWDdiRmVreWRIWDJsbTRYd0ZFEhc1bzRlYXJUVkt0M1R3Y3NQdmZLZnVBOBoiQUpLTEZtSUp0OVZ5a3lzYktGLVo3T3FiT0FfM0lEUWh0QRIEODA1MRoBMyoAMAA4AUAAGAAgqvWU0Q1KAhAC"
               target="_blank"
               rel="noopener noreferrer"
               className="glass-dark px-5 py-2.5 rounded-sm border border-[#FFD700]/15 flex items-center gap-3 hover:border-[#FFD700]/30 transition-all cursor-pointer"
