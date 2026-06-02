@@ -175,12 +175,12 @@ const CourseCard = ({ course, delay }) => {
                 }}
               >
                 <div className="flex justify-between mb-2">
-                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.6)' }}>Duration</span>
-                  <span className="font-cormorant text-sm" style={{ color: '#F8F5F0' }}>{course.duration}</span>
+                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFD700' }}>Duration</span>
+                  <span className="font-cormorant text-sm font-bold" style={{ color: '#FFD700' }}>{course.duration}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(255,195,0,0.6)' }}>Level</span>
-                  <span className="font-cormorant text-sm" style={{ color: levelColors[course.level] }}>{course.level}</span>
+                  <span className="font-cinzel text-[0.6rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFD700' }}>Level</span>
+                  <span className="font-cormorant text-sm font-bold" style={{ color: '#FFD700' }}>{course.level}</span>
                 </div>
               </div>
             </motion.div>

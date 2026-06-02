@@ -46,72 +46,79 @@ const OwnerSpotlight = () => {
             variants={slideLeft}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
-            className="relative"
+            className="flex justify-center w-full"
           >
-            {/* Gold frame */}
-            <div
-              className="absolute pointer-events-none"
-              style={{
-                inset: '-1px',
-                background: 'linear-gradient(135deg, rgba(255,195,0,0.4) 0%, transparent 50%, rgba(255,195,0,0.2) 100%)',
-                zIndex: 0,
-              }}
-            />
-
-            <div className="relative overflow-hidden w-full max-w-[360px] mx-auto" style={{ aspectRatio: '3/4', zIndex: 1 }}>
-              <motion.img
-                src="/images/about3.jpg"
-                alt="Studio Owner — Bridal Makeup Artist"
-                className="w-full h-full object-cover"
-                style={{ filter: 'brightness(0.9) contrast(1.05)' }}
-                whileHover={{ scale: 1.04 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              />
-              {/* Overlay */}
+            <div className="relative w-full max-w-[320px] xs:max-w-[360px] md:max-w-[440px] xl:max-w-[480px]">
+              {/* Gold frame */}
               <div
-                className="absolute inset-0"
+                className="absolute pointer-events-none"
                 style={{
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)',
+                  inset: '-1px',
+                  background: 'linear-gradient(135deg, rgba(255,195,0,0.4) 0%, transparent 50%, rgba(255,195,0,0.2) 100%)',
+                  zIndex: 0,
                 }}
               />
+
+              <div className="relative overflow-hidden w-full" style={{ aspectRatio: '3/4', zIndex: 1 }}>
+                <motion.img
+                  src="/images/about3.jpg"
+                  alt="Studio Owner — Bridal Makeup Artist"
+                  className="w-full h-full object-cover"
+                  style={{ filter: 'brightness(0.9) contrast(1.05)' }}
+                  whileHover={{ scale: 1.04 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                />
+                {/* Overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)',
+                  }}
+                />
+              </div>
+
+              {/* Floating badge */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="absolute -bottom-3 right-4 xs:-bottom-4 xs:-right-3 md:-right-6 px-4.5 py-3 text-center z-10 rounded-sm shadow-lg"
+                style={{ 
+                  border: '1px solid rgba(255,215,0,0.35)', 
+                  background: 'rgba(10, 10, 10, 0.9)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                <div className="font-cinzel text-[0.5rem] xs:text-[0.58rem] tracking-[0.2em] uppercase font-bold" style={{ color: 'rgba(255,215,0,0.8)' }}>
+                  Experience
+                </div>
+                <div className="font-cinzel font-black text-xl xs:text-2xl tracking-wider mt-0.5" style={{ color: '#FFD700' }}>8+</div>
+                <div className="font-cinzel text-[0.5rem] xs:text-[0.58rem] tracking-[0.2em] uppercase font-bold mt-0.5" style={{ color: 'rgba(248,245,240,0.7)' }}>
+                  Years of Artistry
+                </div>
+              </motion.div>
+
+              {/* Gold corner accents */}
+              {[
+                { top: 0, left: 0 },
+                { top: 0, right: 0 },
+                { bottom: 0, left: 0 },
+                { bottom: 0, right: 0 },
+              ].map((pos, i) => (
+                <div
+                  key={i}
+                  className="absolute w-6 h-6 pointer-events-none"
+                  style={{
+                    ...pos,
+                    borderTop: (pos.top === 0) ? '1px solid #FFD700' : 'none',
+                    borderBottom: (pos.bottom === 0) ? '1px solid #FFD700' : 'none',
+                    borderLeft: (pos.left === 0) ? '1px solid #FFD700' : 'none',
+                    borderRight: (pos.right === 0) ? '1px solid #FFD700' : 'none',
+                    zIndex: 2,
+                  }}
+                />
+              ))}
             </div>
-
-            {/* Floating badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="absolute -bottom-6 -right-6 glass-gold px-6 py-4 owner-floating-badge"
-              style={{ border: '1px solid rgba(255,195,0,0.3)' }}
-            >
-              <div className="font-cinzel text-[0.6rem] tracking-[0.3em] uppercase" style={{ color: '#FFD700' }}>
-                Experience
-              </div>
-              <div className="font-playfair text-3xl font-bold text-white mt-1">8+</div>
-              <div className="font-cormorant text-sm italic" style={{ color: 'rgba(248,245,240,0.88)' }}>
-                Years of Artistry
-              </div>
-            </motion.div>
-
-            {/* Gold corner accents */}
-            {[
-              { top: 0, left: 0 },
-              { top: 0, right: 0 },
-              { bottom: 0, left: 0 },
-              { bottom: 0, right: 0 },
-            ].map((pos, i) => (
-              <div
-                key={i}
-                className="absolute w-6 h-6 pointer-events-none"
-                style={{
-                  ...pos,
-                  borderTop: (pos.top === 0) ? '1px solid #FFD700' : 'none',
-                  borderBottom: (pos.bottom === 0) ? '1px solid #FFD700' : 'none',
-                  borderLeft: (pos.left === 0) ? '1px solid #FFD700' : 'none',
-                  borderRight: (pos.right === 0) ? '1px solid #FFD700' : 'none',
-                }}
-              />
-            ))}
           </motion.div>
 
           {/* Right — Content */}
@@ -119,7 +126,7 @@ const OwnerSpotlight = () => {
             variants={staggerContainer}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
-            className="flex flex-col"
+            className="flex flex-col w-full lg:pt-2"
           >
             {/* Pre-label */}
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">

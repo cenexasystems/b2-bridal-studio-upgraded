@@ -8,6 +8,34 @@ const API = import.meta.env.VITE_API_URL || '';
 
 const staticTestimonials = [
   {
+    _id: 'static-7',
+    name: 'Rekha Sivakumar',
+    role: 'Student',
+    quote: "I really enjoyed the Aari work class because the teacher explained the steps clearly, and I was able to learn and practice well with confidence.Practicing during the class helped me improve my skills. The materials they gave us were of good quality. After attending the class, I feel more confident in doing Aari's. work on my own. Overall, it was a great experience and I'm happy I joined.",
+    stars: 5,
+  },
+  {
+    _id: 'static-8',
+    name: 'fy rose27',
+    role: 'Student',
+    quote: 'Hi sis, im Fyrose I m happy to learn aari course for 2 weeks,ur are the one off best coching tutor and also patient and give self-confidence for women Thank you for ur giving to ur for best service',
+    stars: 5,
+  },
+  {
+    _id: 'static-9',
+    name: 'LAKSHATHI DR',
+    role: 'Student',
+    quote: 'Thank you so much mam i loved ur way of teaching and learned many things and many technical term and theory too. A friendly way of teaching i loved all these days',
+    stars: 5,
+  },
+  {
+    _id: 'static-10',
+    name: 'sunishka',
+    role: 'Student',
+    quote: "The course of Aari class is really very good, you'll get a great experience to design your own blouse with neat work 💯",
+    stars: 5,
+  },
+  {
     _id: 'static-1',
     name: 'Priya Lakshmi',
     role: 'Bride, 2023',

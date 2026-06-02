@@ -78,26 +78,216 @@ const About = () => {
             <p className="font-cormorant text-xl leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.92)' }}>
               Shanmugavadivu Sabarinathan is a professional makeup artist, creative entrepreneur, and certified trainer with 20+ certifications. She is recognized for expertise in bridal makeup artistry and skill-based education.
             </p>
-            <p className="font-cormorant text-xl leading-relaxed mb-4 md:mb-0" style={{ color: 'rgba(248,245,240,0.92)' }}>
+            <p className="font-cormorant text-xl leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.92)' }}>
               As the founder of B2 Bridal Studio, she has built a legacy of empowering women through beauty and craftsmanship, training thousands of aspiring professionals across Tamil Nadu.
             </p>
+
+            {/* Honours & Recognition */}
+            <motion.div variants={fadeUp} className="mt-10">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="font-cinzel text-[0.65rem] tracking-[0.25em] uppercase font-bold" style={{ color: 'rgba(255,215,0,0.85)' }}>
+                  Honours & Recognition
+                </span>
+                <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(255,215,0,0.18), transparent)' }} />
+              </div>
+              <div className="grid grid-cols-2 gap-4 max-w-[480px]">
+                {/* Award 1 — WOW Entrepreneur */}
+                <div 
+                  className="glass-dark p-5 flex flex-col items-center justify-center gap-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(255,215,0,0.3)] rounded-sm"
+                  style={{ 
+                    border: '1px solid rgba(255,215,0,0.15)',
+                    background: 'rgba(10, 10, 10, 0.65)',
+                    minHeight: '220px'
+                  }}
+                >
+                  {/* Glowing & Animated Spotlight container */}
+                  <motion.div 
+                    whileHover={{ 
+                      scale: 1.15,
+                      filter: "drop-shadow(0 0 16px rgba(255, 215, 0, 0.8))"
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    className="w-20 h-24 flex items-center justify-center rounded-full cursor-pointer" 
+                    style={{ 
+                      background: 'radial-gradient(circle, rgba(255,215,0,0.12) 0%, transparent 75%)',
+                      filter: "drop-shadow(0 0 6px rgba(255, 215, 0, 0.35))"
+                    }}
+                  >
+                    <svg width="68" height="85" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="goldLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#FFF9D0" />
+                          <stop offset="40%" stopColor="#FFE566" />
+                          <stop offset="70%" stopColor="#FFD700" />
+                          <stop offset="100%" stopColor="#B38F00" />
+                        </linearGradient>
+                        <linearGradient id="goldDark" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#D4AF37" />
+                          <stop offset="50%" stopColor="#AA7C11" />
+                          <stop offset="100%" stopColor="#664600" />
+                        </linearGradient>
+                        <linearGradient id="blackCylinder" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#333333" />
+                          <stop offset="30%" stopColor="#111111" />
+                          <stop offset="70%" stopColor="#000000" />
+                          <stop offset="100%" stopColor="#222222" />
+                        </linearGradient>
+                        <filter id="trophyGlow" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="2.5" result="blur" />
+                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                      </defs>
+
+                      {/* Twisted crossed gold ribbons */}
+                      <path d="M33 76 C33 76 34 60 44 48 C52 38 52 24 52 24 C52 24 50 36 41 46 C32 56 31 76 31 76 Z" fill="url(#goldLight)" />
+                      <path d="M31 76 C31 76 32 58 41 46 C50 36 52 24 52 24" stroke="url(#goldDark)" strokeWidth="0.75" />
+                      
+                      <path d="M47 76 C47 76 46 60 36 48 C28 38 28 24 28 24 C28 24 30 36 39 46 C48 56 49 76 49 76 Z" fill="url(#goldLight)" />
+                      <path d="M49 76 C49 76 48 58 39 46 C30 36 28 24 28 24" stroke="url(#goldDark)" strokeWidth="0.75" />
+                      
+                      <path d="M37 76 C37 76 37 63 42 54 C45 48 48 38 48 24" stroke="#FFF" strokeWidth="0.5" opacity="0.4" />
+                      <path d="M43 76 C43 76 43 63 38 54 C35 48 32 38 32 24" stroke="#FFF" strokeWidth="0.5" opacity="0.4" />
+
+                      {/* Star on Top */}
+                      <g filter="url(#trophyGlow)">
+                        <path d="M40 8 L43 17 L52 17 L45 22 L48 30 L40 25 L32 30 L35 22 L28 17 L37 17 Z" fill="url(#goldLight)" />
+                        <path d="M40 8 L40 25 L32 30 L35 22 Z" fill="url(#goldDark)" opacity="0.35" />
+                        <path d="M40 8 L40 25 L48 30 L45 22 Z" fill="#FFF" opacity="0.25" />
+                      </g>
+
+                      {/* Pedestal Base */}
+                      <ellipse cx="40" cy="76" rx="11" ry="2.5" fill="url(#goldLight)" stroke="url(#goldDark)" strokeWidth="0.5" />
+                      <path d="M29 76 L29 90 C29 92 51 92 51 90 L51 76 Z" fill="url(#blackCylinder)" />
+                      <ellipse cx="40" cy="76.2" rx="10.8" ry="2.2" fill="#050505" opacity="0.8" />
+                      <ellipse cx="40" cy="90" rx="11" ry="2.5" fill="#111" stroke="#333" strokeWidth="0.5" />
+                      <path d="M27 90 L27 94 C27 95.5 53 95.5 53 94 L53 90 Z" fill="url(#goldLight)" stroke="url(#goldDark)" strokeWidth="0.5" />
+                      <ellipse cx="40" cy="90" rx="13" ry="2.8" fill="url(#goldLight)" />
+                      <ellipse cx="40" cy="94" rx="13" ry="2.8" fill="url(#goldDark)" opacity="0.6" />
+                    </svg>
+                  </motion.div>
+                  <div>
+                    <h4 className="font-cinzel text-xs xs:text-sm tracking-[0.22em] font-black uppercase text-gold-gradient leading-tight mb-2" style={{ background: 'linear-gradient(135deg, #FFE566 0%, #FFD700 50%, #B38F00 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      WOW<br />ENTREPRENEUR
+                    </h4>
+                    <span className="font-cormorant text-sm xs:text-base italic font-bold text-white block mt-1" style={{ color: '#FFFFFF', textShadow: '0 0 8px rgba(255,255,255,0.3)' }}>2020</span>
+                  </div>
+                </div>
+
+                {/* Award 2 — 555 Clube */}
+                <div 
+                  className="glass-dark p-5 flex flex-col items-center justify-center gap-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-[rgba(255,215,0,0.3)] rounded-sm"
+                  style={{ 
+                    border: '1px solid rgba(255,215,0,0.15)',
+                    background: 'rgba(10, 10, 10, 0.65)',
+                    minHeight: '220px'
+                  }}
+                >
+                  <motion.div 
+                    whileHover={{ 
+                      scale: 1.15,
+                      filter: "drop-shadow(0 0 16px rgba(255, 215, 0, 0.8))"
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    className="w-20 h-24 flex items-center justify-center rounded-full cursor-pointer" 
+                    style={{ 
+                      background: 'radial-gradient(circle, rgba(255,215,0,0.12) 0%, transparent 75%)',
+                      filter: "drop-shadow(0 0 6px rgba(255, 215, 0, 0.35))"
+                    }}
+                  >
+                    <svg width="68" height="85" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="goldLight2" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#FFF9D0" />
+                          <stop offset="40%" stopColor="#FFE566" />
+                          <stop offset="70%" stopColor="#FFD700" />
+                          <stop offset="100%" stopColor="#B38F00" />
+                        </linearGradient>
+                        <linearGradient id="goldDark2" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#D4AF37" />
+                          <stop offset="50%" stopColor="#AA7C11" />
+                          <stop offset="100%" stopColor="#664600" />
+                        </linearGradient>
+                        <linearGradient id="blackMarble" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#2A2A2A" />
+                          <stop offset="50%" stopColor="#151515" />
+                          <stop offset="100%" stopColor="#0A0A0A" />
+                        </linearGradient>
+                        <filter id="trophyGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                          <feGaussianBlur stdDeviation="2" result="blur" />
+                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                      </defs>
+
+                      {/* Vertical Faceted Gold Pillar */}
+                      <path d="M30 20 L50 20 L44 75 L36 75 Z" fill="url(#goldLight2)" />
+                      <path d="M30 20 L40 20 L40 75 L36 75 Z" fill="url(#goldDark2)" opacity="0.45" />
+                      <path d="M40 20 L50 20 L44 75 L40 75 Z" fill="#FFF" opacity="0.2" />
+                      <line x1="40" y1="20" x2="40" y2="75" stroke="url(#goldDark2)" strokeWidth="0.75" />
+                      <line x1="30" y1="20" x2="36" y2="75" stroke="#FFF" strokeWidth="0.5" opacity="0.5" />
+                      <line x1="50" y1="20" x2="44" y2="75" stroke="url(#goldDark2)" strokeWidth="0.5" />
+
+                      {/* Three climbing gold stars */}
+                      <g filter="url(#trophyGlow2)">
+                        <path d="M40 20 L42 25 L47 25 L43 28 L45 33 L40 30 L35 33 L37 28 L33 25 L38 25 Z" fill="url(#goldLight2)" />
+                        <path d="M40 20 L40 30 L35 33 L37 28 Z" fill="url(#goldDark2)" opacity="0.4" />
+                      </g>
+                      
+                      <g filter="url(#trophyGlow2)">
+                        <path d="M45 35 L47 39 L51 39 L48 42 L49 46 L45 44 L41 46 L42 42 L39 39 L43 39 Z" fill="url(#goldLight2)" />
+                        <path d="M45 35 L45 44 L41 46 L42 42 Z" fill="url(#goldDark2)" opacity="0.4" />
+                      </g>
+
+                      <g filter="url(#trophyGlow2)">
+                        <path d="M35 48 L37 52 L41 52 L38 55 L39 59 L35 57 L31 59 L32 55 L29 52 L33 52 Z" fill="url(#goldLight2)" />
+                        <path d="M35 48 L35 57 L31 59 L32 55 Z" fill="url(#goldDark2)" opacity="0.4" />
+                      </g>
+
+                      {/* Base structures */}
+                      <ellipse cx="40" cy="75" rx="9" ry="2.2" fill="url(#goldLight2)" stroke="url(#goldDark2)" strokeWidth="0.5" />
+                      <ellipse cx="40" cy="77" rx="10" ry="2.5" fill="url(#goldDark2)" />
+                      <path d="M30 75 L30 77 C30 78 50 78 50 77 L50 75 Z" fill="url(#goldLight2)" />
+
+                      <path d="M26 77 L54 77 L56 87 L24 87 Z" fill="url(#blackMarble)" stroke="#333" strokeWidth="0.5" />
+                      <path d="M26 77 L54 77 L52 79 L28 79 Z" fill="#444" opacity="0.3" />
+                      <path d="M23 87 L57 87 L58 91 L22 91 Z" fill="url(#goldLight2)" stroke="url(#goldDark2)" strokeWidth="0.5" />
+                      <rect x="22" y="91" width="36" height="2" fill="url(#goldDark2)" />
+                    </svg>
+                  </motion.div>
+                  <div>
+                    <h4 className="font-cinzel text-xs xs:text-sm tracking-[0.22em] font-black uppercase text-gold-gradient leading-tight mb-2" style={{ background: 'linear-gradient(135deg, #FFE566 0%, #FFD700 50%, #B38F00 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                      555 CLUBE
+                    </h4>
+                    <span className="font-cormorant text-sm xs:text-base italic font-bold text-white block mt-1" style={{ color: '#FFFFFF', textShadow: '0 0 8px rgba(255,255,255,0.3)' }}>2014 - 2015</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Image — Right side */}
-          <motion.div variants={slideRight} className="relative flex justify-center">
-            <div className="img-zoom-container rounded-sm w-full max-w-[360px]" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
-              <img
-                src="/images/about3.jpg"
-                alt="About B2 Bridal Studio"
-                className="w-full object-cover"
-                style={{ aspectRatio: '3/4', objectPosition: 'top center' }}
-                loading="lazy"
-              />
-            </div>
-            {/* Floating stat */}
-            <div className="absolute -bottom-6 -right-4 lg:-right-8 glass-dark px-6 py-4 text-center" style={{ border: '1px solid rgba(255,195,0,0.2)' }}>
-              <div className="font-cinzel font-bold text-lg" style={{ color: '#FFD700' }}>15+</div>
-              <div className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.82)' }}>Years of Excellence</div>
+          <motion.div variants={slideRight} className="flex justify-center">
+            <div className="relative w-full max-w-[320px] xs:max-w-[360px] md:max-w-[440px] xl:max-w-[480px]">
+              <div className="img-zoom-container rounded-sm w-full" style={{ border: '1px solid rgba(255,195,0,0.15)' }}>
+                <img
+                  src="/images/about3.jpg"
+                  alt="About B2 Bridal Studio"
+                  className="w-full object-cover"
+                  style={{ aspectRatio: '3/4', objectPosition: 'top center' }}
+                  loading="lazy"
+                />
+              </div>
+              {/* Floating stat */}
+              <div 
+                className="absolute -bottom-3 right-4 xs:-bottom-4 xs:-right-3 md:-right-6 px-4.5 py-3 text-center z-10 rounded-sm shadow-lg" 
+                style={{ 
+                  border: '1px solid rgba(255,215,0,0.35)', 
+                  background: 'rgba(10, 10, 10, 0.9)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)' 
+                }}
+              >
+                <div className="font-cinzel font-black text-xl xs:text-2xl tracking-wider" style={{ color: '#FFD700' }}>15+</div>
+                <div className="font-cinzel text-[0.5rem] xs:text-[0.58rem] tracking-[0.2em] uppercase font-bold mt-0.5" style={{ color: 'rgba(248,245,240,0.7)' }}>Years of Excellence</div>
+              </div>
             </div>
           </motion.div>
         </motion.div>

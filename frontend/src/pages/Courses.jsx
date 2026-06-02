@@ -220,18 +220,64 @@ const Courses = () => {
 
       {/* Branch Selector */}
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12 pt-10 pb-4">
-        <div className="glass-dark p-4 flex flex-wrap items-center justify-end gap-4" style={{ border: '1px solid rgba(255,195,0,0.1)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
-          <span className="font-cormorant text-base" style={{ color: 'rgba(248,245,240,0.92)' }}>Select Branch:</span>
-          <select
-            value={selectedBranch}
-            onChange={e => setSelectedBranch(e.target.value)}
-            className="px-4 py-2.5 font-cormorant rounded-sm outline-none"
-            style={{ background: 'rgba(255,195,0,0.08)', border: '1px solid rgba(255,195,0,0.2)', color: '#F8F5F0', fontSize: '1.05rem' }}
-          >
-            <option value="branch1" style={{ background: '#111' }}>Chennai — Moolakaadai</option>
-            <option value="branch2" style={{ background: '#111' }}>Madurai — Kochadai</option>
-          </select>
+        <div 
+          className="glass-dark p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-300" 
+          style={{ 
+            border: '1px solid rgba(255,195,0,0.15)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+          }}
+        >
+          {/* Label + Icon */}
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,215,0,0.06)', border: '1px solid rgba(255,215,0,0.15)' }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.8">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-cinzel text-[0.65rem] tracking-[0.25em] uppercase font-bold" style={{ color: '#FFD700' }}>
+                Select Studio Branch
+              </span>
+              <span className="font-cormorant text-[0.8rem] italic mt-0.5" style={{ color: 'rgba(248,245,240,0.6)' }}>
+                Choose a location to view custom offerings
+              </span>
+            </div>
+          </div>
+
+          {/* Select Element */}
+          <div className="w-full sm:w-auto relative">
+            <select
+              value={selectedBranch}
+              onChange={e => setSelectedBranch(e.target.value)}
+              className="w-full sm:w-64 px-4 py-3 font-cormorant rounded-sm outline-none cursor-pointer transition-all duration-300 text-base appearance-none"
+              style={{ 
+                background: 'rgba(255,195,0,0.06)', 
+                border: '1px solid rgba(255,195,0,0.25)', 
+                color: '#F8F5F0', 
+                paddingRight: '2.5rem',
+                fontSize: '1rem',
+                letterSpacing: '0.02em'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(255,195,0,0.5)';
+                e.currentTarget.style.background = 'rgba(255,195,0,0.1)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(255,195,0,0.25)';
+                e.currentTarget.style.background = 'rgba(255,195,0,0.06)';
+              }}
+            >
+              <option value="branch1" style={{ background: '#0e0e0f', color: '#F8F5F0' }}>Chennai — Moolakaadai</option>
+              <option value="branch2" style={{ background: '#0e0e0f', color: '#F8F5F0' }}>Madurai — Kochadai</option>
+            </select>
+            {/* Custom Arrow Accent */}
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center">
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#FFD700" strokeWidth="1.5">
+                <path d="M1 1l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -200,8 +200,8 @@ const ContactSection = () => {
                 {
                   icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
                   label: 'Branch 1',
-                  value: 'No. 63, Madavaram Red Hills Rd, Moolakaadai, Chennai — 600060',
-                  href: 'https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410',
+                  value: 'Navins White berry appartment, 63, Madavaram Red Hills Rd, opp. Chennai, Moolakadai, Kodungaiyur, Chennai — 600060',
+                  href: 'https://maps.app.goo.gl/DqUT6wPtsamb7LQW8',
                 },
                 {
                   icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
@@ -280,15 +280,15 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="overflow-hidden"
+            className="overflow-hidden relative"
             style={{ border: '1px solid rgba(255,195,0,0.12)' }}
           >
             <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,195,0,0.08)' }}>
               <h4 className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase font-semibold" style={{ color: '#FFD700' }}>Chennai Branch</h4>
             </div>
-            <iframe title="B2 Bridal Studio Chennai" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=No+63+Madavaram+Red+Hills+Rd+Kodungaiyur+Chennai+600060&zoom=16" width="100%" height="250" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <iframe title="B2 Bridal Studio Chennai" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3885.3444053495447!2d80.23771557579483!3d13.13143528719875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52656707b1662b%3A0xa18e1f23d8b79682!2sB2%20Bridal%20Studio!5e0!3m2!1sen!2sin!4v1717283624890!5m2!1sen!2sin" width="100%" height="250" style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) brightness(0.85)' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
             <div className="px-4 py-3" style={{ borderTop: '1px solid rgba(255,195,0,0.08)' }}>
-              <a href="https://www.google.com/maps/dir/?api=1&destination=13.1283,80.2410" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase font-semibold flex items-center gap-2 transition-colors duration-200" style={{ color: '#FFD700' }} onMouseEnter={e => e.currentTarget.style.color = '#FFED8A'} onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}>
+              <a href="https://maps.app.goo.gl/DqUT6wPtsamb7LQW8" target="_blank" rel="noreferrer" className="font-cinzel text-[0.65rem] tracking-[0.2em] uppercase font-semibold flex items-center gap-2 transition-colors duration-200" style={{ color: '#FFD700' }} onMouseEnter={e => e.currentTarget.style.color = '#FFED8A'} onMouseLeave={e => e.currentTarget.style.color = '#FFD700'}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 Get Directions
               </a>

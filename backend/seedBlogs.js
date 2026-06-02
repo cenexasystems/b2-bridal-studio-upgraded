@@ -327,7 +327,7 @@ Did you know we offer professional jewellery-making courses? Learn to create cus
 *Discover our Jewellery Making courses and create something extraordinary.*
     `,
     image: '/images/blog/wedding_jewellery_guide.png',
-    author: 'Priya Devi',
+    author: 'B2',
     readTime: '9 min read',
     tags: ['jewellery', 'wedding', 'style guide', 'bridal'],
   },
@@ -485,7 +485,7 @@ Our comprehensive fashion design programs cover everything from traditional tech
 *Explore our Fashion Design courses and start creating.*
     `,
     image: '/images/blog/fashion_design_trends.png',
-    author: 'Priya Devi',
+    author: 'B2',
     readTime: '8 min read',
     tags: ['fashion design', 'trends', '2024', 'sustainable fashion'],
   },

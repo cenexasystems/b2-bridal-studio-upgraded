@@ -17,13 +17,13 @@ const renderContent = (content) => {
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="font-playfair font-bold mt-12 mb-5 tracking-wide" style={{ fontSize: '1.5rem', color: '#FFE566', textShadow: '0 0 5px rgba(255,229,102,0.2)', fontStyle: 'normal', lineHeight: '1.4' }}>
+        <h2 key={i} className="font-playfair font-semibold mt-12 mb-5" style={{ fontSize: '1.4rem', color: '#FFE566', textShadow: '0 0 4px rgba(255,229,102,0.15)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.06em' }}>
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-playfair font-bold mt-8 mb-4 tracking-wide" style={{ fontSize: '1.2rem', color: '#FFE566', textShadow: '0 0 4px rgba(255,229,102,0.15)', fontStyle: 'normal', lineHeight: '1.4' }}>
+        <h3 key={i} className="font-playfair font-semibold mt-8 mb-4" style={{ fontSize: '1.1rem', color: '#FFE566', textShadow: '0 0 3px rgba(255,229,102,0.1)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.05em' }}>
           {line.slice(4)}
         </h3>
       );
@@ -177,13 +177,13 @@ const BlogDetail = () => {
 
 
           {/* Category + Meta */}
-          <div className="flex items-center gap-3 mb-4">
-            <span className="font-cinzel text-[0.55rem] tracking-[0.25em] uppercase px-3 py-1" style={{ background: 'rgba(255,195,0,0.15)', color: '#FFD700', border: '1px solid rgba(255,195,0,0.2)' }}>{blog.category}</span>
-            <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase" style={{ color: 'rgba(248,245,240,0.35)' }}>{blog.readTime}</span>
+          <div className="flex items-center gap-3.5 mb-4">
+            <span className="font-cinzel text-[0.55rem] tracking-[0.25em] uppercase px-3 py-1 font-bold" style={{ background: 'rgba(255,215,0,0.18)', color: '#FFE566', border: '1px solid #FFD700', textShadow: '0 0 4px rgba(255,229,102,0.35)' }}>{blog.category}</span>
+            <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFFFFF', textShadow: '0 0 6px rgba(255,255,255,0.3)' }}>{blog.readTime}</span>
           </div>
 
           {/* Title */}
-          <h1 className="font-playfair font-bold tracking-wider mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#FFD700', fontStyle: 'normal', textShadow: '0 0 15px rgba(255,215,0,0.4)', lineHeight: '1.35', letterSpacing: '0.04em' }}>
+          <h1 className="font-playfair font-bold tracking-wider mb-5" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#FFE566', fontStyle: 'normal', textShadow: '0 0 5px rgba(255,229,102,0.2)', lineHeight: '1.35', letterSpacing: '0.04em' }}>
             {blog.title}
           </h1>
 
@@ -194,7 +194,7 @@ const BlogDetail = () => {
             </div>
             <div>
               <div className="font-inter text-sm" style={{ color: '#F8F5F0' }}>{blog.author}</div>
-              <div className="font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.4)' }}>
+              <div className="font-cormorant italic text-sm font-bold mt-1" style={{ color: '#FFFFFF', textShadow: '0 0 5px rgba(255,255,255,0.25)' }}>
                 {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </div>
             </div>
@@ -227,22 +227,6 @@ const BlogDetail = () => {
           {renderContent(blog.content)}
         </motion.div>
       </section>
-
-      {/* Tags */}
-      {blog.tags && blog.tags.length > 0 && (
-        <section style={{ padding: '0 0 4rem' }}>
-          <div className="max-w-3xl mx-auto px-6 lg:px-8">
-            <div className="h-px mb-8" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,195,0,0.2), transparent)' }} />
-            <div className="flex flex-wrap gap-2">
-              {blog.tags.map(tag => (
-                <span key={tag} className="font-cinzel text-[0.55rem] tracking-[0.15em] uppercase px-4 py-1.5" style={{ background: 'rgba(255,195,0,0.06)', color: 'rgba(255,195,0,0.5)', border: '1px solid rgba(255,195,0,0.12)' }}>
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Back to Blog CTA */}
       <section className="relative" style={{ padding: '4rem 0 6rem' }}>
