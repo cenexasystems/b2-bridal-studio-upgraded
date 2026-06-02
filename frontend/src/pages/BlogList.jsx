@@ -47,12 +47,12 @@ const BlogCard = ({ blog, index }) => (
         <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFD700', textShadow: '0 0 6px rgba(255,215,0,0.2)' }}>{blog.readTime}</span>
       </div>
       <Link to={`/blogs/${blog.slug}`}>
-        <h3 className="font-playfair font-semibold leading-snug mb-3 transition-colors duration-300 group-hover:text-gold-500" style={{ fontSize: '1.15rem', color: '#F8F5F0' }}>{blog.title}</h3>
+        <h3 className="font-playfair font-semibold leading-snug mb-3 transition-colors duration-300 group-hover:text-gold-500" style={{ fontSize: '1.025rem', color: '#F8F5F0' }}>{blog.title}</h3>
       </Link>
       <div className="gold-divider-left mb-4" />
       <p className="font-cormorant leading-relaxed flex-1 mb-5" style={{ fontSize: '1.05rem', color: 'rgba(248,245,240,0.75)' }}>{blog.preview}</p>
       <div className="flex items-center justify-between">
-        <span className="font-cormorant italic text-sm font-semibold" style={{ color: '#FFE566', textShadow: '0 0 6px rgba(255,229,102,0.2)' }}>By {blog.author}</span>
+        <span className="font-cormorant italic font-semibold" style={{ color: '#FFE566', textShadow: '0 0 6px rgba(255,229,102,0.2)', fontSize: '13.5px' }}>By {blog.author}</span>
         <Link to={`/blogs/${blog.slug}`} className="flex items-center gap-2 font-cinzel text-[0.6rem] tracking-[0.2em] uppercase transition-all duration-300 group-hover:gap-3 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)', textDecoration: 'none' }}>
           Read More
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="#FFD700" strokeWidth="1.5" strokeLinecap="round"><path d="M1 5h12M7 1l6 4-6 4"/></svg>
@@ -75,7 +75,7 @@ const FeaturedBlog = ({ blog }) => (
           <span style={{ color: 'rgba(255, 215, 0, 0.4)' }}>·</span>
           <span className="font-cinzel text-[0.55rem] tracking-[0.2em] uppercase font-bold" style={{ color: '#FFD700', textShadow: '0 0 6px rgba(255,215,0,0.2)' }}>{blog.readTime}</span>
         </div>
-        <h2 className="font-playfair font-bold leading-tight mb-4 transition-colors duration-300 group-hover:text-gold-400" style={{ fontSize: 'clamp(1.4rem, 3vw, 2rem)', color: '#F8F5F0' }}>{blog.title}</h2>
+        <h2 className="font-playfair font-bold leading-tight mb-4 transition-colors duration-300 group-hover:text-gold-400" style={{ fontSize: 'clamp(1.275rem, 2.8vw, 1.875rem)', color: '#F8F5F0' }}>{blog.title}</h2>
         <div className="gold-divider-left mb-4" />
         <p className="font-cormorant leading-relaxed mb-6" style={{ fontSize: '1.1rem', color: 'rgba(248,245,240,0.75)' }}>{blog.preview}</p>
         <div className="flex items-center gap-2 font-cinzel text-[0.65rem] tracking-[0.2em] uppercase transition-all duration-300 group-hover:gap-4 font-bold" style={{ color: '#FFD700', textShadow: '0 0 8px rgba(255,215,0,0.3)' }}>

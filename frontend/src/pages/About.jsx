@@ -445,7 +445,7 @@ const About = () => {
               <div className="p-5 flex flex-col flex-1 justify-between">
                 <div>
                   <Link to={`/blogs/${post.slug}`}>
-                    <h3 className="font-playfair text-base mb-2 leading-tight transition-colors duration-300 group-hover:text-gold-500" style={{ color: '#F8F5F0' }}>{post.title}</h3>
+                    <h3 className="font-playfair mb-2 leading-tight transition-colors duration-300 group-hover:text-gold-500" style={{ color: '#F8F5F0', fontSize: '14px' }}>{post.title}</h3>
                   </Link>
                   <div className="gold-divider-left mb-3" />
                   <p className="font-cormorant text-sm leading-relaxed mb-4" style={{ color: 'rgba(248,245,240,0.9)' }}>{post.excerpt}</p>
