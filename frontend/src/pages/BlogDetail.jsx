@@ -17,13 +17,13 @@ const renderContent = (content) => {
 
     if (line.startsWith('## ')) {
       elements.push(
-        <h2 key={i} className="font-playfair font-semibold mt-12 mb-5" style={{ fontSize: '1.4rem', color: '#FFE566', textShadow: '0 0 4px rgba(255,229,102,0.15)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.06em' }}>
+        <h2 key={i} className="font-playfair font-medium mt-12 mb-5" style={{ fontSize: '1.3rem', color: '#FFD700', textShadow: '0 0 4px rgba(255,215,0,0.15)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.07em', fontWeight: '500' }}>
           {line.slice(3)}
         </h2>
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-playfair font-semibold mt-8 mb-4" style={{ fontSize: '1.1rem', color: '#FFE566', textShadow: '0 0 3px rgba(255,229,102,0.1)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.05em' }}>
+        <h3 key={i} className="font-playfair font-medium mt-8 mb-4" style={{ fontSize: '1.0rem', color: '#FFD700', textShadow: '0 0 3px rgba(255,215,0,0.1)', fontStyle: 'normal', lineHeight: '1.45', letterSpacing: '0.06em', fontWeight: '500' }}>
           {line.slice(4)}
         </h3>
       );

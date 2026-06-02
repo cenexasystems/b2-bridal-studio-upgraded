@@ -252,7 +252,7 @@ router.post('/forgot-password', async (req, res) => {
     const htmlContent = `
       <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #FFD700; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 140px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
+          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 70px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
           <div style="width: 60px; height: 2px; background-color: #FFD700; margin: 15px auto;"></div>
         </div>
         
@@ -399,7 +399,7 @@ router.post('/send-otp', async (req, res) => {
     const htmlContent = `
       <div style="max-width: 600px; margin: 0 auto; font-family: 'Georgia', serif; background-color: #ffffff; color: #111111; padding: 40px; border: 2px solid #FFD700; border-radius: 2px;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 140px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
+          <img src="${process.env.FRONTEND_URL || 'https://b2-bridal-studio-upgraded.vercel.app'}/b2-logo-transparent.svg" alt="B2 Bridal Studio Logo" style="width: 70px; max-width: 100%; height: auto; display: block; margin: 0 auto 15px auto;" />
           <div style="width: 60px; height: 2px; background-color: #FFD700; margin: 15px auto;"></div>
         </div>
         
