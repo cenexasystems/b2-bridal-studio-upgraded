@@ -128,14 +128,14 @@ const CustomerLogins = () => {
               placeholder="Search Name, Email, Phone..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37]"
+              className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37] text-gray-900 placeholder-gray-400"
             />
             <Search className="absolute left-3 top-2.5 text-gray-400" size={14} />
           </div>
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="p-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37]"
+            className="p-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37] text-gray-900"
           >
             <option value="All">All Statuses</option>
             <option value="Active">Active Only</option>
@@ -144,7 +144,7 @@ const CustomerLogins = () => {
           <select
             value={dobOption}
             onChange={e => setDobOption(e.target.value)}
-            className="p-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37]"
+            className="p-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37] text-gray-900"
           >
             <option value="none">DOB Filter / Sort</option>
             <option value="thisMonth">Birthdays This Month</option>

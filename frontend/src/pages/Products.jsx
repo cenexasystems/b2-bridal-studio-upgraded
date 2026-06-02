@@ -7,21 +7,28 @@ const API = import.meta.env.VITE_API_URL;
 
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(() => {
+    const cached = localStorage.getItem('b2_products_cache');
+    return cached ? JSON.parse(cached) : [];
+  });
+  const [loading, setLoading] = useState(() => {
+    return !localStorage.getItem('b2_products_cache');
+  });
   const [quantities, setQuantities] = useState({});
   const [toast, setToast] = useState(null);
   const { addToCart, removeFromCart, items, openCart } = useCart();
 
   useEffect(() => {
-    setLoading(true);
+    if (!products.length) setLoading(true);
     axios.get(`${API}/api/products`)
       .then(res => {
-        setProducts(res.data || []);
+        const data = res.data || [];
+        setProducts(data);
+        localStorage.setItem('b2_products_cache', JSON.stringify(data));
         setLoading(false);
       })
       .catch(() => {
-        setProducts([]);
+        if (!products.length) setProducts([]);
         setLoading(false);
       });
   }, []);
