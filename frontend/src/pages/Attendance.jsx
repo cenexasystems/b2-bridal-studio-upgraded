@@ -194,7 +194,7 @@ const Attendance = () => {
       const status = r.status || 'Present';
       const entryTime = isLeave ? '-' : (r.entryTime || '-');
       const exitTime = isLeave ? '-' : (r.exitTime || '-');
-      const leaveReason = isLeave ? (r.leaveReason || '-') : '-';
+      const leaveReason = r.status !== 'Present' ? (r.leaveReason || '-') : '-';
       
       return [
         staffId,
