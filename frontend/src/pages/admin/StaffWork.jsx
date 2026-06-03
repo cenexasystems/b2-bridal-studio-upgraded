@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
-import { Briefcase, Plus, Trash2, Calendar, Search, Filter, RotateCcw, X, Check } from 'lucide-react';
+import { Briefcase, Plus, Trash2, Calendar, Search, Filter, RotateCcw, X, Check, Download } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -225,6 +225,59 @@ const StaffWork = () => {
       customerName: ''
     });
     setIsFilterActive(false);
+  };
+
+  // Export filtered records to Excel (CSV)
+  const handleExportExcel = () => {
+    const headers = ['Work Date', 'Staff ID', 'Staff Name', 'Customer Name', 'Services Performed'];
+    
+    const rows = filteredWorks.map(w => {
+      const formattedDate = new Date(w.workDate).toLocaleDateString('en-IN', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+      const staffId = w.staffId || '-';
+      const staffName = w.staffName || 'Unknown';
+      const customerName = w.customerName || '-';
+      const servicesPerformed = (w.services || []).map(s => s.serviceName).join(', ');
+      
+      return [
+        formattedDate,
+        staffId,
+        staffName,
+        customerName,
+        servicesPerformed
+      ];
+    });
+    
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => 
+        row.map(value => {
+          const stringVal = String(value);
+          if (stringVal.includes(',') || stringVal.includes('"') || stringVal.includes('\n')) {
+            return `"${stringVal.replace(/"/g, '""')}"`;
+          }
+          return stringVal;
+        }).join(',')
+      )
+    ].join('\n');
+    
+    const day = String(new Date().getDate()).padStart(2, '0');
+    const month = String(new Date().getMonth() + 1).padStart(2, '0');
+    const year = new Date().getFullYear();
+    const formattedFilename = `Staff_Work_Report_${day}-${month}-${year}.csv`;
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', formattedFilename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   // Filtered staff works computed reactively
@@ -490,6 +543,18 @@ const StaffWork = () => {
         </div>
 
         <div className="mt-4 flex justify-end gap-3">
+          <button
+            onClick={handleExportExcel}
+            disabled={filteredWorks.length === 0}
+            className={`flex items-center gap-1.5 px-5 py-2 rounded-lg font-cinzel text-xs font-bold uppercase tracking-wider transition-all border ${
+              filteredWorks.length > 0
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 cursor-pointer'
+                : 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed opacity-50'
+            }`}
+          >
+            <Download size={14} className={filteredWorks.length > 0 ? 'text-emerald-600' : 'text-gray-400'} />
+            Export to Excel
+          </button>
           <button
             onClick={handleClearFilters}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 font-cinzel text-xs font-bold uppercase tracking-wider transition-colors"
