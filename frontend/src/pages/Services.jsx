@@ -675,8 +675,8 @@ const Services = () => {
                         return (
                           <div key={service._id} className="glass-dark p-5 rounded-sm flex flex-col justify-between">
                             <div>
-                            <div className="flex justify-between items-start mb-3">
-                                 <div>
+                            <div className="flex flex-col sm:flex-row sm:justify-between items-start gap-2 sm:gap-3 mb-3">
+                                 <div className="min-w-0">
                                   <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase block mb-1 font-bold" style={{ color: '#FFD700' }}>{category.category}</span>
                                   <h3 className="font-playfair text-base font-semibold" style={{ color: '#F8F5F0' }}>{service.name}</h3>
                                   {(category.category === 'Bridal Services' || isHairExtensionCategory(category.category)) && (
@@ -685,10 +685,10 @@ const Services = () => {
                                     </span>
                                   )}
                                 </div>
-                                <span className="font-cinzel text-sm font-bold min-w-max ml-3 text-right" style={{ color: '#FFD700' }}>
+                                <span className="font-cinzel text-sm font-bold text-left sm:text-right sm:ml-3" style={{ color: '#FFD700' }}>
                                   {isHairExtensionCategory(category.category) ? `Starting From ₹${priceToDisplay}` : `₹${priceToDisplay}`}
                                   {serviceGst > 0 && (
-                                    <span style={{ fontSize: '0.65rem', color: 'rgba(248,245,240,0.5)', display: 'block', textAlign: 'right', fontWeight: 'normal', textTransform: 'none' }}>
+                                    <span className="text-[0.65rem] text-left sm:text-right block font-normal normal-case mt-0.5" style={{ color: 'rgba(248,245,240,0.5)' }}>
                                       (incl. GST)
                                     </span>
                                   )}

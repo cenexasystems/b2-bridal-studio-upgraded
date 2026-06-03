@@ -84,6 +84,14 @@ const CustomerLogins = () => {
       return dobMonth === currentMonth;
     }
     
+    if (dobOption === 'nextMonth') {
+      if (!c.dob) return false;
+      const dobMonth = new Date(c.dob).getMonth();
+      const currentMonth = new Date().getMonth();
+      const nextMonth = (currentMonth + 1) % 12;
+      return dobMonth === nextMonth;
+    }
+    
     if (dobOption === 'today') {
       if (!c.dob) return false;
       const dobDate = new Date(c.dob);
@@ -91,19 +99,14 @@ const CustomerLogins = () => {
       return dobDate.getMonth() === today.getMonth() && dobDate.getDate() === today.getDate();
     }
 
-    return true;
-  }).sort((a, b) => {
-    if (dobOption === 'asc' || dobOption === 'desc') {
-      if (!a.dob && !b.dob) return 0;
-      if (!a.dob) return 1;
-      if (!b.dob) return -1;
-      
-      const dateA = new Date(a.dob).getTime();
-      const dateB = new Date(b.dob).getTime();
-
-      return dobOption === 'asc' ? dateA - dateB : dateB - dateA;
+    if (dobOption.startsWith('month_')) {
+      if (!c.dob) return false;
+      const targetMonth = parseInt(dobOption.split('_')[1], 10);
+      const dobMonth = new Date(c.dob).getMonth();
+      return dobMonth === targetMonth;
     }
-    return 0;
+
+    return true;
   });
 
   if (loading) return (
@@ -146,11 +149,22 @@ const CustomerLogins = () => {
             onChange={e => setDobOption(e.target.value)}
             className="p-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37] text-gray-900"
           >
-            <option value="none">DOB Filter / Sort</option>
+            <option value="none">DOB Filter</option>
             <option value="thisMonth">Birthdays This Month</option>
+            <option value="nextMonth">Birthdays Next Month</option>
             <option value="today">Birthdays Today</option>
-            <option value="asc">Sort: Oldest to Youngest</option>
-            <option value="desc">Sort: Youngest to Oldest</option>
+            <option value="month_0">January</option>
+            <option value="month_1">February</option>
+            <option value="month_2">March</option>
+            <option value="month_3">April</option>
+            <option value="month_4">May</option>
+            <option value="month_5">June</option>
+            <option value="month_6">July</option>
+            <option value="month_7">August</option>
+            <option value="month_8">September</option>
+            <option value="month_9">October</option>
+            <option value="month_10">November</option>
+            <option value="month_11">December</option>
           </select>
         </div>
       </div>
