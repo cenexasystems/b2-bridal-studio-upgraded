@@ -3,7 +3,7 @@ import axios from 'axios';
 import { 
   TrendingUp, Calendar, Users, Award, 
   Clock, CheckCircle, Search, RotateCcw, 
-  Download, FileText, ChevronRight, Star, 
+  Download, ChevronRight, Star, 
   ShieldCheck, ArrowUpRight
 } from 'lucide-react';
 
@@ -345,10 +345,7 @@ const StaffReports = () => {
     document.body.removeChild(link);
   };
 
-  // Download PDF / Print
-  const handlePrintPDF = () => {
-    window.print();
-  };
+
 
   // Switch active staff view (all metrics vs single staff profile details)
   const activeMetrics = useMemo(() => {
@@ -385,12 +382,7 @@ const StaffReports = () => {
           >
             <Download size={14} className="text-gray-400" /> Export CSV
           </button>
-          <button
-            onClick={handlePrintPDF}
-            className="flex items-center gap-1.5 px-4 py-2 bg-[#111] text-white rounded-lg font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-gray-800 transition-all shadow-sm"
-          >
-            <FileText size={14} className="text-[#FFD700]" /> Print / PDF
-          </button>
+
         </div>
       </div>
 
