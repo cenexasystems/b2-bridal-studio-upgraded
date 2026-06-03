@@ -66,6 +66,12 @@ const StaffReports = () => {
     }
   };
 
+  // Helper to format hour values elegantly
+  const formatHours = (h) => {
+    if (h % 1 === 0) return h.toString();
+    return h.toFixed(1);
+  };
+
   // Build a price map from Services collection to resolve revenue
   const servicePriceMap = useMemo(() => {
     const map = {};
@@ -162,6 +168,7 @@ const StaffReports = () => {
         leaveDays: 0,
         absentDays: 0,
         permissionDays: 0,
+        permissionHours: 0,
         totalWorkingDays: 0,
         totalWorkingHours: 0,
         
@@ -191,6 +198,8 @@ const StaffReports = () => {
         metrics[sId].absentDays += 1;
       } else if (r.status === 'Permission') {
         metrics[sId].permissionDays += 1;
+        const permHours = getDurationHours(r.entryTime, r.exitTime);
+        metrics[sId].permissionHours += permHours;
       }
     });
 
@@ -300,14 +309,14 @@ const StaffReports = () => {
 
   // Export CSV
   const handleExportCSV = () => {
-    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Days', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)', 'Productivity Score'];
+    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Hours', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)', 'Productivity Score'];
     const rows = staffMetrics.map(m => [
       m.staffId,
       m.name,
       m.totalWorkingDays,
       m.presentDays,
       m.absentDays,
-      m.permissionDays,
+      `${formatHours(m.permissionHours)} Hours`,
       m.totalWorkingHours.toFixed(1),
       `${m.attendancePercent}%`,
       m.totalCustomers,
@@ -567,11 +576,37 @@ const StaffReports = () => {
                     <div className="text-[0.62rem] text-gray-400 font-cormorant">{m.email}</div>
                   </td>
                   <td className="p-4">
-                    <div className="flex flex-wrap gap-1 text-[0.62rem] max-w-[200px]">
-                      <span className="px-1.5 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded font-semibold">P: {m.presentDays}d</span>
-                      <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded font-semibold">Perm: {m.permissionDays}d</span>
-                      <span className="px-1.5 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded font-semibold">A: {m.absentDays}d</span>
-                    </div>
+                    {filterType === 'daily' ? (
+                      <div className="flex flex-wrap items-center gap-1.5 text-[0.62rem] max-w-[220px]">
+                        {m.presentDays > 0 && m.permissionHours > 0 ? (
+                          <>
+                            <span className="px-1.5 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded font-semibold">Present</span>
+                            <span className="text-gray-400 font-bold text-[0.7rem]">+</span>
+                            <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded font-semibold">
+                              Permission ({formatHours(m.permissionHours)} Hours)
+                            </span>
+                          </>
+                        ) : m.presentDays > 0 ? (
+                          <span className="px-1.5 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded font-semibold">Present</span>
+                        ) : m.permissionHours > 0 ? (
+                          <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded font-semibold">
+                            Permission ({formatHours(m.permissionHours)} Hours)
+                          </span>
+                        ) : m.absentDays > 0 ? (
+                          <span className="px-1.5 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded font-semibold">Absent</span>
+                        ) : m.leaveDays > 0 ? (
+                          <span className="px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded font-semibold">Leave</span>
+                        ) : (
+                          <span className="text-gray-400 font-cormorant italic text-sm">—</span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex flex-wrap gap-1 text-[0.62rem] max-w-[200px]">
+                        <span className="px-1.5 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded font-semibold">P: {m.presentDays}d</span>
+                        <span className="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded font-semibold">Perm: {formatHours(m.permissionHours)} Hours</span>
+                        <span className="px-1.5 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded font-semibold">A: {m.absentDays}d</span>
+                      </div>
+                    )}
                   </td>
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.totalWorkingHours.toFixed(1)} hrs</td>
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.totalCustomers} Customers</td>
