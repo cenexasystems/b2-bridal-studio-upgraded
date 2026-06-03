@@ -227,11 +227,29 @@ const ContactSection = () => {
                   label: 'Email',
                   value: 'b2bridalstudio02@gmail.com',
                 },
+                {
+                  icon: (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" strokeWidth="1.5">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  ),
+                  label: 'Business Hours',
+                  value: (
+                    <div className="flex flex-col gap-1">
+                      <div>Open Daily: 11:00 AM – 8:30 PM</div>
+                      <div style={{ opacity: 0.85 }}>Open on all days</div>
+                      <div style={{ fontSize: '15px', opacity: 0.6, fontStyle: 'italic', marginTop: '2px' }}>
+                        In rare emergency situations, the studio may remain closed
+                      </div>
+                    </div>
+                  ),
+                },
               ].map((item, i) => (
                 <div
                   key={i}
                   className="flex gap-4 py-4"
-                  style={{ borderBottom: i < 3 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}
+                  style={{ borderBottom: i < 4 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}
                 >
                   <span className="flex-shrink-0 mt-0.5">{item.icon}</span>
                   <div>
