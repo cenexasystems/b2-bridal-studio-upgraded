@@ -133,7 +133,7 @@ const VideoWallSection = () => {
                     className="text-center mb-12 px-6"
                 >
                     <h2 className="font-cinzel text-white uppercase mb-3" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', letterSpacing: '0.08em' }}>
-                        Customer Showcase
+                        Video Testimonials
                     </h2>
                     <p className="text-[#FFD700] text-sm md:text-base font-medium uppercase tracking-widest">
                         Real Brides, Real Experiences
