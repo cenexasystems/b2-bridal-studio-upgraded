@@ -144,7 +144,7 @@ const TestimonialCard = ({ testimonial, isFloating }) => (
         <div className="font-cinzel text-sm tracking-[0.1em] uppercase text-white font-extrabold">
           {testimonial.name}
         </div>
-        <div className="font-cormorant text-xs italic mt-0.5" style={{ color: 'rgba(255,215,0,0.65)' }}>
+        <div className="font-cormorant text-sm italic mt-1 font-bold" style={{ color: '#FFD700', letterSpacing: '0.02em' }}>
           {testimonial.role || 'Client'}
         </div>
       </div>
