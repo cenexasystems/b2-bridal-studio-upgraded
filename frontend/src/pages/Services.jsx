@@ -446,35 +446,7 @@ const Services = () => {
       : service.name;
     const price = activeOption ? activeOption.price : service.price;
 
-    let dateTimeInfo = '';
-    if (bookingBranch || bookingDate || bookingTime) {
-      const parts = [];
-      if (bookingDate) {
-        try {
-          const formattedDate = new Date(bookingDate).toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-          parts.push(`on ${formattedDate}`);
-        } catch (e) {
-          // ignore
-        }
-      }
-      if (bookingTime) {
-        const timeLabel = HOUR_SLOTS.find(slot => slot.value === bookingTime)?.label || bookingTime;
-        parts.push(`at ${timeLabel}`);
-      }
-      if (bookingBranch) {
-        parts.push(`for the ${bookingBranch} branch`);
-      }
-      if (parts.length > 0) {
-        dateTimeInfo = ` ${parts.join(' ')}`;
-      }
-    }
-
-    const message = `Hello B2 Bridal Studio! I would like to inquire about booking the service "${serviceName}" (Price: ₹${price})${dateTimeInfo}. Prefilled Customer Info: Name: ${user.name}, Phone: ${user.phone || 'N/A'}, Email: ${user.email || 'N/A'}.`;
+    const message = `Hello B2 Bridal Studio! I would like to inquire about booking the service "${serviceName}" (Price: ₹${price}). Prefilled Customer Info: Name: ${user.name}, Phone: ${user.phone || 'N/A'}, Email: ${user.email || 'N/A'}.`;
     const whatsappUrl = `https://wa.me/919361527951?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -498,32 +470,11 @@ const Services = () => {
 
     if (cart.length === 0) return;
 
-    // Validation
-    const errs = {};
-    if (!bookingBranch) errs.branch = 'Please select a branch';
-    if (!bookingDate)   errs.date   = 'Please select a booking date';
-    if (!bookingTime)   errs.time   = 'Please select a booking time';
-    if (Object.keys(errs).length > 0) {
-      setBookingErrors(errs);
-      return;
-    }
-    setBookingErrors({});
-
     // Filter bridal services in the cart
     const bridalItems = cart.filter(item => item.category === 'Bridal Services');
     const bridalNames = bridalItems.map(item => `${item.name} (Service For: ${item.peopleCount || 1} ${item.peopleCount === 1 ? 'Person' : 'People'})`).join(', ');
 
-    // Prefilled message formatting
-    const formattedDate = new Date(bookingDate).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    
-    const timeLabel = HOUR_SLOTS.find(slot => slot.value === bookingTime)?.label || bookingTime;
-
-    const message = `Hello B2 Bridal Studio! I would like to inquire about Bridal Services (${bridalNames}) for ${formattedDate} at the ${bookingBranch} branch around ${timeLabel}. Prefilled Customer Info: Name: ${user.name}, Phone: ${user.phone || 'N/A'}, Email: ${user.email || 'N/A'}.`;
+    const message = `Hello B2 Bridal Studio! I would like to inquire about Bridal Services (${bridalNames}). Prefilled Customer Info: Name: ${user.name}, Phone: ${user.phone || 'N/A'}, Email: ${user.email || 'N/A'}.`;
     
     const whatsappUrl = `https://wa.me/919361527951?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
