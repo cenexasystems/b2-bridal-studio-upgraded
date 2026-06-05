@@ -90,7 +90,8 @@ router.post('/register', async (req, res) => {
       name,
       email,
       phone,
-      password: hashed
+      password: hashed,
+      isVerified: true
     };
 
     if (dob) {
@@ -185,6 +186,7 @@ router.post('/google-auth', async (req, res) => {
         if (!user.authProvider || user.authProvider === 'local') {
           user.authProvider = user.password ? 'local' : 'google';
         }
+        user.isVerified = true;
         await user.save();
       } else {
         // Create new customer with Google data
@@ -192,8 +194,15 @@ router.post('/google-auth', async (req, res) => {
           name,
           email,
           googleId,
-          authProvider: 'google'
+          authProvider: 'google',
+          isVerified: true
         });
+        await user.save();
+      }
+    } else {
+      // Ensure existing google user is verified
+      if (!user.isVerified) {
+        user.isVerified = true;
         await user.save();
       }
     }
@@ -531,6 +540,12 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
       return email.toString().trim().toLowerCase();
     };
 
+    const getSafeTime = (dateVal) => {
+      if (!dateVal) return 0;
+      const d = new Date(dateVal);
+      return isNaN(d.getTime()) ? 0 : d.getTime();
+    };
+
     const addOrUpdate = (key, data) => {
       if (!key) return;
       if (customerMap.has(key)) {
@@ -550,13 +565,17 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
         if (data.source) {
           existing.sources.add(data.source);
         }
+        if (data.lastBillTime && data.lastBillTime > existing.lastBillTime) {
+          existing.lastBillTime = data.lastBillTime;
+        }
       } else {
         customerMap.set(key, {
           name: data.name || 'Unknown',
           phone: data.phone || '',
           email: data.email || '',
           dob: data.dob || null,
-          sources: new Set(data.source ? [data.source] : [])
+          sources: new Set(data.source ? [data.source] : []),
+          lastBillTime: data.lastBillTime || 0
         });
       }
     };
@@ -586,12 +605,15 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
       const email = cleanEmail || (regCust ? regCust.email : '');
       const key = cleanPhone || cleanEmail || b.phone || b.userId;
 
+      let lastBillTime = getSafeTime(b.createdAt);
+
       addOrUpdate(key, {
         name: b.name || (regCust ? regCust.name : ''),
         phone: b.phone || (regCust ? regCust.phone : ''),
         email: email,
         dob: dob,
-        source: 'online'
+        source: 'online',
+        lastBillTime: lastBillTime
       });
     });
 
@@ -611,12 +633,16 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
       const source = bill.source || 'offline';
 
       const key = cleanPhone || cleanEmail || phone || bill.userId || customerName;
+
+      let lastBillTime = getSafeTime(bill.createdAt) || getSafeTime(bill.date);
+
       addOrUpdate(key, {
         name: customerName || (regCust ? regCust.name : ''),
         phone: phone || (regCust ? regCust.phone : ''),
         email: email,
         dob: dob,
-        source: source
+        source: source,
+        lastBillTime: lastBillTime
       });
     });
 
@@ -636,11 +662,12 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
         phone: c.phone || 'N/A',
         email: c.email || 'N/A',
         dob: c.dob,
-        source: sourceStr
+        source: sourceStr,
+        lastBillTime: c.lastBillTime
       };
     });
 
-    result.sort((a, b) => a.name.localeCompare(b.name));
+    result.sort((a, b) => b.lastBillTime - a.lastBillTime);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -650,7 +677,13 @@ router.get('/b2-details', verifyToken, verifyRole(['owner']), async (req, res) =
 // 📥 GET ALL CUSTOMERS (Secure - Owner only)
 router.get('/list', verifyToken, verifyRole(['owner']), async (req, res) => {
   try {
-    const customers = await Customer.find().sort({ createdAt: -1 });
+    const customers = await Customer.find({
+      $or: [
+        { isVerified: true },
+        { authProvider: 'local' },
+        { authProvider: 'google' }
+      ]
+    }).sort({ createdAt: -1 });
     res.json(customers);
   } catch (err) {
     res.status(500).json({ error: err.message });

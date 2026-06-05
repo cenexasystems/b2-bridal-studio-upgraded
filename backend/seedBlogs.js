@@ -69,7 +69,7 @@ Our professional certification courses cover all these trends and more. Join our
 
 *Ready to begin your bridal makeup journey? [Explore our courses](/courses)*
     `,
-    image: '/images/blog/bridal_makeup_looks_2024.jpg',
+    image: '/images/blog/bridal_makeup_looks_2024.png',
     author: 'Shanmugavadivu Sabarinathan',
     readTime: '8 min read',
     tags: ['bridal makeup', 'trends', 'wedding', '2024'],
