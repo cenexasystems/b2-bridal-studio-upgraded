@@ -9,7 +9,7 @@ const blogs = [
     category: 'Bridal Trends',
     title: '10 Bridal Makeup Looks Dominating 2024 Weddings',
     preview: 'From dewy skin finishes to bold jewel-toned eyes — discover which looks are defining the modern Indian bride.',
-    image: '/images/blog/bridal_makeup_looks_2024.png',
+    image: '/images/blog/bridal_makeup_looks_2024.jpg',
     readTime: '5 min read',
     slug: '10-bridal-makeup-looks-dominating-2024-weddings',
   },
