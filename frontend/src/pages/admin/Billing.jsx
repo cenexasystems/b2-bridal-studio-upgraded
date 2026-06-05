@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ShoppingCart, Plus, Trash2, FileText, CheckCircle, Printer, Download, X, Send } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { ShoppingCart, Plus, Trash2, FileText, CheckCircle, Printer, Download, X, Send, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -70,10 +70,58 @@ export default function Billing() {
   const catalogueItems = category === 'services'
     ? services.flatMap(svc =>
         svc.options && svc.options.length > 0
-          ? svc.options.map(opt => ({ id: `${svc._id}-${opt._id}`, name: `${svc.name} — ${opt.name}`, price: opt.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0 }))
-          : svc.price ? [{ id: svc._id, name: svc.name, price: svc.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0 }] : []
+          ? svc.options.map(opt => ({ id: `${svc._id}-${opt._id}`, name: `${svc.name} — ${opt.name}`, price: opt.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0, category: svc.category || 'Uncategorized' }))
+          : svc.price ? [{ id: svc._id, name: svc.name, price: svc.price, itemType: 'service', gstPercentage: svc.gstPercentage || 0, category: svc.category || 'Uncategorized' }] : []
       )
-    : products.map(p => ({ id: p._id, name: p.name, price: p.price, itemType: 'product', gstPercentage: 0 }));
+    : products.map(p => ({ id: p._id, name: p.name, price: p.price, itemType: 'product', gstPercentage: 0, category: 'Products' }));
+
+  /* ─── custom select states ─────────────────────────────────── */
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [expandedCategories, setExpandedCategories] = useState({});
+  const dropdownRef = useRef(null);
+
+  // Group items by category
+  const filteredCatalogue = catalogueItems.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const groupedItems = filteredCatalogue.reduce((groups, item) => {
+    const cat = item.category || 'Uncategorized';
+    if (!groups[cat]) {
+      groups[cat] = [];
+    }
+    groups[cat].push(item);
+    return groups;
+  }, {});
+
+  // Handle outside clicks
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Expand categories by default on first load or when switching categories
+  useEffect(() => {
+    const initialExpanded = {};
+    catalogueItems.forEach(item => {
+      initialExpanded[item.category] = true;
+    });
+    setExpandedCategories(initialExpanded);
+  }, [category, services, products]);
+
+  const toggleCategory = (catName) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [catName]: !prev[catName]
+    }));
+  };
 
   /* ─── add custom item to bill ───────────────────────────────── */
   const handleAddCustomItem = () => {
@@ -637,19 +685,97 @@ export default function Billing() {
             {loadingCat ? (
               <div className="text-center py-4 text-sm text-gray-600 font-cormorant italic">Loading catalogue…</div>
             ) : (
-              <select
-                id="billing-item-select"
-                value={selectedItem}
-                onChange={e => setSelectedItem(e.target.value)}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 font-cormorant text-lg transition-colors"
-              >
-                <option value="">— Select {category === 'services' ? 'a service' : 'a product'} —</option>
-                {catalogueItems.map(item => (
-                  <option key={item.id} value={item.id}>
-                    {item.name} — ₹{item.price}
-                  </option>
-                ))}
-              </select>
+              <div ref={dropdownRef} className="relative w-full">
+                {/* Trigger Button */}
+                <button
+                  type="button"
+                  id="billing-item-select-trigger"
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 font-cormorant text-lg transition-colors flex items-center justify-between text-left"
+                >
+                  <span className="truncate">
+                    {selectedItem
+                      ? `${catalogueItems.find(i => i.id === selectedItem)?.name || ''} — ₹${catalogueItems.find(i => i.id === selectedItem)?.price || ''}`
+                      : `— Select ${category === 'services' ? 'a service' : 'a product'} —`}
+                  </span>
+                  <ChevronDown size={18} className="text-gray-500 shrink-0 ml-2" />
+                </button>
+
+                {/* Dropdown Menu Popover */}
+                {isOpen && (
+                  <div className="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto flex flex-col p-2">
+                    {/* Search Input */}
+                    <div className="relative mb-2">
+                      <input
+                        type="text"
+                        placeholder={`Search ${category === 'services' ? 'services' : 'products'}...`}
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        className="w-full pl-8 pr-3 py-2 border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#D4AF37] text-gray-900 placeholder-gray-400 bg-gray-50"
+                        autoFocus
+                      />
+                      <Search className="absolute left-2.5 top-2.5 text-gray-400" size={14} />
+                    </div>
+
+                    {/* Grouped Items List */}
+                    <div className="overflow-y-auto flex-1 max-h-56">
+                      {Object.keys(groupedItems).length === 0 ? (
+                        <div className="text-center py-4 text-xs text-gray-500 font-cormorant italic">
+                          No matching items found.
+                        </div>
+                      ) : (
+                        Object.keys(groupedItems).map(catName => {
+                          const isCatExpanded = searchTerm.trim() !== '' || expandedCategories[catName];
+                          const catItems = groupedItems[catName];
+
+                          return (
+                            <div key={catName} className="mb-2">
+                              {/* Category Header */}
+                              <button
+                                type="button"
+                                onClick={() => toggleCategory(catName)}
+                                className="w-full flex items-center gap-1.5 py-1.5 px-2 text-left font-cinzel font-bold text-[0.7rem] text-gray-700 hover:bg-gray-50 rounded transition-colors uppercase tracking-wider"
+                              >
+                                {isCatExpanded ? (
+                                  <ChevronDown size={12} className="text-[#D4AF37]" />
+                                ) : (
+                                  <ChevronRight size={12} className="text-gray-400" />
+                                )}
+                                {catName}
+                              </button>
+
+                              {/* Category Options */}
+                              {isCatExpanded && (
+                                <div className="mt-0.5 ml-2 pl-2 border-l border-gray-100 space-y-0.5">
+                                  {catItems.map(item => (
+                                    <button
+                                      key={item.id}
+                                      type="button"
+                                      onClick={() => {
+                                        setSelectedItem(item.id);
+                                        setIsOpen(false);
+                                        setSearchTerm('');
+                                      }}
+                                      className={`w-full text-left py-1.5 px-3 rounded text-sm font-cormorant text-gray-800 transition-colors flex justify-between items-center ${
+                                        selectedItem === item.id
+                                          ? 'bg-amber-50 font-bold text-amber-900'
+                                          : 'hover:bg-[#FFFCF5] hover:text-[#D4AF37]'
+                                      }`}
+                                    >
+                                      <span className="truncate">{item.name}</span>
+                                      <span className="font-bold text-gray-900 text-xs shrink-0 ml-2">₹{item.price}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Quantity */}
