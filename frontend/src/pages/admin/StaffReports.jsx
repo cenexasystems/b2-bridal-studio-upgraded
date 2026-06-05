@@ -4,7 +4,7 @@ import {
   TrendingUp, Calendar, Users, Award, 
   Clock, CheckCircle, Search, RotateCcw, 
   Download, ChevronRight, Star, 
-  ShieldCheck, ArrowUpRight, FileSpreadsheet
+  ArrowUpRight, FileSpreadsheet
 } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL;
@@ -309,7 +309,7 @@ const StaffReports = () => {
 
   // Export CSV
   const handleExportCSV = () => {
-    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Hours', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)', 'Productivity Score'];
+    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Hours', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)'];
     const rows = staffMetrics.map(m => [
       m.staffId,
       m.name,
@@ -321,8 +321,7 @@ const StaffReports = () => {
       `${m.attendancePercent}%`,
       m.totalCustomers,
       m.servicesPerformedList.length,
-      m.revenueGenerated,
-      `${m.productivityScore}/100`
+      m.revenueGenerated
     ]);
 
     const csvContent = [
@@ -502,12 +501,11 @@ const StaffReports = () => {
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Jobs completed</th>
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Avg Cust/Day</th>
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Revenue Generated</th>
-                <th className="p-4 pr-6 text-xs font-cinzel font-bold uppercase tracking-wider text-right">Productivity</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {activeMetrics.length === 0 ? (
-                <tr><td colSpan="8" className="p-10 text-center font-cormorant italic text-lg text-gray-500">No matching staff metrics found.</td></tr>
+                <tr><td colSpan="7" className="p-10 text-center font-cormorant italic text-lg text-gray-500">No matching staff metrics found.</td></tr>
               ) : activeMetrics.map((m) => (
                 <tr key={m.staffId} className="hover:bg-[#FFFCF5] transition-colors">
                   <td className="p-4 pl-6 font-mono font-bold text-sm text-amber-700">{m.staffId}</td>
@@ -552,11 +550,6 @@ const StaffReports = () => {
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.averageCustomersPerDay}</td>
                   <td className="p-4">
                     <span className="font-bold text-gray-900 font-cinzel">₹{m.revenueGenerated.toLocaleString('en-IN')}</span>
-                  </td>
-                  <td className="p-4 pr-6 text-right">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 shadow-sm">
-                      <ShieldCheck size={12} className="text-amber-600" /> {m.productivityScore}/100
-                    </span>
                   </td>
                 </tr>
               ))}
