@@ -310,7 +310,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
-      navigate('/admin-login');
+      navigate('/admin/login');
     }
   }, [navigate]);
 
@@ -325,7 +325,7 @@ const AdminDashboard = () => {
     localStorage.removeItem('adminToken');
     sessionStorage.removeItem('ownerToken');
     sessionStorage.removeItem('revenueToken');
-    navigate('/admin-login');
+    navigate('/admin/login');
   };
 
   // Restructured Menu items: Revenue & Staff removed, unified under secure "Owner" portal

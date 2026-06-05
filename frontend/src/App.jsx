@@ -66,12 +66,14 @@ const ContactRedirect = () => {
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 /* ─── Admin Route Guard ──────────────────────────────────── */
-// Synchronously checks for adminToken BEFORE rendering any admin content.
-// If token is absent, instantly redirects to /admin-login with no content flash.
+// Synchronously checks for adminToken BEFORE rendering ANY admin content.
+// Runs during the render phase — zero content flash, works on direct URL
+// entry, page refresh, and Incognito mode.
 const ProtectedAdminRoute = ({ children }) => {
   const token = localStorage.getItem('adminToken');
   if (!token) {
-    return <Navigate to="/admin-login" replace />;
+    // Redirect to canonical admin login URL
+    return <Navigate to="/admin/login" replace />;
   }
   return children;
 };
@@ -118,7 +120,11 @@ function App() {
               <Route path="/reset-password" element={<PublicLayout><ResetPassword /></PublicLayout>} />
 
               {/* ADMIN ROUTES */}
-              <Route path="/admin-login" element={<AdminLogin />} />
+              {/* Canonical login URL — /admin/login */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              {/* Legacy alias — preserve old bookmarks */}
+              <Route path="/admin-login" element={<Navigate to="/admin/login" replace />} />
+              {/* All other /admin/* routes are protected */}
               <Route path="/admin/*" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
 
             </Routes>
