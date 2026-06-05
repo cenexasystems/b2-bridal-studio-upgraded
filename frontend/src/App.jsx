@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -65,6 +65,17 @@ const ContactRedirect = () => {
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
+/* ─── Admin Route Guard ──────────────────────────────────── */
+// Synchronously checks for adminToken BEFORE rendering any admin content.
+// If token is absent, instantly redirects to /admin-login with no content flash.
+const ProtectedAdminRoute = ({ children }) => {
+  const token = localStorage.getItem('adminToken');
+  if (!token) {
+    return <Navigate to="/admin-login" replace />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
@@ -108,7 +119,7 @@ function App() {
 
               {/* ADMIN ROUTES */}
               <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/admin/*" element={<AdminDashboard />} />
+              <Route path="/admin/*" element={<ProtectedAdminRoute><AdminDashboard /></ProtectedAdminRoute>} />
 
             </Routes>
           </div>
