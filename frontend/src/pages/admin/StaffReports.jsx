@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { 
-  TrendingUp, Calendar, Users, Award, 
+  Calendar, Users, Award, 
   Clock, CheckCircle, Search, RotateCcw, 
   Download, ChevronRight, Star, 
   ArrowUpRight, FileSpreadsheet
@@ -247,7 +247,7 @@ const StaffReports = () => {
         repeatRate: m.totalCustomers > 0 ? 35 : 0, // Retention benchmark 35%
         rating: 4.8 // Consistent high performance salon rating
       };
-    }).sort((a, b) => b.revenueGenerated - a.revenueGenerated); // Sort by highest revenue contribution
+    }).sort((a, b) => a.staffId.localeCompare(b.staffId)); // Sort by staff ID alphabetically
   }, [staffList, filteredAttendance, filteredWorks, servicePriceMap]);
 
   // Aggregate statistics for the overall salon
@@ -309,7 +309,7 @@ const StaffReports = () => {
 
   // Export CSV
   const handleExportCSV = () => {
-    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Hours', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed', 'Revenue Generated (₹)'];
+    const headers = ['Staff ID', 'Name', 'Working Days', 'Present Days', 'Absent Days', 'Permission Hours', 'Working Hours', 'Attendance %', 'Customers Served', 'Services Completed'];
     const rows = staffMetrics.map(m => [
       m.staffId,
       m.name,
@@ -320,8 +320,7 @@ const StaffReports = () => {
       m.totalWorkingHours.toFixed(1),
       `${m.attendancePercent}%`,
       m.totalCustomers,
-      m.servicesPerformedList.length,
-      m.revenueGenerated
+      m.servicesPerformedList.length
     ]);
 
     const csvContent = [
@@ -455,12 +454,7 @@ const StaffReports = () => {
       </div>
 
       {/* ── 📊 SUMMARY FINANCIALS CARDS ── */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <div className="text-[0.65rem] font-cinzel font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5"><TrendingUp size={12} className="text-amber-500" /> Total Revenue</div>
-          <div className="text-2xl font-bold text-gray-900 font-cinzel">₹{summaryStats.totalRevenue.toLocaleString('en-IN')}</div>
-          <div className="text-[0.62rem] text-gray-400 mt-1 italic font-cormorant">Derived from Staff logs</div>
-        </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
           <div className="text-[0.65rem] font-cinzel font-bold text-gray-400 uppercase tracking-wider mb-1 flex items-center gap-1.5"><Users size={12} className="text-blue-500" /> Customers Served</div>
           <div className="text-2xl font-bold text-gray-900 font-cinzel">{summaryStats.totalCustomers}</div>
@@ -500,12 +494,11 @@ const StaffReports = () => {
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Working Hours</th>
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Jobs completed</th>
                 <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Avg Cust/Day</th>
-                <th className="p-4 text-xs font-cinzel font-bold uppercase tracking-wider">Revenue Generated</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {activeMetrics.length === 0 ? (
-                <tr><td colSpan="7" className="p-10 text-center font-cormorant italic text-lg text-gray-500">No matching staff metrics found.</td></tr>
+                <tr><td colSpan="6" className="p-10 text-center font-cormorant italic text-lg text-gray-500">No matching staff metrics found.</td></tr>
               ) : activeMetrics.map((m) => (
                 <tr key={m.staffId} className="hover:bg-[#FFFCF5] transition-colors">
                   <td className="p-4 pl-6 font-mono font-bold text-sm text-amber-700">{m.staffId}</td>
@@ -548,9 +541,6 @@ const StaffReports = () => {
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.totalWorkingHours.toFixed(1)} hrs</td>
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.totalCustomers} Customers</td>
                   <td className="p-4 text-gray-700 text-sm font-medium">{m.averageCustomersPerDay}</td>
-                  <td className="p-4">
-                    <span className="font-bold text-gray-900 font-cinzel">₹{m.revenueGenerated.toLocaleString('en-IN')}</span>
-                  </td>
                 </tr>
               ))}
             </tbody>
