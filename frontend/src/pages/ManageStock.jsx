@@ -457,29 +457,36 @@ const ManageStock = () => {
                 <p className="text-center font-cormorant italic text-gray-500 py-12">No stock consumption logs logged yet.</p>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse text-sm">
+                  <table className="w-full text-left border-collapse text-sm" style={{ tableLayout: 'fixed' }}>
+                    <colgroup>
+                      <col style={{ width: '22%' }} />
+                      <col style={{ width: '10%' }} />
+                      <col style={{ width: '26%' }} />
+                      <col style={{ width: '18%' }} />
+                      <col style={{ width: '24%' }} />
+                    </colgroup>
                     <thead>
                       <tr className="text-gray-500 border-b border-gray-100">
-                        <th className="pb-3 text-xs font-cinzel uppercase font-bold">Product</th>
-                        <th className="pb-3 text-xs font-cinzel uppercase font-bold text-center">Qty</th>
-                        <th className="pb-3 text-xs font-cinzel uppercase font-bold">Staff Member</th>
-                        <th className="pb-3 text-xs font-cinzel uppercase font-bold">Date Used</th>
-                        <th className="pb-3 text-xs font-cinzel uppercase font-bold pr-4 text-right">Linked Service</th>
+                        <th className="py-3 px-3 text-xs font-cinzel uppercase font-bold">Product</th>
+                        <th className="py-3 px-3 text-xs font-cinzel uppercase font-bold text-center">Qty</th>
+                        <th className="py-3 px-3 text-xs font-cinzel uppercase font-bold">Staff Member</th>
+                        <th className="py-3 px-3 text-xs font-cinzel uppercase font-bold">Date Used</th>
+                        <th className="py-3 px-3 text-xs font-cinzel uppercase font-bold text-right">Linked Service</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 text-gray-700 font-cormorant text-base">
                       {allUsageRecords.map(rec => (
                         <tr key={rec._id} className="hover:bg-gray-50/50">
-                          <td className="py-3 font-playfair font-bold text-gray-900">{rec.productName}</td>
-                          <td className="py-3 text-center font-mono font-bold text-amber-700">{rec.quantityUsed}</td>
-                          <td className="py-3 font-sans text-xs">
+                          <td className="py-3 px-3 font-playfair font-bold text-gray-900 truncate">{rec.productName}</td>
+                          <td className="py-3 px-3 text-center font-mono font-bold text-amber-700">{rec.quantityUsed}</td>
+                          <td className="py-3 px-3 font-sans text-xs">
                             <div className="font-bold text-gray-800">{rec.staffName}</div>
                             <div className="text-gray-400 font-mono text-[0.65rem]">{rec.staffId}</div>
                           </td>
-                          <td className="py-3 font-sans text-xs text-gray-500">
+                          <td className="py-3 px-3 font-sans text-xs text-gray-500">
                             {new Date(rec.dateUsed).toLocaleDateString('en-IN')}
                           </td>
-                          <td className="py-3 text-right pr-4 text-xs font-sans text-gray-600 font-medium">
+                          <td className="py-3 px-3 text-right text-xs font-sans text-gray-600 font-medium">
                             {rec.serviceLinked ? (
                               <span className="px-2 py-0.5 bg-green-50 text-green-600 border border-green-200/50 rounded font-semibold text-[0.65rem]">{rec.serviceLinked}</span>
                             ) : (
