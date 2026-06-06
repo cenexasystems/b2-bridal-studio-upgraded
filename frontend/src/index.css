@@ -681,7 +681,74 @@ body {
   font-style: normal !important;
 }
 
+/* ─── Admin Portal Font Size Hierarchy ───────────────────────
+   Ensure titles are always visually larger than body/inner text.
+   Base body text is reduced to 13px. Headings scale up from there.
+───────────────────────────────────────────────────────────── */
 
+/* Default body text: compact and readable */
+.admin-portal {
+  font-size: 13px;
+}
+
+/* Table body cells, general paragraph text, list items */
+.admin-portal td,
+.admin-portal p,
+.admin-portal li,
+.admin-portal span:not(.font-cinzel),
+.admin-portal label {
+  font-size: 13px !important;
+}
+
+/* Input and select values — slightly smaller than body */
+.admin-portal input,
+.admin-portal select,
+.admin-portal textarea {
+  font-size: 13px !important;
+}
+
+/* Table header (th) — larger than body cells to assert hierarchy */
+.admin-portal th {
+  font-size: 11px !important; /* Cinzel uppercase — visually reads bigger due to tracking */
+  letter-spacing: 0.08em;
+}
+
+/* Section headings — clear hierarchy above body */
+.admin-portal h4,
+.admin-portal .text-sm.font-cinzel,
+.admin-portal .text-xs.font-cinzel {
+  font-size: 12px !important;
+}
+
+.admin-portal h3 {
+  font-size: 13px !important;
+}
+
+.admin-portal h2 {
+  font-size: 16px !important;
+}
+
+.admin-portal h1 {
+  font-size: 20px !important;
+}
+
+/* Page-level title (the big heading at the top of each admin page) */
+.admin-portal .text-2xl.font-cinzel {
+  font-size: 18px !important;
+}
+
+/* Metric/stat card numbers — keep them prominent */
+.admin-portal .text-2xl:not(.font-cinzel),
+.admin-portal .text-3xl:not(.font-cinzel) {
+  font-size: 22px !important;
+}
+
+/* Badge and tag text — tiny labels */
+.admin-portal .text-\[0\.65rem\],
+.admin-portal .text-\[0\.62rem\],
+.admin-portal .text-xs {
+  font-size: 11px !important;
+}
 
 /* Sidebar — Dark elegant contrast */
 .admin-sidebar {
