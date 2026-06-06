@@ -603,9 +603,75 @@ body {
 .admin-root {
   background: #FAF8F5;
   min-height: 100vh;
-  color: #1a1a1a;
+  color: #000000;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
+
+/* ─── Admin Portal Specific Theme Overrides (2 Fonts, Black Text) ─── */
+.admin-portal {
+  color: #000000;
+}
+
+/* Force only Inter font for general text, labels, inputs, dates, and tables */
+.admin-portal,
+.admin-portal input,
+.admin-portal select,
+.admin-portal textarea,
+.admin-portal .font-sans,
+.admin-portal .font-cormorant,
+.admin-portal .font-playfair,
+.admin-portal .font-mono,
+.admin-portal .font-serif,
+.admin-portal .font-signature,
+.admin-portal font-cormorant,
+.admin-portal font-playfair,
+.admin-portal font-mono {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+/* Retain Cinzel ONLY for headings and styling uppercase headers/buttons */
+.admin-portal .font-cinzel,
+.admin-portal .admin-heading,
+.admin-portal h1.font-cinzel,
+.admin-portal h2.font-cinzel,
+.admin-portal h3.font-cinzel,
+.admin-portal h4.font-cinzel,
+.admin-portal th.font-cinzel,
+.admin-portal button.font-cinzel,
+.admin-portal .btn-gold,
+.admin-portal .btn-outline-gold {
+  font-family: 'Cinzel', serif !important;
+}
+
+/* Override all gray shades to solid black inside the admin portal */
+.admin-portal .text-gray-400,
+.admin-portal .text-gray-500,
+.admin-portal .text-gray-600,
+.admin-portal .text-gray-700,
+.admin-portal .text-gray-800,
+.admin-portal .text-gray-900,
+.admin-portal .text-zinc-400,
+.admin-portal .text-zinc-500,
+.admin-portal .text-zinc-600,
+.admin-portal .text-zinc-700,
+.admin-portal .text-zinc-800,
+.admin-portal .text-zinc-900,
+.admin-portal .text-slate-400,
+.admin-portal .text-slate-500,
+.admin-portal .text-slate-600,
+.admin-portal .text-slate-700,
+.admin-portal .text-slate-800,
+.admin-portal .text-slate-900 {
+  color: #000000 !important;
+}
+
+/* Ensure placeholder colors remain readable and not pure black */
+.admin-portal input::placeholder,
+.admin-portal textarea::placeholder,
+.admin-portal .placeholder-gray-400::placeholder {
+  color: #888888 !important;
+}
+
 
 /* Sidebar — Dark elegant contrast */
 .admin-sidebar {

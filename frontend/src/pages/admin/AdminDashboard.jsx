@@ -389,7 +389,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: '#FAF8F5' }}>
+    <div className="flex h-screen overflow-hidden admin-portal" style={{ background: '#FAF8F5' }}>
       {/* Sidebar — Desktop */}
       <div className={`hidden md:flex flex-col transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} shrink-0`}
         style={{ background: '#FFFFFF', borderRight: '1px solid rgba(0,0,0,0.06)', boxShadow: '2px 0 20px rgba(0,0,0,0.03)' }}

@@ -40,7 +40,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative" style={{ background: 'linear-gradient(135deg, #FAF8F5 0%, #F5F0E8 50%, #EDE8DD 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center relative admin-portal" style={{ background: 'linear-gradient(135deg, #FAF8F5 0%, #F5F0E8 50%, #EDE8DD 100%)' }}>
       {/* Subtle decorative elements */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-30" style={{ background: 'radial-gradient(circle, rgba(212,175,55,0.08), transparent 70%)' }} />
       <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, rgba(212,175,55,0.1), transparent 60%)' }} />
