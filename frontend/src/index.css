@@ -672,6 +672,16 @@ body {
   color: #888888 !important;
 }
 
+/* Force all text inside the admin portal to be non-italicized (normal) */
+.admin-portal,
+.admin-portal *,
+.admin-portal .italic,
+.admin-portal em,
+.admin-portal i {
+  font-style: normal !important;
+}
+
+
 
 /* Sidebar — Dark elegant contrast */
 .admin-sidebar {
