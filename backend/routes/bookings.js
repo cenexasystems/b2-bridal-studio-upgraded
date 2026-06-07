@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Booking = require('../models/Booking');
+const CashAppointment = require('../models/CashAppointment');
 const Bill = require('../models/Bill');
 const Revenue = require('../models/Revenue');
 const SlotBlock = require('../models/SlotBlock');
@@ -150,11 +151,17 @@ router.get('/slot-check', async (req, res) => {
 
     const paddedHour = String(hour).padStart(2, '0');
     const prefix = `${date}T${paddedHour}`;
-    const count = await Booking.countDocuments({
+    const onlineCount = await Booking.countDocuments({
       branch,
       status: { $in: ['Approved', 'Completed'] },
       dateTime: { $regex: `^${prefix}` }
     });
+    const cashCount = await CashAppointment.countDocuments({
+      branch,
+      status: { $in: ['Pending', 'Completed'] },
+      dateTime: { $regex: `^${prefix}` }
+    });
+    const count = onlineCount + cashCount;
     res.json({ count, available: count < 3 });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -190,7 +197,7 @@ router.get('/full-slots', async (req, res) => {
       }
     });
 
-    // Find all approved or completed bookings for this branch and date
+    // Find all approved/completed online bookings for this branch and date
     const prefix = date;
     const bookings = await Booking.find({
       branch,
@@ -198,9 +205,16 @@ router.get('/full-slots', async (req, res) => {
       dateTime: { $regex: `^${prefix}` }
     });
 
-    // Group by hour and count
+    // Find all pending/completed cash appointments for this branch and date
+    const cashAppointments = await CashAppointment.find({
+      branch,
+      status: { $in: ['Pending', 'Completed'] },
+      dateTime: { $regex: `^${prefix}` }
+    });
+
+    // Group by hour and count (combine both types)
     const slotCounts = {};
-    bookings.forEach(b => {
+    [...bookings, ...cashAppointments].forEach(b => {
       const parts = b.dateTime.split('T');
       if (parts[1]) {
         const hour = parts[1].split(':')[0];
@@ -209,7 +223,7 @@ router.get('/full-slots', async (req, res) => {
       }
     });
 
-    // Find slots where count >= 3
+    // Find slots where combined count >= 3
     const fullSlots = Object.keys(slotCounts).filter(hour => slotCounts[hour] >= 3);
 
     res.json({

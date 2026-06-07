@@ -24,6 +24,7 @@ import StaffWork from './StaffWork.jsx';
 import ExpenseTracker from './ExpenseTracker.jsx';
 import StaffReports from './StaffReports.jsx';
 import B2CustomerDetails from './B2CustomerDetails.jsx';
+import WalkInAppointments from './WalkInAppointments.jsx';
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -339,6 +340,7 @@ const AdminDashboard = () => {
     { name: 'Services', path: '/admin/services', icon: Scissors },
     { name: 'Bookings', path: '/admin/bookings', icon: Receipt },
     { name: 'Payments', path: '/admin/payments', icon: CreditCard },
+    { name: 'Walk-in Appts', path: '/admin/walkin', icon: CalendarCheck },
     { name: 'Products', path: '/admin/products', icon: Package },
     { name: 'Courses', path: '/admin/courses', icon: GraduationCap },
     { name: 'Stock', path: '/admin/stock', icon: Boxes },
@@ -528,6 +530,7 @@ const AdminDashboard = () => {
               <Route path="services" element={<ManageServices />} />
               <Route path="bookings" element={<ViewBookings />} />
               <Route path="payments" element={<PaymentVerification />} />
+              <Route path="walkin" element={<WalkInAppointments />} />
               <Route path="products" element={<ManageProducts />} />
               <Route path="courses" element={<ManageCourses />} />
               <Route path="stock" element={<ManageStock />} />

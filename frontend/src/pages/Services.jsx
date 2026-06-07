@@ -253,6 +253,7 @@ const Services = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [toast, setToast] = useState({ show: false, message: '', serviceName: '' });
   const [pendingCounts, setPendingCounts] = useState({});
+  const [paymentMethod, setPaymentMethod] = useState('online');
 
   const triggerAuthToast = (message) => {
     setToast({ show: true, message, serviceName: '', isWarning: true });
@@ -280,15 +281,20 @@ const Services = () => {
 
   useEffect(() => {
     const fetchServices = async () => {
-  try {
-    const res = await axios.get(`${API}/api/services`);
-    setServices(groupServicesByCategory(res.data));
-  } catch (err) {
-    console.error('Failed to fetch services', err);
-  } finally {
-    setLoading(false); // ✅ THIS FIXES LOADING ISSUE
-  }
-};
+      try {
+        const res = await axios.get(`${API}/api/services`);
+        if (Array.isArray(res.data) && res.data.length > 0 && res.data[0].category) {
+          setServices(groupServicesByCategory(res.data));
+        } else {
+          setServices(SERVICE_CATEGORIES);
+        }
+      } catch (err) {
+        console.error('Failed to fetch services', err);
+        setServices(SERVICE_CATEGORIES);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchServices();
   }, []);
 
@@ -532,7 +538,12 @@ const Services = () => {
       date: bookingDate,
       hour: bookingTime,
     };
-    navigate('/payment', { state: { serviceData } });
+
+    if (paymentMethod === 'cash') {
+      navigate('/cash-booking', { state: { serviceData } });
+    } else {
+      navigate('/payment', { state: { serviceData } });
+    }
   };
 
   return (
@@ -892,20 +903,66 @@ const Services = () => {
                 <MessageCircle size={14} /> Inquire via WhatsApp
               </button>
             ) : (
-              <button
-                onClick={handleProceedToPayment}
-                disabled={cart.length === 0 || slotChecking}
-                className="w-full py-3 font-cinzel text-[0.65rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 transition-all rounded-sm"
-                style={{
-                  background: cart.length > 0 ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'rgba(255,255,255,0.03)',
-                  color: cart.length > 0 ? '#000' : 'rgba(248,245,240,0.5)',
-                  cursor: cart.length > 0 && !slotChecking ? 'pointer' : 'not-allowed',
-                  fontWeight: 700,
-                  opacity: slotChecking ? 0.7 : 1,
-                }}
-              >
-                {slotChecking ? 'Checking availability...' : 'Proceed to Payment'}
-              </button>
+              <>
+                {/* Payment Method Selector */}
+                {cart.length > 0 && (
+                  <div className="mb-4">
+                    <label className="block font-cinzel text-[0.65rem] tracking-[0.2em] uppercase mb-3 font-bold" style={{ color: '#FFD700' }}>Payment Method *</label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('online')}
+                        className="flex-1 py-2.5 font-cinzel text-[0.65rem] tracking-[0.12em] uppercase rounded-sm transition-all cursor-pointer flex flex-col items-center gap-1"
+                        style={{
+                          border: paymentMethod === 'online' ? '2px solid #FFD700' : '1px solid rgba(255,215,0,0.3)',
+                          background: paymentMethod === 'online' ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'rgba(255,215,0,0.03)',
+                          color: paymentMethod === 'online' ? '#000' : 'rgba(248,245,240,0.7)',
+                          fontWeight: 700,
+                          boxShadow: paymentMethod === 'online' ? '0 2px 10px rgba(255,215,0,0.2)' : 'none',
+                        }}
+                      >
+                        <span style={{ fontSize: '1rem' }}>💳</span>
+                        Online
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPaymentMethod('cash')}
+                        className="flex-1 py-2.5 font-cinzel text-[0.65rem] tracking-[0.12em] uppercase rounded-sm transition-all cursor-pointer flex flex-col items-center gap-1"
+                        style={{
+                          border: paymentMethod === 'cash' ? '2px solid #FFD700' : '1px solid rgba(255,215,0,0.3)',
+                          background: paymentMethod === 'cash' ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'rgba(255,215,0,0.03)',
+                          color: paymentMethod === 'cash' ? '#000' : 'rgba(248,245,240,0.7)',
+                          fontWeight: 700,
+                          boxShadow: paymentMethod === 'cash' ? '0 2px 10px rgba(255,215,0,0.2)' : 'none',
+                        }}
+                      >
+                        <span style={{ fontSize: '1rem' }}>💵</span>
+                        Cash at Salon
+                      </button>
+                    </div>
+                    {paymentMethod === 'cash' && (
+                      <p className="mt-2 font-cormorant italic text-xs" style={{ color: 'rgba(248,245,240,0.55)' }}>
+                        Pay when you arrive. Slot will be reserved for you.
+                      </p>
+                    )}
+                  </div>
+                )}
+
+                <button
+                  onClick={handleProceedToPayment}
+                  disabled={cart.length === 0 || slotChecking}
+                  className="w-full py-3 font-cinzel text-[0.65rem] tracking-[0.15em] uppercase flex items-center justify-center gap-2 transition-all rounded-sm"
+                  style={{
+                    background: cart.length > 0 ? 'linear-gradient(135deg, #FFD700, #FFE566)' : 'rgba(255,255,255,0.03)',
+                    color: cart.length > 0 ? '#000' : 'rgba(248,245,240,0.5)',
+                    cursor: cart.length > 0 && !slotChecking ? 'pointer' : 'not-allowed',
+                    fontWeight: 700,
+                    opacity: slotChecking ? 0.7 : 1,
+                  }}
+                >
+                  {slotChecking ? 'Checking availability...' : (paymentMethod === 'cash' ? 'Reserve Slot (Cash)' : 'Proceed to Payment')}
+                </button>
+              </>
             )}
           </div>
         </div>

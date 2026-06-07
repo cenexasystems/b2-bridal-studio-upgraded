@@ -15,7 +15,9 @@ const statusColors = {
 
 const Profile = () => {
   const [bookings, setBookings] = useState([]);
+  const [cashAppointments, setCashAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cashLoading, setCashLoading] = useState(true);
   const getValidUser = () => {
     const stored = localStorage.getItem('user');
     if (stored) {
@@ -44,6 +46,21 @@ const Profile = () => {
     // Poll every 10 seconds so status updates (Pending→Approved) reflect automatically
     const timer = setInterval(load, 10000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Fetch cash walk-in appointments
+  useEffect(() => {
+    if (!user?.email) { setCashLoading(false); return; }
+    const loadCash = () =>
+      fetch(`${API}/api/cash-appointments/user/${encodeURIComponent(user.email)}`)
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => setCashAppointments(Array.isArray(data) ? data : []))
+        .catch(console.error)
+        .finally(() => setCashLoading(false));
+
+    loadCash();
+    const cashTimer = setInterval(loadCash, 10000);
+    return () => clearInterval(cashTimer);
   }, []);
 
   if (!user) {
@@ -179,6 +196,101 @@ const Profile = () => {
                           </Link>
                         </div>
                       )}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Walk-in Appointments (Cash) */}
+      <section style={{ padding: '0 0 6rem' }}>
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="font-cinzel text-sm tracking-[0.25em] uppercase mb-6 font-bold" style={{ color: '#FFD700' }}>Walk-in Appointments (Cash)</h2>
+
+          {cashLoading ? (
+            <div className="flex justify-center py-16">
+              <div className="w-8 h-8 rounded-full animate-spin" style={{ border: '2px solid rgba(255,195,0,0.2)', borderTopColor: '#FFD700' }} />
+            </div>
+          ) : cashAppointments.length === 0 ? (
+            <div className="glass-dark p-10 rounded-sm text-center" style={{ border: '1px solid rgba(255,195,0,0.1)' }}>
+              <span className="text-3xl block mb-3">💵</span>
+              <h3 className="font-cinzel text-base tracking-[0.1em] uppercase mb-2 font-bold" style={{ color: '#FFFFFF' }}>No Walk-in Appointments</h3>
+              <p className="font-cormorant italic text-sm font-bold" style={{ color: 'rgba(255,255,255,0.6)' }}>Cash walk-in bookings will appear here.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {cashAppointments.map((appt, i) => {
+                const sc = statusColors[appt.status] || statusColors.Pending;
+                return (
+                  <motion.div
+                    key={appt._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    className="glass-dark rounded-sm overflow-hidden"
+                    style={{ border: '1.5px solid rgba(255,215,0,0.2)' }}
+                  >
+                    <div className="p-6">
+                      {/* Header */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-3">
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.2em] uppercase px-3 py-1 rounded-sm font-extrabold" style={{ background: sc.bg, border: `1.5px solid ${sc.border}`, color: sc.color }}>
+                            {appt.status}
+                          </span>
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.15em] uppercase px-3 py-1 font-extrabold" style={{ background: 'rgba(255,215,0,0.12)', color: '#FFD700', border: '1.5px solid #FFD700' }}>
+                            {appt.branch}
+                          </span>
+                          <span className="font-cinzel text-[0.6rem] tracking-[0.1em] uppercase px-2 py-1 rounded-sm font-bold" style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(248,245,240,0.7)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                            💵 Cash
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          {appt.dateTime && (
+                            <div className="font-cormorant text-base mb-1 font-bold" style={{ color: '#FFD700' }}>
+                              📅 {new Date(appt.dateTime).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                              {' '}&nbsp;🕐 {new Date(appt.dateTime).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                            </div>
+                          )}
+                          <span className="font-cormorant text-[0.9rem] font-bold" style={{ color: '#FFFFFF' }}>
+                            Booked: {new Date(appt.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Items */}
+                      <div className="mb-4">
+                        {appt.items.map((item, j) => {
+                          const count = item.peopleCount || item.quantity || 1;
+                          return (
+                            <div key={j} className="flex justify-between items-start py-2 text-lg font-bold" style={{ borderBottom: j < appt.items.length - 1 ? '1px solid rgba(255,195,0,0.08)' : 'none' }}>
+                              <div className="flex flex-col gap-0.5">
+                                <span className="font-cormorant font-extrabold text-white">{item.name}</span>
+                                <span className="font-cinzel text-[0.7rem] tracking-[0.05em] uppercase font-bold" style={{ color: '#FFD700' }}>
+                                  Service For: {count} {count === 1 ? 'Person' : 'People'}
+                                </span>
+                              </div>
+                              <span className="font-cinzel text-base font-extrabold" style={{ color: '#FFD700' }}>₹{(item.price * count).toLocaleString()}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 pt-3" style={{ borderTop: '1.5px solid rgba(255,195,0,0.15)' }}>
+                        <div>
+                          <span className="font-cinzel text-[0.7rem] tracking-[0.15em] uppercase font-extrabold" style={{ color: 'rgba(255,215,0,0.7)' }}>
+                            {appt.status === 'Pending' ? '⏳ Awaiting your visit — pay at salon' : '✅ Service completed'}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <span className="font-cinzel text-xl font-extrabold" style={{ color: '#FFD700' }}>
+                            ₹{Number(appt.total).toFixed(2)}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 );

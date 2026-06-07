@@ -23,6 +23,7 @@ import BlogDetail from './pages/BlogDetail';
 // Booking / Payment Pages
 import Payment from './pages/Payment';
 import ConfirmBooking from './pages/ConfirmBooking';
+import CashBooking from './pages/CashBooking';
 import Profile from './pages/Profile';
 import BillView from './pages/BillView';
 
@@ -109,6 +110,7 @@ function App() {
               {/* BOOKING / PAYMENT ROUTES */}
               <Route path="/payment" element={<PublicLayout><Payment /></PublicLayout>} />
               <Route path="/confirm-booking" element={<PublicLayout><ConfirmBooking /></PublicLayout>} />
+              <Route path="/cash-booking" element={<PublicLayout><CashBooking /></PublicLayout>} />
               <Route path="/profile" element={<PublicLayout><Profile /></PublicLayout>} />
               <Route path="/bill/:id" element={<PublicLayout><BillView /></PublicLayout>} />
 
