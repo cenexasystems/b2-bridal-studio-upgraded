@@ -3,7 +3,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { fadeUp, staggerContainer, zoomIn } from '../../animations/variants';
 
 const GALLERY_ITEMS = [
-  { id: 1, src: '/images/bridal10.jpeg', category: 'Bridal', title: 'South Indian Bridal' },
+  { id: 1, src: '/images/model2.png', category: 'Styling', title: 'Radiant Red Elegance' },
   { id: 2, src: '/images/bridal4.jpeg', category: 'Makeup', title: 'HD Bridal Look' },
   { id: 3, src: '/images/sareedraping.jpeg', category: 'Styling', title: 'Saree Draping' },
   { id: 4, src: '/images/5.jpeg', category: 'Bride', title: 'Makeup' },
