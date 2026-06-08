@@ -257,6 +257,8 @@ const Services = () => {
 
   const triggerAuthToast = (message) => {
     setToast({ show: true, message, serviceName: '', isWarning: true });
+    sessionStorage.setItem('redirectAfterLogin', '/services');
+    sessionStorage.setItem('authMessage', message);
     setTimeout(() => {
       navigate('/auth');
     }, 2500);
