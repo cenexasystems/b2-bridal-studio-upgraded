@@ -5,11 +5,11 @@ import { fadeUp, staggerContainer } from '../animations/variants';
 const GALLERY_TABS = ['All', 'Bridal', 'Makeup', 'Fashion', 'Embroidery', 'Crafts'];
 
 const GALLERY_IMAGES = [
-  { id: 57, src: '/images/new-bride-1.jpeg', category: 'Bridal', title: 'Elegant Red Gown' },
-  { id: 58, src: '/images/new-bride-2.jpeg', category: 'Bridal', title: 'Radiant Red Charm' },
-  { id: 59, src: '/images/new-bride-3.jpeg', category: 'Bridal', title: 'Couture Red Saree' },
-  { id: 60, src: '/images/new-bride-4.jpeg', category: 'Bridal', title: 'Midnight Glamour' },
-  { id: 61, src: '/images/new-bride-5.jpeg', category: 'Bridal', title: 'Exquisite Black Sequins' },
+  { id: 57, src: '/images/bridal8.jpeg', category: 'Bridal', title: 'Elegant Bridal Glow' },
+  { id: 58, src: '/images/bridal9.jpeg', category: 'Bridal', title: 'Radiant Bridal Charm' },
+  { id: 59, src: '/images/bridal10.jpeg', category: 'Bridal', title: 'Couture Bridal Look' },
+  { id: 60, src: '/images/bridal11.jpeg', category: 'Bridal', title: 'Midnight Glamour' },
+  { id: 61, src: '/images/bridal12.jpeg', category: 'Bridal', title: 'Exquisite Bridal Elegance' },
   { id: 1, src: '/images/1.jpeg', category: 'Bridal', title: 'Exquisite Bridal Artistry' },
   { id: 2, src: '/images/2.jpeg', category: 'Bridal', title: 'Royal Grace' },
   { id: 3, src: '/images/3.jpeg', category: 'Bridal', title: 'Shining Elegance' },
