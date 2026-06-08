@@ -87,6 +87,8 @@ app.use('/api/expenses', require('./routes/expenses'));
 
 
 
+app.use('/api/admin', require('./routes/adminCleanup'));
+
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

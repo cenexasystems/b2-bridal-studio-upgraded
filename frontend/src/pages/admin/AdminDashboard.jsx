@@ -314,6 +314,29 @@ const AdminDashboard = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
 
+  // Cleanup state
+  const [showCleanupModal, setShowCleanupModal] = useState(false);
+  const [cleanupConfirmText, setCleanupConfirmText] = useState('');
+  const [cleanupLoading, setCleanupLoading] = useState(false);
+  const [cleanupResult, setCleanupResult] = useState(null);
+
+  const handleCleanup = async () => {
+    if (cleanupConfirmText !== 'DELETE ALL TEST DATA') return;
+    setCleanupLoading(true);
+    try {
+      const token = localStorage.getItem('adminToken');
+      const res = await axios.post(`${API}/api/admin/cleanup-testdata`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setCleanupResult(res.data);
+      setCleanupConfirmText('');
+    } catch (err) {
+      alert('Cleanup failed: ' + (err.response?.data?.error || err.message));
+    } finally {
+      setCleanupLoading(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     if (!token) {
@@ -519,12 +542,37 @@ const AdminDashboard = () => {
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={
-                <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in">
+                <div className="flex flex-col items-center justify-center py-16 text-center animate-fade-in">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-sm" style={{ background: 'rgba(212,175,55,0.08)', border: '1px solid rgba(212,175,55,0.15)' }}>
                     <LayoutDashboard size={28} style={{ color: '#D4AF37' }} />
                   </div>
                   <h2 className="font-cinzel text-xl font-bold tracking-wide uppercase text-gray-900 mb-2">Welcome to Admin Panel</h2>
-                  <p className="font-cormorant italic text-gray-600 text-lg">Select an option from the sidebar to get started.</p>
+                  <p className="font-cormorant italic text-gray-600 text-lg mb-10">Select an option from the sidebar to get started.</p>
+
+                  {/* Handover Cleanup Card */}
+                  <div className="w-full max-w-md bg-white rounded-2xl shadow-sm border border-red-100 p-6 text-left">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(239,68,68,0.08)' }}>
+                        <AlertCircle size={20} className="text-red-500" />
+                      </div>
+                      <div>
+                        <h3 className="font-cinzel font-bold text-sm uppercase tracking-wide text-gray-900">Client Handover — Clean Test Data</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">Remove all test records before going live</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-600 mb-4 leading-relaxed">
+                      This will permanently delete: <span className="font-semibold text-red-600">Bookings, Bills, Cash Appointments, Coupons, Customers, Expenses, Revenue, Attendance, Staff Work, Slot Blocks, Reviews, Stock</span>.
+                      <br /><br />
+                      <span className="text-green-700 font-semibold">✅ Kept:</span> Blogs, Services, Courses, Products, Staff, Admin Logins.
+                    </p>
+                    <button
+                      onClick={() => { setShowCleanupModal(true); setCleanupResult(null); setCleanupConfirmText(''); }}
+                      className="w-full py-2.5 rounded-lg text-xs font-cinzel font-bold uppercase tracking-wide text-white transition-all"
+                      style={{ background: 'linear-gradient(135deg, #dc2626, #b91c1c)' }}
+                    >
+                      🗑️ Clean All Test Data
+                    </button>
+                  </div>
                 </div>
               } />
               <Route path="services" element={<ManageServices />} />
@@ -553,7 +601,69 @@ const AdminDashboard = () => {
         </main>
       </div>
 
+      {/* Cleanup Confirmation Modal */}
+      {showCleanupModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl relative" style={{ border: '1px solid rgba(239,68,68,0.2)' }}>
+            <button onClick={() => { setShowCleanupModal(false); setCleanupResult(null); }} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><X size={20} /></button>
+
+            {!cleanupResult ? (
+              <>
+                <div className="flex justify-center mb-5">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)' }}>
+                    <AlertCircle size={28} className="text-red-500" />
+                  </div>
+                </div>
+                <h3 className="font-cinzel font-bold text-lg uppercase tracking-wide text-center text-gray-900 mb-2">Confirm Cleanup</h3>
+                <p className="text-sm text-gray-600 text-center mb-5">
+                  This will <span className="font-bold text-red-600">permanently delete</span> all test data. This action <span className="font-bold">cannot be undone</span>.
+                </p>
+                <p className="text-xs text-gray-500 mb-2">Type <span className="font-mono font-bold text-red-600">DELETE ALL TEST DATA</span> to confirm:</p>
+                <input
+                  type="text"
+                  value={cleanupConfirmText}
+                  onChange={e => setCleanupConfirmText(e.target.value)}
+                  placeholder="DELETE ALL TEST DATA"
+                  className="w-full p-3 rounded-lg border text-sm font-mono mb-4 focus:outline-none focus:border-red-400"
+                  style={{ borderColor: cleanupConfirmText === 'DELETE ALL TEST DATA' ? '#22c55e' : '#e5e7eb' }}
+                />
+                <button
+                  onClick={handleCleanup}
+                  disabled={cleanupConfirmText !== 'DELETE ALL TEST DATA' || cleanupLoading}
+                  className="w-full py-3 rounded-lg text-sm font-cinzel font-bold uppercase tracking-wide text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{ background: 'linear-gradient(135deg, #dc2626, #b91c1c)' }}
+                >
+                  {cleanupLoading ? 'Cleaning...' : '🗑️ Delete All Test Data'}
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="flex justify-center mb-5">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
+                    <ShieldCheck size={28} className="text-green-500" />
+                  </div>
+                </div>
+                <h3 className="font-cinzel font-bold text-lg uppercase tracking-wide text-center text-gray-900 mb-4">✅ Cleanup Complete</h3>
+                <div className="bg-gray-50 rounded-xl p-4 mb-4 max-h-56 overflow-y-auto">
+                  {cleanupResult.summary?.map(item => (
+                    <div key={item.collection} className="flex justify-between text-sm py-1 border-b border-gray-100 last:border-0">
+                      <span className="text-gray-700 font-medium">{item.collection}</span>
+                      <span className="text-red-600 font-bold">{item.deleted} deleted</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-green-700 font-semibold text-center mb-4">✅ Blogs, Services, Courses, Products, Staff & Admin Logins are intact.</p>
+                <button onClick={() => { setShowCleanupModal(false); setCleanupResult(null); }} className="w-full py-2.5 rounded-lg text-sm font-cinzel font-bold uppercase tracking-wide text-white" style={{ background: '#111' }}>
+                  Done
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Password Modal for Owner Authorization */}
+
       {showPasswordModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl relative" style={{ border: '1px solid rgba(0,0,0,0.08)' }}>
