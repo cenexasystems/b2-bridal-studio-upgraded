@@ -56,6 +56,7 @@ const GalleryShowcase = () => {
                   src={item.src}
                   alt={item.title}
                   className="w-full h-full object-cover"
+                  style={{ objectPosition: 'top center' }}
                   loading="lazy"
                 />
                 {/* Gold hover overlay */}

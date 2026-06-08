@@ -114,7 +114,7 @@ const Gallery = () => {
 
       {/* Gallery Grid */}
       <div className="max-w-[1300px] mx-auto px-6 lg:px-12 py-8 pb-20">
-        <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3" style={{ alignItems: 'start' }}>
           <AnimatePresence mode="popLayout">
             {filtered.map((item, i) => (
               <motion.div
@@ -125,10 +125,10 @@ const Gallery = () => {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4, delay: i * 0.04 }}
                 className="relative group cursor-pointer img-zoom-container"
-                style={{ aspectRatio: '1/1', border: '1px solid rgba(255,195,0,0.08)' }}
+                style={{ aspectRatio: '3/4', border: '1px solid rgba(255,195,0,0.08)' }}
                 onClick={() => setLightbox(item)}
               >
-                <img src={item.src} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+                <img src={item.src} alt={item.title} className="w-full h-full object-cover" style={{ objectPosition: 'top center' }} loading="lazy" />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.3), rgba(255,195,0,0.05))' }}>
                   <span className="font-cinzel text-[0.5rem] tracking-[0.25em] uppercase px-2 py-0.5 mb-1" style={{ background: 'rgba(255,195,0,0.9)', color: '#000' }}>{item.category}</span>
                   <span className="font-playfair text-sm" style={{ color: '#F8F5F0' }}>{item.title}</span>
